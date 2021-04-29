@@ -1,0 +1,21 @@
+query PostsConnection($sort: String, $start: Int) {
+  postsConnection(sort: $sort, limit: 10, start: $start) {
+    values {
+      id
+      title
+      slug
+      description
+      created_at
+      published_at
+      user {
+        username
+      }
+      image {
+        url
+      }
+    }
+    aggregate {
+      totalCount
+    }
+  }
+}
