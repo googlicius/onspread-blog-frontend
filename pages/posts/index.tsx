@@ -1,28 +1,23 @@
-import Head from 'next/head';
 import { FC } from 'react';
-import client from '@/apollo-client';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 import PageHeader from '@/components/layout/PageHeader';
 import PostPreview from '@/components/posts/PostPreview';
-import {
-  Post,
-  PostsConnectionQuery,
-  PostsConnectionDocument,
-  usePostsConnectionQuery,
-} from '@/graphql/generated';
-import Link from 'next/link';
+import Pagination from '@/components/Pagination';
+import { Post, usePostsConnectionQuery } from '@/graphql/generated';
 
 interface IProps {
-  data: PostsConnectionQuery;
+  // data: PostsConnectionQuery;
 }
 
-const Posts: FC<IProps> = ({ data: serverData }) => {
-  const { data = serverData } = usePostsConnectionQuery({
-    skip: !!serverData,
+const Posts: FC<IProps> = () => {
+  const router = useRouter();
+  const { page = 1 } = router.query;
+  const { data } = usePostsConnectionQuery({
+    variables: {
+      start: (+page - 1) * +process.env.NEXT_PUBLIC_PER_PAGE,
+    },
   });
-
-  if (!data.postsConnection) {
-    return null;
-  }
 
   return (
     <>
@@ -30,41 +25,35 @@ const Posts: FC<IProps> = ({ data: serverData }) => {
         <title>Posts</title>
       </Head>
 
-      <PageHeader heading="Onspread Blog" />
+      <PageHeader
+        heading="Onspread Blog"
+        subHeading="A Blog Theme by Start Bootstrap"
+      />
 
       <div className="container">
         <div className="row">
           <div className="col-lg-8 col-md-10 mx-auto">
-            {data.postsConnection.values &&
-              data.postsConnection.values.map(post => (
-                <PostPreview key={post.id} post={post as Post} />
-              ))}
+            {!data?.postsConnection && <div>Loading...</div>}
+            {data?.postsConnection?.values && (
+              <>
+                {data.postsConnection.values.map(post => (
+                  <PostPreview key={post.id} post={post as Post} />
+                ))}
 
-            <div className="clearfix">
-              <Link href="#!">
-                <a className="btn btn-primary float-right">Older Posts →</a>
-              </Link>
-            </div>
+                <div className="clearfix" />
+
+                <Pagination
+                  currentPage={+page}
+                  totalCount={data.postsConnection.aggregate.totalCount}
+                  listPath={router.pathname}
+                />
+              </>
+            )}
           </div>
         </div>
       </div>
     </>
   );
 };
-
-// This function gets called at build time on server-side.
-// It won't be called on client-side, so you can even do
-// direct database queries. See the "Technical details" section.
-export async function getStaticProps() {
-  const { data } = await client.query<PostsConnectionQuery>({
-    query: PostsConnectionDocument,
-  });
-
-  return {
-    props: {
-      data,
-    },
-  };
-}
 
 export default Posts;

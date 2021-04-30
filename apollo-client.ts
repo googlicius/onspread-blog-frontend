@@ -17,7 +17,7 @@ const client = new ApolloClient({
   link: concat(authLink, httpLink),
   uri: process.env.NEXT_PUBLIC_GRAPHQL_URL,
   cache: new InMemoryCache(),
-  connectToDevTools: process.env.NODE_ENV !== 'production',
+  connectToDevTools: false,
   ssrMode: true,
 });
 

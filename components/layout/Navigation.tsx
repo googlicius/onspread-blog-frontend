@@ -5,7 +5,7 @@ export default function Navigation() {
       id="mainNav"
     >
       <div className="container">
-        <a className="navbar-brand" href="index.html">
+        <a className="navbar-brand" href="/">
           <strong>ONSPREAD</strong>
         </a>
         <button

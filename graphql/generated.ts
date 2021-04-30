@@ -537,6 +537,8 @@ export type Query = {
   users?: Maybe<Array<Maybe<UsersPermissionsUser>>>;
   usersConnection?: Maybe<UsersPermissionsUserConnection>;
   me?: Maybe<UsersPermissionsMe>;
+  /** Get specific post by its slug */
+  postBySlug?: Maybe<Post>;
 };
 
 
@@ -669,6 +671,11 @@ export type QueryUsersConnectionArgs = {
   limit?: Maybe<Scalars['Int']>;
   start?: Maybe<Scalars['Int']>;
   where?: Maybe<Scalars['JSON']>;
+};
+
+
+export type QueryPostBySlugArgs = {
+  slug: Scalars['String'];
 };
 
 export type RoleInput = {
@@ -1338,6 +1345,23 @@ export type UpdateUserPayload = {
   user?: Maybe<UsersPermissionsUser>;
 };
 
+export type PostBySlugQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
+
+
+export type PostBySlugQuery = (
+  { __typename?: 'Query' }
+  & { postBySlug?: Maybe<(
+    { __typename?: 'Post' }
+    & Pick<Post, 'id' | 'title' | 'description' | 'content'>
+    & { image?: Maybe<(
+      { __typename?: 'UploadFile' }
+      & Pick<UploadFile, 'url'>
+    )> }
+  )> }
+);
+
 export type PostsConnectionQueryVariables = Exact<{
   sort?: Maybe<Scalars['String']>;
   start?: Maybe<Scalars['Int']>;
@@ -1366,6 +1390,47 @@ export type PostsConnectionQuery = (
 );
 
 
+export const PostBySlugDocument = gql`
+    query PostBySlug($slug: String!) {
+  postBySlug(slug: $slug) {
+    id
+    title
+    description
+    content
+    image {
+      url
+    }
+  }
+}
+    `;
+
+/**
+ * __usePostBySlugQuery__
+ *
+ * To run a query within a React component, call `usePostBySlugQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePostBySlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostBySlugQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function usePostBySlugQuery(baseOptions: Apollo.QueryHookOptions<PostBySlugQuery, PostBySlugQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PostBySlugQuery, PostBySlugQueryVariables>(PostBySlugDocument, options);
+      }
+export function usePostBySlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PostBySlugQuery, PostBySlugQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PostBySlugQuery, PostBySlugQueryVariables>(PostBySlugDocument, options);
+        }
+export type PostBySlugQueryHookResult = ReturnType<typeof usePostBySlugQuery>;
+export type PostBySlugLazyQueryHookResult = ReturnType<typeof usePostBySlugLazyQuery>;
+export type PostBySlugQueryResult = Apollo.QueryResult<PostBySlugQuery, PostBySlugQueryVariables>;
 export const PostsConnectionDocument = gql`
     query PostsConnection($sort: String, $start: Int) {
   postsConnection(sort: $sort, limit: 10, start: $start) {
