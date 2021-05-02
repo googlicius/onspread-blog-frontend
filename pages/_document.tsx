@@ -1,5 +1,4 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import Navigation from '@/components/layout/Navigation';
 import { Footer } from '@/components/layout/Footer';
 
 class MyDocument extends Document {
@@ -15,7 +14,6 @@ class MyDocument extends Document {
           <link href="/css/styles.css" rel="stylesheet" />
         </Head>
         <body>
-          <Navigation />
           <Main />
           <NextScript />
           <Footer />

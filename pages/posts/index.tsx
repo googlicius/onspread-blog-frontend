@@ -5,6 +5,7 @@ import PageHeader from '@/components/layout/PageHeader';
 import PostPreview from '@/components/posts/PostPreview';
 import Pagination from '@/components/Pagination';
 import { Post, usePostsConnectionQuery } from '@/graphql/generated';
+import Navigation from '@/components/layout/Navigation';
 
 interface IProps {
   // data: PostsConnectionQuery;
@@ -24,6 +25,8 @@ const Posts: FC<IProps> = () => {
       <Head>
         <title>Posts</title>
       </Head>
+
+      <Navigation />
 
       <PageHeader
         heading="Onspread Blog"

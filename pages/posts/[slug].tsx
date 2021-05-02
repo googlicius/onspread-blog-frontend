@@ -9,6 +9,13 @@ import {
   PostBySlugQuery,
   usePostBySlugQuery,
 } from '@/graphql/generated';
+import ViewCommentsBtn from '@/components/posts/ViewCommentsBtn';
+import HeartBtn from '@/components/posts/HeartBtn';
+import Navigation from '@/components/layout/Navigation';
+import Link from 'next/link';
+import { ReactSVG } from 'react-svg';
+import { useSelector } from 'react-redux';
+import { selectMe } from '@/redux/meProducer';
 
 interface IProps {
   data: PostBySlugQuery;
@@ -23,12 +30,15 @@ const PostDetail: FC<IProps> = ({ data: serverData }) => {
     },
     skip: !!serverData,
   });
+  const me = useSelector(selectMe);
 
   return (
     <>
       <Head>
-        <title>Posts</title>
+        <title>{data?.postBySlug?.title}</title>
       </Head>
+
+      <Navigation />
 
       {!data?.postBySlug && <div>Loading...</div>}
 
@@ -39,7 +49,20 @@ const PostDetail: FC<IProps> = ({ data: serverData }) => {
           <div className="container">
             <div className="row">
               <div className="col-lg-8 col-md-10 mx-auto">
+                {me?.id === data.postBySlug.user?.id && (
+                  <Link href={`/posts/edit?slug=${slug}`}>
+                    <a className="d-flex">
+                      <ReactSVG src="/assets/icon/edit.svg" className="mr-3" />
+                      <span>Edit</span>
+                    </a>
+                  </Link>
+                )}
                 <ReactMarkdown>{data.postBySlug.content}</ReactMarkdown>
+
+                <div className="mt-3 d-flex flex-item-center">
+                  <HeartBtn count={32} />
+                  <ViewCommentsBtn count={3} />
+                </div>
               </div>
             </div>
           </div>

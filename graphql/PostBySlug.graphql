@@ -1,4 +1,4 @@
-query PostBySlug ($slug: String!) {
+query PostBySlug($slug: String!) {
   postBySlug(slug: $slug) {
     id
     title
@@ -6,6 +6,10 @@ query PostBySlug ($slug: String!) {
     content
     image {
       url
+    }
+    user {
+      id
+      username
     }
   }
 }
