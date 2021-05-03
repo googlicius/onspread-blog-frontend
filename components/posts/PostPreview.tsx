@@ -1,7 +1,7 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import Link from 'next/link';
-import format from 'date-fns/format';
 import { Post } from '@/graphql/generated';
+import format from 'date-fns/format';
 
 interface IProps {
   post: Post;

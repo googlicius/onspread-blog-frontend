@@ -1,5 +1,5 @@
-import Navigation from '@/components/layout/Navigation';
 import Head from 'next/head';
+import Navigation from '@/components/layout/Navigation';
 
 const PostEdit = () => {
   return (

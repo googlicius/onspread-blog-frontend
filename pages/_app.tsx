@@ -1,10 +1,10 @@
-import { FC, useEffect } from 'react';
-import { ApolloProvider } from '@apollo/client';
 import '@/styles/globals.scss';
-import client from '@/apollo-client';
+import { FC, useEffect } from 'react';
 import { Provider, useDispatch } from 'react-redux';
-import store from '@/redux/store';
+import { ApolloProvider } from '@apollo/client';
+import client from '@/apollo-client';
 import { meInitialAsync } from '@/redux/meProducer';
+import store from '@/redux/store';
 
 const InitApp: FC = ({ children }) => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const InitApp: FC = ({ children }) => {
   return <>{children}</>;
 };
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }): JSX.Element {
   return (
     <ApolloProvider client={client}>
       <Provider store={store}>

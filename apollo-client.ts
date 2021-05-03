@@ -1,16 +1,9 @@
-import {
-  ApolloClient,
-  concat,
-  gql,
-  HttpLink,
-  InMemoryCache,
-  makeVar,
-} from '@apollo/client';
+import { ApolloClient, HttpLink, InMemoryCache, concat } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
 const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_URL });
 
-const authLink = setContext(async (_: any, { headers }) => {
+const authLink = setContext(async (_, { headers }) => {
   const jwtToken =
     typeof window !== 'undefined' &&
     localStorage.getItem(process.env.NEXT_PUBLIC_JWT_TOKEN_KEY);

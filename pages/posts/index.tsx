@@ -1,17 +1,13 @@
+import { Post, usePostsConnectionQuery } from '@/graphql/generated';
 import { FC } from 'react';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import PageHeader from '@/components/layout/PageHeader';
-import PostPreview from '@/components/posts/PostPreview';
-import Pagination from '@/components/Pagination';
-import { Post, usePostsConnectionQuery } from '@/graphql/generated';
 import Navigation from '@/components/layout/Navigation';
+import PageHeader from '@/components/layout/PageHeader';
+import Pagination from '@/components/Pagination';
+import PostPreview from '@/components/posts/PostPreview';
+import { useRouter } from 'next/router';
 
-interface IProps {
-  // data: PostsConnectionQuery;
-}
-
-const Posts: FC<IProps> = () => {
+const Posts: FC = () => {
   const router = useRouter();
   const { page = 1 } = router.query;
   const { data } = usePostsConnectionQuery({
@@ -39,7 +35,7 @@ const Posts: FC<IProps> = () => {
             {!data?.postsConnection && <div>Loading...</div>}
             {data?.postsConnection?.values && (
               <>
-                {data.postsConnection.values.map(post => (
+                {data.postsConnection.values.map((post) => (
                   <PostPreview key={post.id} post={post as Post} />
                 ))}
 

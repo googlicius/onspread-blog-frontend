@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, FC, forwardRef } from 'react';
+import { ButtonHTMLAttributes, forwardRef } from 'react';
 import { ReactSVG } from 'react-svg';
 
 interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {

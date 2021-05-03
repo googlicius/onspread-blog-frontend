@@ -1,16 +1,17 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { clearLoggedInUser, selectMe } from '@/redux/meProducer';
+import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import cs from 'classnames';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearLoggedInUser, selectMe } from '@/redux/meProducer';
 
 const MQL = 992;
 
 interface IProps {
   isDark?: boolean;
+  children?;
 }
 
-export default function Navigation(props: IProps) {
+export default function Navigation(props: IProps): JSX.Element {
   const navElementRef = useRef<HTMLElement>(null);
   const me = useSelector(selectMe);
   const dispatch = useDispatch();
@@ -103,6 +104,7 @@ export default function Navigation(props: IProps) {
 
         <div className="collapse navbar-collapse" id="navbarResponsive">
           <ul className="navbar-nav ml-auto">
+            {props.children}
             {me ? (
               <>
                 <li className="nav-item dropdown">
@@ -136,22 +138,6 @@ export default function Navigation(props: IProps) {
                 </Link>
               </li>
             )}
-
-            {/* <li className="nav-item">
-              <a className="nav-link" href="about.html">
-                About
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="post.html">
-                Sample Post
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="contact.html">
-                Contact
-              </a>
-            </li> */}
           </ul>
         </div>
       </div>

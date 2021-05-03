@@ -1,13 +1,13 @@
-import Navigation from '@/components/layout/Navigation';
-import { useLoginMutation, useMeLazyQuery } from '@/graphql/generated';
 import { useEffect, useRef } from 'react';
-import { useForm } from 'react-hook-form';
-import cs from 'classnames';
-import styles from './index.module.scss';
+import { useLoginMutation, useMeLazyQuery } from '@/graphql/generated';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
+import Navigation from '@/components/layout/Navigation';
+import cs from 'classnames';
 import { setLoggedInUser } from '@/redux/meProducer';
+import styles from './index.module.scss';
+import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 interface IFormData {
   identifier: string;
@@ -38,7 +38,9 @@ const Login = () => {
         res.data.login.jwt,
       );
       meQuery();
-    } catch (err) {}
+    } catch (err) {
+      // Throw error
+    }
   };
 
   useEffect(() => {

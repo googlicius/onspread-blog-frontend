@@ -1,5 +1,5 @@
+import React, { FC, useMemo } from 'react';
 import Link from 'next/link';
-import { FC, useMemo } from 'react';
 import cs from 'classnames';
 
 interface IProps {
@@ -13,7 +13,7 @@ const Pagination: FC<IProps> = ({
   perPage = +process.env.NEXT_PUBLIC_PER_PAGE,
   currentPage,
   totalCount,
-  listPath
+  listPath,
 }) => {
   const pages = useMemo(() => {
     const totalPages = Math.ceil(totalCount / perPage);
@@ -34,7 +34,7 @@ const Pagination: FC<IProps> = ({
             </Link>
           </li>
         )}
-        {pages.map(page => (
+        {pages.map((page) => (
           <li
             className={cs({ 'page-item': true, active: page === currentPage })}
             key={page}
