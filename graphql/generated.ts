@@ -1460,7 +1460,7 @@ export type PostsConnectionQuery = (
         & Pick<UsersPermissionsUser, 'username'>
       )>, image?: Maybe<(
         { __typename?: 'UploadFile' }
-        & Pick<UploadFile, 'url'>
+        & Pick<UploadFile, 'url' | 'formats'>
       )> }
     )>>>, aggregate?: Maybe<(
       { __typename?: 'PostAggregator' }
@@ -1618,7 +1618,7 @@ export type PostBySlugQueryHookResult = ReturnType<typeof usePostBySlugQuery>;
 export type PostBySlugLazyQueryHookResult = ReturnType<typeof usePostBySlugLazyQuery>;
 export type PostBySlugQueryResult = Apollo.QueryResult<PostBySlugQuery, PostBySlugQueryVariables>;
 export const PostsConnectionDocument = gql`
-    query PostsConnection($sort: String, $start: Int) {
+    query PostsConnection($sort: String = "published_at:desc", $start: Int) {
   postsConnection(sort: $sort, limit: 10, start: $start) {
     values {
       id
@@ -1632,6 +1632,7 @@ export const PostsConnectionDocument = gql`
       }
       image {
         url
+        formats
       }
     }
     aggregate {

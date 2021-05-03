@@ -46,7 +46,7 @@ const PostDetail = ({ data: serverData }: IProps): JSX.Element => {
   }, 1000);
 
   useEffect(() => {
-    if (data) {
+    if (data?.postBySlug) {
       setTotalHeart(data.postBySlug.heart);
     }
   }, [data]);
@@ -58,7 +58,7 @@ const PostDetail = ({ data: serverData }: IProps): JSX.Element => {
       </Head>
 
       <Navigation>
-        {me?.id === data.postBySlug.user?.id && (
+        {me?.id === data.postBySlug?.user?.id && (
           <li className="nav-item">
             <Link href={`/posts/edit?slug=${slug}`}>
               <a className="nav-link">Edit</a>
@@ -71,7 +71,10 @@ const PostDetail = ({ data: serverData }: IProps): JSX.Element => {
 
       {data?.postBySlug && (
         <>
-          <PageHeader heading={data.postBySlug.title} />
+          <PageHeader
+            heading={data.postBySlug.title}
+            imageUrl={`${process.env.NEXT_PUBLIC_API_ENDPOINT}${data.postBySlug.image?.url}`}
+          />
 
           <div className="container">
             <div className="row">

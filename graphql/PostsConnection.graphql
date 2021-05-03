@@ -1,4 +1,4 @@
-query PostsConnection($sort: String, $start: Int) {
+query PostsConnection($sort: String = "published_at:desc", $start: Int) {
   postsConnection(sort: $sort, limit: 10, start: $start) {
     values {
       id
@@ -12,6 +12,7 @@ query PostsConnection($sort: String, $start: Int) {
       }
       image {
         url
+        formats
       }
     }
     aggregate {

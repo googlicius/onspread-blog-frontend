@@ -3,13 +3,18 @@ import { FC } from 'react';
 interface IProps {
   heading: string;
   subHeading?: string;
+  imageUrl?: string;
 }
 
-export const PageHeader: FC<IProps> = ({ heading, subHeading }) => {
+export const PageHeader: FC<IProps> = ({
+  heading,
+  subHeading,
+  imageUrl = '/assets/img/home-bg.jpg',
+}) => {
   return (
     <header
       className="masthead"
-      style={{ backgroundImage: "url('/assets/img/home-bg.jpg')" }}
+      style={{ backgroundImage: `url('${imageUrl}')` }}
     >
       <div className="overlay"></div>
       <div className="container">

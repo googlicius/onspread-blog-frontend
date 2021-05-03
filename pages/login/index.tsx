@@ -1,11 +1,11 @@
+import { selectMe, setLoggedInUser } from '@/redux/meProducer';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef } from 'react';
 import { useLoginMutation, useMeLazyQuery } from '@/graphql/generated';
 import Head from 'next/head';
 import Navigation from '@/components/layout/Navigation';
 import cs from 'classnames';
-import { setLoggedInUser } from '@/redux/meProducer';
 import styles from './index.module.scss';
-import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -24,6 +24,7 @@ const Login = () => {
   const [loginMutation, { error }] = useLoginMutation();
   const [meQuery, { data, loading }] = useMeLazyQuery();
   const router = useRouter();
+  const me = useSelector(selectMe);
   const dispatch = useDispatch();
 
   const onSubmit = async (formData: IFormData) => {
@@ -50,9 +51,14 @@ const Login = () => {
   useEffect(() => {
     if (data) {
       dispatch(setLoggedInUser(data.me));
-      router.push('/posts');
     }
   }, [data]);
+
+  useEffect(() => {
+    if (me) {
+      router.push('/posts');
+    }
+  }, [me]);
 
   return (
     <>
