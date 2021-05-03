@@ -4,6 +4,7 @@ query PostBySlug($slug: String!) {
     title
     description
     content
+    heart
     image {
       url
     }

@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { IRootState } from './interface';
 import meProducer from './meProducer';
 
-const store = configureStore({
+const store = configureStore<IRootState>({
   reducer: {
-    me: meProducer
+    me: meProducer,
   },
 });
 

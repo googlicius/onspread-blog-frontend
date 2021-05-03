@@ -1,12 +1,9 @@
 import client from '@/apollo-client';
-import { MeDocument, MeQuery, UsersPermissionsMe } from '@/graphql/generated';
+import { MeDocument, MeQuery } from '@/graphql/generated';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { IMeState, IRootState } from './interface';
 
-interface IState {
-  value?: UsersPermissionsMe;
-}
-
-const initialState: IState = {
+const initialState: IMeState = {
   value: null,
 };
 
@@ -64,6 +61,6 @@ export const { setLoggedInUser, clearLoggedInUser } = meSlice.actions;
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
-export const selectMe = (state) => state.me.value;
+export const selectMe = (state: IRootState) => state.me.value;
 
 export default meSlice.reducer;

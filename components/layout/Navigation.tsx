@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import cs from 'classnames';
-import { useSelector } from 'react-redux';
-import { selectMe } from '@/redux/meProducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearLoggedInUser, selectMe } from '@/redux/meProducer';
 
 const MQL = 992;
 
@@ -13,10 +13,11 @@ interface IProps {
 export default function Navigation(props: IProps) {
   const navElementRef = useRef<HTMLElement>(null);
   const me = useSelector(selectMe);
+  const dispatch = useDispatch();
 
-  const handleLogout = async () => {
+  const handleLogOut = async () => {
     localStorage.removeItem(process.env.NEXT_PUBLIC_JWT_TOKEN_KEY);
-    window.location.reload();
+    dispatch(clearLoggedInUser());
   };
 
   // Handle scroll event.
@@ -121,7 +122,7 @@ export default function Navigation(props: IProps) {
                     <a
                       className="dropdown-item"
                       href="#"
-                      onClick={handleLogout}
+                      onClick={handleLogOut}
                     >
                       Logout
                     </a>

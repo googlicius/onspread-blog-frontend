@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import ReactMarkdown from 'react-markdown';
@@ -7,6 +7,7 @@ import client from '@/apollo-client';
 import {
   PostBySlugDocument,
   PostBySlugQuery,
+  useGiveHeartMutation,
   usePostBySlugQuery,
 } from '@/graphql/generated';
 import ViewCommentsBtn from '@/components/posts/ViewCommentsBtn';
@@ -16,6 +17,7 @@ import Link from 'next/link';
 import { ReactSVG } from 'react-svg';
 import { useSelector } from 'react-redux';
 import { selectMe } from '@/redux/meProducer';
+import debounce from 'lodash/debounce';
 
 interface IProps {
   data: PostBySlugQuery;
@@ -23,7 +25,9 @@ interface IProps {
 
 const PostDetail: FC<IProps> = ({ data: serverData }) => {
   const router = useRouter();
+  const [totalHeart, setTotalHeart] = useState(0);
   const { slug } = router.query;
+  const [giveHeartMutation] = useGiveHeartMutation();
   const { data = serverData } = usePostBySlugQuery({
     variables: {
       slug: slug as string,
@@ -31,6 +35,22 @@ const PostDetail: FC<IProps> = ({ data: serverData }) => {
     skip: !!serverData,
   });
   const me = useSelector(selectMe);
+
+  const giveHeart = debounce(async (heart: number) => {
+    const { data: heartData } = await giveHeartMutation({
+      variables: {
+        postId: data.postBySlug.id,
+        heart,
+      },
+    });
+    setTotalHeart(heartData.giveHeart);
+  }, 1000);
+
+  useEffect(() => {
+    if (data) {
+      setTotalHeart(data.postBySlug.heart);
+    }
+  }, [data]);
 
   return (
     <>
@@ -60,8 +80,12 @@ const PostDetail: FC<IProps> = ({ data: serverData }) => {
                 <ReactMarkdown>{data.postBySlug.content}</ReactMarkdown>
 
                 <div className="mt-3 d-flex flex-item-center">
-                  <HeartBtn count={32} />
-                  <ViewCommentsBtn count={3} />
+                  <HeartBtn
+                    className="pl-0"
+                    count={totalHeart || null}
+                    onGiveHeart={giveHeart}
+                  />
+                  <ViewCommentsBtn className="pl-0" count={3} />
                 </div>
               </div>
             </div>

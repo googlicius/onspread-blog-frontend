@@ -1,0 +1,3 @@
+mutation GiveHeart($postId: ID!, $heart: Int!) {
+  giveHeart(postId: $postId, heart: $heart)
+}
