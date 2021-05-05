@@ -1,15 +1,22 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import Link from 'next/link';
 import { Post } from '@/graphql/generated';
 import format from 'date-fns/format';
 import styles from './PostPreview.module.scss';
 
-interface IProps {
+interface Props {
   post: Post;
 }
 
-const PostPreview: FC<IProps> = ({ post }) => {
-  const thumbnailImage = post.image?.formats?.small?.url || post.image?.url;
+const PostPreview: FC<Props> = ({ post }) => {
+  // const thumbnailImage = post.image?.formats?.small?.url || post.image?.url;
+
+  const thumbnailImage = useMemo(() => {
+    const path = post.image?.formats?.small?.url || post.image?.url;
+    return post.image?.provider === 'local'
+      ? process.env.NEXT_PUBLIC_API_ENDPOINT + path
+      : path;
+  }, [post]);
 
   return (
     <>
@@ -38,9 +45,7 @@ const PostPreview: FC<IProps> = ({ post }) => {
                 <div
                   className={` ${styles['feature-image']}`}
                   style={{
-                    backgroundImage: `url(${
-                      process.env.NEXT_PUBLIC_API_ENDPOINT + thumbnailImage
-                    })`,
+                    backgroundImage: `url(${thumbnailImage})`,
                     backgroundSize: 'cover',
                   }}
                 />

@@ -1,9 +1,9 @@
 import { UsersPermissionsMe } from '@/graphql/generated';
 
-export interface IMeState {
+export interface MeState {
   value?: UsersPermissionsMe;
 }
 
-export interface IRootState {
-  me: IMeState;
+export interface RootState {
+  me: MeState;
 }

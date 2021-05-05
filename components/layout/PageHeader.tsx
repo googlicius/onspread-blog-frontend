@@ -1,12 +1,13 @@
 import { FC } from 'react';
+import PropTypes from 'prop-types';
 
-interface IProps {
+interface Props {
   heading: string;
   subHeading?: string;
   imageUrl?: string;
 }
 
-export const PageHeader: FC<IProps> = ({
+export const PageHeader: FC<Props> = ({
   heading,
   subHeading,
   imageUrl = '/assets/img/home-bg.jpg',
@@ -29,6 +30,12 @@ export const PageHeader: FC<IProps> = ({
       </div>
     </header>
   );
+};
+
+PageHeader.propTypes = {
+  heading: PropTypes.string,
+  subHeading: PropTypes.string,
+  imageUrl: PropTypes.string,
 };
 
 export default PageHeader;

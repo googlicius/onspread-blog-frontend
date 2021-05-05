@@ -157,7 +157,7 @@ const Login = () => {
 
                 <div className="form-group">
                   <p className="text-center">
-                    Don't have account?{' '}
+                    Don&apos;t have account?{' '}
                     <a href="#" id="signup">
                       Sign up here
                     </a>

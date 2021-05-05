@@ -7,6 +7,7 @@ query PostBySlug($slug: String!) {
     heart
     image {
       url
+      provider
     }
     user {
       id

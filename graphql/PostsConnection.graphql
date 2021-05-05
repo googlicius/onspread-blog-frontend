@@ -5,7 +5,7 @@ query PostsConnection($sort: String = "published_at:desc", $start: Int) {
       title
       slug
       description
-      created_at
+      createdAt
       published_at
       user {
         username

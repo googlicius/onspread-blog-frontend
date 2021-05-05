@@ -4,7 +4,7 @@ import {
   useGiveHeartMutation,
   usePostBySlugQuery,
 } from '@/graphql/generated';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import HeartBtn from '@/components/posts/HeartBtn';
 import Link from 'next/link';
@@ -34,6 +34,15 @@ const PostDetail = ({ data: serverData }: IProps): JSX.Element => {
     skip: !!serverData,
   });
   const me = useSelector(selectMe);
+
+  const imageUrl = useMemo(() => {
+    if (!data?.postBySlug) {
+      return '';
+    }
+    return data.postBySlug.image?.provider === 'local'
+      ? `${process.env.NEXT_PUBLIC_API_ENDPOINT}${data.postBySlug.image?.url}`
+      : data.postBySlug.image?.url;
+  }, [data]);
 
   const giveHeart = debounce(async (heart: number) => {
     const { data: heartData } = await giveHeartMutation({
@@ -73,7 +82,7 @@ const PostDetail = ({ data: serverData }: IProps): JSX.Element => {
         <>
           <PageHeader
             heading={data.postBySlug.title}
-            imageUrl={`${process.env.NEXT_PUBLIC_API_ENDPOINT}${data.postBySlug.image?.url}`}
+            imageUrl={`${imageUrl}`}
           />
 
           <div className="container">

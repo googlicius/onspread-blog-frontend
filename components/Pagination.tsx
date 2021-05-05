@@ -1,6 +1,7 @@
 import React, { FC, useMemo } from 'react';
 import Link from 'next/link';
 import cs from 'classnames';
+import PropTypes from 'prop-types';
 
 interface IProps {
   currentPage: number;
@@ -54,6 +55,13 @@ const Pagination: FC<IProps> = ({
       </ul>
     </nav>
   );
+};
+
+Pagination.propTypes = {
+  currentPage: PropTypes.number.isRequired,
+  listPath: PropTypes.string.isRequired,
+  totalCount: PropTypes.number.isRequired,
+  perPage: PropTypes.number,
 };
 
 export default Pagination;

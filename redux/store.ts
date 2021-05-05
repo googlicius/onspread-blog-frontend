@@ -1,8 +1,8 @@
-import { IRootState } from './interface';
+import { RootState } from './interface';
 import { configureStore } from '@reduxjs/toolkit';
 import meProducer from './meProducer';
 
-const store = configureStore<IRootState>({
+const store = configureStore<RootState>({
   reducer: {
     me: meProducer,
   },

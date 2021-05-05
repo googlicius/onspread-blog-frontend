@@ -20,4 +20,6 @@ const ViewCommentsBtn = forwardRef<HTMLButtonElement, IProps>(
   },
 );
 
+ViewCommentsBtn.displayName = 'ViewCommentsBtn';
+
 export default ViewCommentsBtn;
