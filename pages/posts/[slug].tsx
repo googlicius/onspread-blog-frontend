@@ -18,11 +18,11 @@ import { selectMe } from '@/redux/meProducer';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 
-interface IProps {
+interface Props {
   data: PostBySlugQuery;
 }
 
-const PostDetail = ({ data: serverData }: IProps): JSX.Element => {
+const PostDetail = ({ data: serverData }: Props): JSX.Element => {
   const router = useRouter();
   const [totalHeart, setTotalHeart] = useState(0);
   const { slug } = router.query;
@@ -111,14 +111,13 @@ const PostDetail = ({ data: serverData }: IProps): JSX.Element => {
 // Next.js will pre-render this page on each request using the data
 // returned by getServerSideProps.
 
-interface IServerProps {
+interface ServerProps {
   props: {
     data: PostBySlugQuery;
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export async function getServerSideProps({ params }): Promise<IServerProps> {
+export async function getServerSideProps({ params }): Promise<ServerProps> {
   const { data } = await client.query<PostBySlugQuery>({
     query: PostBySlugDocument,
     variables: {
