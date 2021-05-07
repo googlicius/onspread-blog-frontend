@@ -3,14 +3,14 @@ import { FC, useEffect } from 'react';
 import { Provider, useDispatch } from 'react-redux';
 import { ApolloProvider } from '@apollo/client';
 import client from '@/apollo-client';
-import { meInitialAsync } from '@/redux/meProducer';
+import { meQueryAsync } from '@/redux/meProducer';
 import store from '@/redux/store';
 
 const InitApp: FC = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(meInitialAsync());
+    dispatch(meQueryAsync());
   }, []);
 
   return <>{children}</>;

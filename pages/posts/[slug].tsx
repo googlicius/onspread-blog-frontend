@@ -67,7 +67,7 @@ const PostDetail = ({ data: serverData }: Props): JSX.Element => {
       </Head>
 
       <Navigation>
-        {me?.id === data.postBySlug?.user?.id && (
+        {me.value?.id === data.postBySlug?.user?.id && (
           <li className="nav-item">
             <Link href={`/posts/edit?slug=${slug}`}>
               <a className="nav-link">Edit</a>

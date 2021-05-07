@@ -4,14 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import cs from 'classnames';
 
-const MQL = 992;
-
-interface IProps {
+interface Props {
   isDark?: boolean;
   children?;
 }
 
-export default function Navigation(props: IProps): JSX.Element {
+export default function Navigation(props: Props): JSX.Element {
   const navElementRef = useRef<HTMLElement>(null);
   const me = useSelector(selectMe);
   const dispatch = useDispatch();
@@ -58,9 +56,7 @@ export default function Navigation(props: IProps): JSX.Element {
       previousTop = currentTop;
     };
 
-    if (window.innerWidth > MQL) {
-      window.addEventListener('scroll', handleShowHideHeader);
-    }
+    window.addEventListener('scroll', handleShowHideHeader);
 
     return function cleanUp() {
       window.removeEventListener('scroll', handleShowHideHeader);
@@ -89,57 +85,38 @@ export default function Navigation(props: IProps): JSX.Element {
           </a>
         </Link>
 
-        <button
-          className="navbar-toggler navbar-toggler-right"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarResponsive"
-          aria-controls="navbarResponsive"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          Menu
-          <i className="fas fa-bars"></i>
-        </button>
+        <ul className="navbar-nav ml-auto">
+          {props.children}
+          {me.value ? (
+            <>
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle pr-0"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  href="#"
+                >
+                  {me.value.username}
+                </a>
 
-        <div className="collapse navbar-collapse" id="navbarResponsive">
-          <ul className="navbar-nav ml-auto">
-            {props.children}
-            {me ? (
-              <>
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle pr-0"
-                    id="dropdownMenuButton"
-                    data-toggle="dropdown"
-                    href="#"
-                  >
-                    {me.username}
+                <div
+                  className="dropdown-menu dropdown-menu-right"
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  <a className="dropdown-item" href="#" onClick={handleLogOut}>
+                    Logout
                   </a>
-
-                  <div
-                    className="dropdown-menu dropdown-menu-right"
-                    aria-labelledby="dropdownMenuButton"
-                  >
-                    <a
-                      className="dropdown-item"
-                      href="#"
-                      onClick={handleLogOut}
-                    >
-                      Logout
-                    </a>
-                  </div>
-                </li>
-              </>
-            ) : (
-              <li className="nav-item">
-                <Link href={`/login`}>
-                  <a className="nav-link">Login</a>
-                </Link>
+                </div>
               </li>
-            )}
-          </ul>
-        </div>
+            </>
+          ) : (
+            <li className="nav-item">
+              <Link href={`/login`}>
+                <a className="nav-link">Login</a>
+              </Link>
+            </li>
+          )}
+        </ul>
       </div>
     </nav>
   );

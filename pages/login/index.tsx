@@ -1,15 +1,15 @@
-import { selectMe, setLoggedInUser } from '@/redux/meProducer';
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef } from 'react';
-import { useLoginMutation, useMeLazyQuery } from '@/graphql/generated';
-import Head from 'next/head';
-import Navigation from '@/components/layout/Navigation';
-import cs from 'classnames';
-import styles from './index.module.scss';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
+import cs from 'classnames';
+import { meQueryAsync, selectMe } from '@/redux/meProducer';
+import { useLoginMutation } from '@/graphql/generated';
+import Navigation from '@/components/layout/Navigation';
+import styles from './index.module.scss';
 
-interface IFormData {
+interface FormData {
   identifier: string;
   password: string;
 }
@@ -22,12 +22,11 @@ const Login = () => {
     formState: { errors, isSubmitting },
   } = useForm();
   const [loginMutation, { error }] = useLoginMutation();
-  const [meQuery, { data, loading }] = useMeLazyQuery();
   const router = useRouter();
   const me = useSelector(selectMe);
   const dispatch = useDispatch();
 
-  const onSubmit = async (formData: IFormData) => {
+  const onSubmit = async (formData: FormData) => {
     try {
       const res = await loginMutation({
         variables: {
@@ -38,7 +37,7 @@ const Login = () => {
         process.env.NEXT_PUBLIC_JWT_TOKEN_KEY,
         res.data.login.jwt,
       );
-      meQuery();
+      dispatch(meQueryAsync());
     } catch (err) {
       // Throw error
     }
@@ -49,13 +48,7 @@ const Login = () => {
   }, [emailInputRef]);
 
   useEffect(() => {
-    if (data) {
-      dispatch(setLoggedInUser(data.me));
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (me) {
+    if (me.value) {
       router.push('/posts');
     }
   }, [me]);
@@ -89,10 +82,10 @@ const Login = () => {
                   <label>Email address</label>
 
                   <input
-                    ref={emailInputRef}
                     {...register('identifier', {
                       required: { value: true, message: 'Email is required' },
                     })}
+                    ref={emailInputRef}
                     type="email"
                     className={cs('form-control', {
                       'is-invalid': !!errors.identifier,
@@ -135,7 +128,7 @@ const Login = () => {
                 <div className="text-center ">
                   <button
                     type="submit"
-                    disabled={isSubmitting || loading}
+                    disabled={isSubmitting || me.status === 'loading'}
                     className=" btn btn-block mybtn btn-primary tx-tfm"
                   >
                     Login
