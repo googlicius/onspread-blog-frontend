@@ -3,14 +3,13 @@ import Link from 'next/link';
 import { Post } from '@/graphql/generated';
 import format from 'date-fns/format';
 import styles from './PostPreview.module.scss';
+import classNames from 'classnames';
 
 interface Props {
   post: Post;
 }
 
 const PostPreview: FC<Props> = ({ post }) => {
-  // const thumbnailImage = post.image?.formats?.small?.url || post.image?.url;
-
   const thumbnailImage = useMemo(() => {
     const path = post.image?.formats?.small?.url || post.image?.url;
     return post.image?.provider === 'local'
@@ -20,8 +19,28 @@ const PostPreview: FC<Props> = ({ post }) => {
 
   return (
     <>
-      <div className="d-flex py-5">
-        <div className="post-preview">
+      <div
+        className={classNames(`d-flex ${styles['post-preview-container']}`, {
+          'flex-row': !post.image,
+        })}
+      >
+        {post.image && (
+          <div className={styles['feature-image-wrapper']}>
+            <Link href={`/posts/${post.slug}`}>
+              <a>
+                <div
+                  className={styles['feature-image']}
+                  style={{
+                    backgroundImage: `url(${thumbnailImage})`,
+                    backgroundSize: 'cover',
+                  }}
+                />
+              </a>
+            </Link>
+          </div>
+        )}
+
+        <div className={`post-preview`}>
           <Link href={`/posts/${post.slug}`}>
             <a>
               <h2 className="post-title">{post.title}</h2>
@@ -37,22 +56,6 @@ const PostPreview: FC<Props> = ({ post }) => {
             )}
           </p>
         </div>
-
-        {post.image && (
-          <div className="col-md-4 pr-0">
-            <Link href={`/posts/${post.slug}`}>
-              <a>
-                <div
-                  className={` ${styles['feature-image']}`}
-                  style={{
-                    backgroundImage: `url(${thumbnailImage})`,
-                    backgroundSize: 'cover',
-                  }}
-                />
-              </a>
-            </Link>
-          </div>
-        )}
       </div>
       <hr />
     </>

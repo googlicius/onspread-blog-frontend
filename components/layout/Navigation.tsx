@@ -79,7 +79,7 @@ export default function Navigation(props: Props): JSX.Element {
       id="mainNav"
     >
       <div className="container d-flex justify-content-between align-items-center">
-        <Link href="/posts">
+        <Link href="/">
           <a className="navbar-brand">
             <strong>ONSPREAD</strong>
           </a>
