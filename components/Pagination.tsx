@@ -3,14 +3,14 @@ import Link from 'next/link';
 import cs from 'classnames';
 import PropTypes from 'prop-types';
 
-interface IProps {
+interface Props {
   currentPage: number;
   totalCount: number;
   listPath: string;
   perPage?: number;
 }
 
-const Pagination: FC<IProps> = ({
+const Pagination: FC<Props> = ({
   perPage = +process.env.NEXT_PUBLIC_PER_PAGE,
   currentPage,
   totalCount,
@@ -37,7 +37,7 @@ const Pagination: FC<IProps> = ({
         )}
         {pages.map((page) => (
           <li
-            className={cs({ 'page-item': true, active: page === currentPage })}
+            className={cs('page-item', { active: page === currentPage })}
             key={page}
           >
             <Link href={`${listPath}?page=${page}`}>

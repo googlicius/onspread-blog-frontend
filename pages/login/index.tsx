@@ -49,7 +49,7 @@ const Login = () => {
 
   useEffect(() => {
     if (me.value) {
-      router.push('/posts');
+      router.push('/');
     }
   }, [me]);
 

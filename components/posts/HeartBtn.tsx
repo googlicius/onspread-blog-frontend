@@ -7,12 +7,12 @@ import React, {
 import PropTypes from 'prop-types';
 import { ReactSVG } from 'react-svg';
 
-interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   count: number;
   onGiveHeart: (heart: number) => Promise<void>;
 }
 
-const HeartBtn = forwardRef<HTMLButtonElement, IProps>(
+const HeartBtn = forwardRef<HTMLButtonElement, Props>(
   ({ count, onGiveHeart, className, ...rest }, ref) => {
     const [totalHeart, setTotalHeart] = useState(0);
     const [newHeart, setNewHeart] = useState(0);

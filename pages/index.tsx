@@ -1,13 +1,14 @@
 import { Post, usePostsConnectionQuery } from '@/graphql/generated';
-import { FC } from 'react';
 import Head from 'next/head';
 import Navigation from '@/components/layout/Navigation';
 import PageHeader from '@/components/layout/PageHeader';
 import Pagination from '@/components/Pagination';
 import PostPreview from '@/components/posts/PostPreview';
 import { useRouter } from 'next/router';
+import first from 'lodash/first';
+import get from 'lodash/get';
 
-const Posts: FC = () => {
+const Home = () => {
   const router = useRouter();
   const { page = 1 } = router.query;
   const { data } = usePostsConnectionQuery({
@@ -15,6 +16,8 @@ const Posts: FC = () => {
       start: (+page - 1) * +process.env.NEXT_PUBLIC_PER_PAGE,
     },
   });
+
+  const firstPost = first<Post>(get(data, 'postsConnection.values'));
 
   return (
     <>
@@ -24,10 +27,13 @@ const Posts: FC = () => {
 
       <Navigation />
 
-      <PageHeader
-        heading="Onspread Blog"
-        subHeading="A Blog Theme by Start Bootstrap"
-      />
+      {firstPost && (
+        <PageHeader
+          heading={firstPost.title}
+          subHeading={firstPost.description}
+          imageUrl={firstPost.image?.url}
+        />
+      )}
 
       <div className="container">
         <div className="row">
@@ -35,9 +41,11 @@ const Posts: FC = () => {
             {!data?.postsConnection && <div>Loading...</div>}
             {data?.postsConnection?.values && (
               <>
-                {data.postsConnection.values.map((post) => (
-                  <PostPreview key={post.id} post={post as Post} />
-                ))}
+                {data.postsConnection.values
+                  .filter((_, index) => index !== 0)
+                  .map((post) => (
+                    <PostPreview key={post.id} post={post as Post} />
+                  ))}
 
                 <div className="clearfix" />
 
@@ -55,4 +63,4 @@ const Posts: FC = () => {
   );
 };
 
-export default Posts;
+export default Home;

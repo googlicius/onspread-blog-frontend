@@ -237,7 +237,7 @@ export type LocaleInput = {
 };
 
 
-export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnection_Id | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | CreateCategoryPayload | UpdateCategoryPayload | DeleteCategoryPayload | Comment | CommentConnection | CommentAggregator | CommentGroupBy | CommentConnectionId | CommentConnection_Id | CommentConnectionCreatedAt | CommentConnectionUpdatedAt | CommentConnectionContent | CommentConnectionUser | CommentConnectionPost | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Post | PostConnection | PostAggregator | PostAggregatorSum | PostAggregatorAvg | PostAggregatorMin | PostAggregatorMax | PostGroupBy | PostConnectionId | PostConnection_Id | PostConnectionCreatedAt | PostConnectionUpdatedAt | PostConnectionTitle | PostConnectionContent | PostConnectionImage | PostConnectionCategory | PostConnectionUser | PostConnectionSlug | PostConnectionDescription | PostConnectionHeart | PostConnectionPublished_At | CreatePostPayload | UpdatePostPayload | DeletePostPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnection_Id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnection_Id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnection_Id | UsersPermissionsUserConnectionCreatedAt | UsersPermissionsUserConnectionUpdatedAt | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
+export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnection_Id | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | CreateCategoryPayload | UpdateCategoryPayload | DeleteCategoryPayload | Comment | CommentConnection | CommentAggregator | CommentGroupBy | CommentConnectionId | CommentConnection_Id | CommentConnectionCreatedAt | CommentConnectionUpdatedAt | CommentConnectionContent | CommentConnectionUser | CommentConnectionPost | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Post | PostConnection | PostAggregator | PostAggregatorSum | PostAggregatorAvg | PostAggregatorMin | PostAggregatorMax | PostGroupBy | PostConnectionId | PostConnection_Id | PostConnectionCreatedAt | PostConnectionUpdatedAt | PostConnectionTitle | PostConnectionContent | PostConnectionImage | PostConnectionCategory | PostConnectionUser | PostConnectionSlug | PostConnectionDescription | PostConnectionHeart | PostConnectionHomeFeatured | PostConnectionPublished_At | CreatePostPayload | UpdatePostPayload | DeletePostPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnection_Id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnection_Id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnection_Id | UsersPermissionsUserConnectionCreatedAt | UsersPermissionsUserConnectionUpdatedAt | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -428,6 +428,7 @@ export type Post = {
   slug?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   heart?: Maybe<Scalars['Int']>;
+  homeFeatured?: Maybe<Scalars['Boolean']>;
   published_at?: Maybe<Scalars['DateTime']>;
 };
 
@@ -498,6 +499,12 @@ export type PostConnectionHeart = {
   connection?: Maybe<PostConnection>;
 };
 
+export type PostConnectionHomeFeatured = {
+  __typename?: 'PostConnectionHomeFeatured';
+  key?: Maybe<Scalars['Boolean']>;
+  connection?: Maybe<PostConnection>;
+};
+
 export type PostConnectionId = {
   __typename?: 'PostConnectionId';
   key?: Maybe<Scalars['ID']>;
@@ -560,6 +567,7 @@ export type PostGroupBy = {
   slug?: Maybe<Array<Maybe<PostConnectionSlug>>>;
   description?: Maybe<Array<Maybe<PostConnectionDescription>>>;
   heart?: Maybe<Array<Maybe<PostConnectionHeart>>>;
+  homeFeatured?: Maybe<Array<Maybe<PostConnectionHomeFeatured>>>;
   published_at?: Maybe<Array<Maybe<PostConnectionPublished_At>>>;
 };
 
@@ -572,6 +580,7 @@ export type PostInput = {
   slug?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   heart?: Maybe<Scalars['Int']>;
+  homeFeatured?: Maybe<Scalars['Boolean']>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -605,6 +614,8 @@ export type Query = {
   me?: Maybe<UsersPermissionsMe>;
   /** Get specific post by its slug */
   postBySlug?: Maybe<Post>;
+  /** Get featured post */
+  featuredPost?: Maybe<Post>;
 };
 
 
@@ -1358,6 +1369,7 @@ export type EditPostInput = {
   slug?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   heart?: Maybe<Scalars['Int']>;
+  homeFeatured?: Maybe<Scalars['Boolean']>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -1436,6 +1448,21 @@ export type UpdateUserPayload = {
   __typename?: 'updateUserPayload';
   user?: Maybe<UsersPermissionsUser>;
 };
+
+export type FeaturedPostQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FeaturedPostQuery = (
+  { __typename?: 'Query' }
+  & { featuredPost?: Maybe<(
+    { __typename?: 'Post' }
+    & Pick<Post, 'title' | 'description'>
+    & { image?: Maybe<(
+      { __typename?: 'UploadFile' }
+      & Pick<UploadFile, 'url'>
+    )> }
+  )> }
+);
 
 export type GiveHeartMutationVariables = Exact<{
   postId: Scalars['ID'];
@@ -1520,6 +1547,44 @@ export type PostsConnectionQuery = (
 );
 
 
+export const FeaturedPostDocument = gql`
+    query FeaturedPost {
+  featuredPost {
+    title
+    description
+    image {
+      url
+    }
+  }
+}
+    `;
+
+/**
+ * __useFeaturedPostQuery__
+ *
+ * To run a query within a React component, call `useFeaturedPostQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFeaturedPostQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFeaturedPostQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFeaturedPostQuery(baseOptions?: Apollo.QueryHookOptions<FeaturedPostQuery, FeaturedPostQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FeaturedPostQuery, FeaturedPostQueryVariables>(FeaturedPostDocument, options);
+      }
+export function useFeaturedPostLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FeaturedPostQuery, FeaturedPostQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FeaturedPostQuery, FeaturedPostQueryVariables>(FeaturedPostDocument, options);
+        }
+export type FeaturedPostQueryHookResult = ReturnType<typeof useFeaturedPostQuery>;
+export type FeaturedPostLazyQueryHookResult = ReturnType<typeof useFeaturedPostLazyQuery>;
+export type FeaturedPostQueryResult = Apollo.QueryResult<FeaturedPostQuery, FeaturedPostQueryVariables>;
 export const GiveHeartDocument = gql`
     mutation GiveHeart($postId: ID!, $heart: Int!) {
   giveHeart(postId: $postId, heart: $heart)

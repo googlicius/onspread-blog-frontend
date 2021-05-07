@@ -1,0 +1,9 @@
+query FeaturedPost {
+  featuredPost {
+    title
+    description
+    image {
+      url
+    }
+  }
+}

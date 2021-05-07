@@ -23,7 +23,7 @@ export const PageHeader: FC<Props> = ({
           <div className="col-lg-8 col-md-10 mx-auto">
             <div className="site-heading">
               <h1>{heading}</h1>
-              <span className="subheading">{subHeading}</span>
+              <h2 className="subheading">{subHeading}</h2>
             </div>
           </div>
         </div>

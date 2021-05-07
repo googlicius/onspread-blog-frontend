@@ -40,7 +40,7 @@ const PostPreview: FC<Props> = ({ post }) => {
           </div>
         )}
 
-        <div className={`post-preview`}>
+        <div className="post-preview">
           <Link href={`/posts/${post.slug}`}>
             <a>
               <h2 className="post-title">{post.title}</h2>
