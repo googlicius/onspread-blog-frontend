@@ -78,14 +78,14 @@ export default function Navigation(props: Props): JSX.Element {
       ref={navElementRef}
       id="mainNav"
     >
-      <div className="container">
+      <div className="container d-flex justify-content-between align-items-center">
         <Link href="/posts">
           <a className="navbar-brand">
             <strong>ONSPREAD</strong>
           </a>
         </Link>
 
-        <ul className="navbar-nav ml-auto">
+        <ul className="navbar-nav d-flex align-items-center mb-0">
           {props.children}
           {me.value ? (
             <>
