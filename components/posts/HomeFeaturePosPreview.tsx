@@ -23,7 +23,7 @@ const HomeFeaturePosPreview = ({ post }: Props) => {
 
               <div className="mt-5">
                 <Link href={`/posts/${post.slug}`}>
-                  <a className="btn btn-link btn-read-continue pl-0">
+                  <a className="btn btn-link btn-read-continue px-0">
                     Continue Reading
                   </a>
                 </Link>

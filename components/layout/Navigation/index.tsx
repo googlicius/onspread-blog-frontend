@@ -85,7 +85,7 @@ export default function Navigation({ isDark, children }: Props): JSX.Element {
           </a>
         </Link>
 
-        <ul className="navbar-nav d-flex align-items-center mb-0">
+        <ul className="navbar-nav d-flex flex-row">
           {children}
           {me.value ? (
             <>
@@ -103,6 +103,10 @@ export default function Navigation({ isDark, children }: Props): JSX.Element {
                   className="dropdown-menu dropdown-menu-right"
                   aria-labelledby="dropdownMenuButton"
                 >
+                  <a className="dropdown-item" href="#" onClick={handleLogOut}>
+                    Profile
+                  </a>
+
                   <a className="dropdown-item" href="#" onClick={handleLogOut}>
                     Logout
                   </a>
