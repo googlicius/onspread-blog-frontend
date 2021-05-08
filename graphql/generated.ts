@@ -1456,7 +1456,7 @@ export type FeaturedPostQuery = (
   { __typename?: 'Query' }
   & { featuredPost?: Maybe<(
     { __typename?: 'Post' }
-    & Pick<Post, 'title' | 'description'>
+    & Pick<Post, 'title' | 'slug' | 'description'>
     & { image?: Maybe<(
       { __typename?: 'UploadFile' }
       & Pick<UploadFile, 'url'>
@@ -1551,6 +1551,7 @@ export const FeaturedPostDocument = gql`
     query FeaturedPost {
   featuredPost {
     title
+    slug
     description
     image {
       url

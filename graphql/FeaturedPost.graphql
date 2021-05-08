@@ -1,6 +1,7 @@
 query FeaturedPost {
   featuredPost {
     title
+    slug
     description
     image {
       url

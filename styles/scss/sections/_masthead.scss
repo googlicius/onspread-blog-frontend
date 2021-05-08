@@ -22,7 +22,6 @@ header.masthead {
   .post-heading,
   .site-heading {
     padding: 200px 0 150px;
-    color: white;
     line-height: 1.1;
 
     @media only screen and (min-width: 768px) {
@@ -37,6 +36,7 @@ header.masthead {
     h1 {
       font-size: 50px;
       margin-top: 0;
+      color: white;
     }
 
     .subheading {
@@ -46,10 +46,15 @@ header.masthead {
       display: block;
       margin: 10px 0 0;
       font-family: $headings-font-family;
+      color: white;
 
       @media (min-width: 576px) {
         font-size: 30px;
       }
+    }
+
+    .btn-read-continue {
+      color: $white;
     }
 
     @media only screen and (min-width: 768px) {

@@ -1,12 +1,15 @@
-import { Post, usePostsConnectionQuery } from '@/graphql/generated';
+import {
+  Post,
+  useFeaturedPostQuery,
+  usePostsConnectionQuery,
+} from '@/graphql/generated';
 import Head from 'next/head';
 import Navigation from '@/components/layout/Navigation';
-import PageHeader from '@/components/layout/PageHeader';
 import Pagination from '@/components/Pagination';
 import PostPreview from '@/components/posts/PostPreview';
 import { useRouter } from 'next/router';
-import first from 'lodash/first';
 import get from 'lodash/get';
+import HomeFeaturePosPreview from '@/components/posts/HomeFeaturePosPreview';
 
 const Home = () => {
   const router = useRouter();
@@ -16,8 +19,11 @@ const Home = () => {
       start: (+page - 1) * +process.env.NEXT_PUBLIC_PER_PAGE,
     },
   });
+  const { data: featuredPostData } = useFeaturedPostQuery({
+    skip: page > 1,
+  });
 
-  const firstPost = first<Post>(get(data, 'postsConnection.values'));
+  const featuredPost = get(featuredPostData, 'featuredPost');
 
   return (
     <>
@@ -25,15 +31,9 @@ const Home = () => {
         <title>Posts</title>
       </Head>
 
-      <Navigation />
+      <Navigation isDark={!featuredPost} />
 
-      {firstPost && (
-        <PageHeader
-          heading={firstPost.title}
-          subHeading={firstPost.description}
-          imageUrl={firstPost.image?.url}
-        />
-      )}
+      {featuredPost && <HomeFeaturePosPreview post={featuredPost as Post} />}
 
       <div className="container">
         <div className="row">
@@ -41,11 +41,9 @@ const Home = () => {
             {!data?.postsConnection && <div>Loading...</div>}
             {data?.postsConnection?.values && (
               <>
-                {data.postsConnection.values
-                  .filter((_, index) => index !== 0)
-                  .map((post) => (
-                    <PostPreview key={post.id} post={post as Post} />
-                  ))}
+                {data.postsConnection.values.map((post) => (
+                  <PostPreview key={post.id} post={post as Post} />
+                ))}
 
                 <div className="clearfix" />
 
