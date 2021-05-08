@@ -9,7 +9,7 @@ interface Props {
   children?;
 }
 
-export default function Navigation(props: Props): JSX.Element {
+export default function Navigation({ isDark, children }: Props): JSX.Element {
   const navElementRef = useRef<HTMLElement>(null);
   const me = useSelector(selectMe);
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ export default function Navigation(props: Props): JSX.Element {
 
   // Handle scroll event.
   useEffect(() => {
-    if (props.isDark) {
+    if (isDark) {
       return;
     }
 
@@ -61,7 +61,7 @@ export default function Navigation(props: Props): JSX.Element {
     return function cleanUp() {
       window.removeEventListener('scroll', handleShowHideHeader);
     };
-  }, []);
+  }, [isDark]);
 
   return (
     <nav
@@ -69,10 +69,10 @@ export default function Navigation(props: Props): JSX.Element {
         'navbar',
         'navbar-expand-lg',
         {
-          'navbar-light fixed-top': !props.isDark,
+          'navbar-light fixed-top': !isDark,
         },
         {
-          'navbar-dark bg-dark': props.isDark,
+          'navbar-dark bg-dark': isDark,
         },
       )}
       ref={navElementRef}
@@ -86,7 +86,7 @@ export default function Navigation(props: Props): JSX.Element {
         </Link>
 
         <ul className="navbar-nav d-flex align-items-center mb-0">
-          {props.children}
+          {children}
           {me.value ? (
             <>
               <li className="nav-item dropdown">
