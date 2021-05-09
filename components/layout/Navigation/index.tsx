@@ -97,7 +97,7 @@ export default function Navigation(props: Props): JSX.Element {
                 <a
                   className="nav-link dropdown-toggle pr-0"
                   id="dropdownMenuButton"
-                  data-toggle="dropdown"
+                  data-bs-toggle="dropdown"
                   href="#"
                 >
                   {me.value.username}

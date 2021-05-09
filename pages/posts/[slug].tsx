@@ -1,8 +1,11 @@
 import {
   PostBySlugDocument,
   PostBySlugQuery,
+  CountPostCommentQuery,
+  useCommentsQuery,
   useGiveHeartMutation,
   usePostBySlugQuery,
+  CountPostCommentDocument,
 } from '@/graphql/generated';
 import React, { useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
@@ -17,21 +20,35 @@ import debounce from 'lodash/debounce';
 import { selectMe } from '@/redux/meProducer';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
+import { ReactSVG } from 'react-svg';
+import formatDistance from 'date-fns/formatDistance';
+import styles from './PostDetail.module.scss';
+import cs from 'classnames';
 
 interface Props {
-  data: PostBySlugQuery;
+  postData: PostBySlugQuery;
+  countCommentData: CountPostCommentQuery;
 }
 
-const PostDetail = ({ data: serverData }: Props): JSX.Element => {
+interface ServerProps {
+  props: Props;
+}
+
+const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
   const router = useRouter();
   const [totalHeart, setTotalHeart] = useState(0);
   const { slug } = router.query;
   const [giveHeartMutation] = useGiveHeartMutation();
-  const { data = serverData } = usePostBySlugQuery({
+  const { data = postData } = usePostBySlugQuery({
     variables: {
       slug: slug as string,
     },
-    skip: !!serverData,
+    skip: !!postData,
+  });
+  const { data: commentData } = useCommentsQuery({
+    variables: {
+      postId: data.postBySlug.id,
+    },
   });
   const me = useSelector(selectMe);
 
@@ -94,7 +111,70 @@ const PostDetail = ({ data: serverData }: Props): JSX.Element => {
                     count={totalHeart || null}
                     onGiveHeart={giveHeart}
                   />
-                  <ViewCommentsBtn className="pl-0" count={3} />
+                  <ViewCommentsBtn
+                    className="pl-0"
+                    count={countCommentData.countPostComment}
+                    data-bs-toggle="modal"
+                    data-bs-target="#commentModal"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="modal right fade"
+            id="commentModal"
+            role="dialog"
+            aria-labelledby="myModalLabel"
+          >
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h3>Comments ({countCommentData.countPostComment})</h3>
+                  <button
+                    type="button"
+                    className="close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <ReactSVG src="/assets/icon/close.svg" />
+                  </button>
+                </div>
+
+                <div className="modal-body">
+                  <div className="mt-3">
+                    <input
+                      placeholder="Share your thought"
+                      className="form-control"
+                    />
+
+                    <hr className="mt-5" />
+                  </div>
+
+                  {commentData?.comments &&
+                    commentData.comments.map((comment, index) => (
+                      <div key={index} className={styles.comment}>
+                        <div className={cs(styles.comment__user, 'd-flex')}>
+                          <div className={`${styles.avatar} mr-3`}></div>
+                          <div className="username">
+                            {comment.user.username}
+                            <div className="text-secondary">
+                              {formatDistance(
+                                new Date(comment.createdAt),
+                                new Date(),
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className={`${styles.comment__content} my-3`}>
+                          {comment.content}
+                        </div>
+
+                        <hr />
+                      </div>
+                    ))}
                 </div>
               </div>
             </div>
@@ -109,23 +189,25 @@ const PostDetail = ({ data: serverData }: Props): JSX.Element => {
 // Next.js will pre-render this page on each request using the data
 // returned by getServerSideProps.
 
-interface ServerProps {
-  props: {
-    data: PostBySlugQuery;
-  };
-}
-
 export async function getServerSideProps({ params }): Promise<ServerProps> {
-  const { data } = await client.query<PostBySlugQuery>({
+  const { data: postData } = await client.query<PostBySlugQuery>({
     query: PostBySlugDocument,
     variables: {
       slug: params.slug,
     },
   });
 
+  const { data: countCommentData } = await client.query<CountPostCommentQuery>({
+    query: CountPostCommentDocument,
+    variables: {
+      postId: postData.postBySlug.id,
+    },
+  });
+
   return {
     props: {
-      data,
+      postData,
+      countCommentData,
     },
   };
 }

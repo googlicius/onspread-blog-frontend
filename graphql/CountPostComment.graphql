@@ -1,0 +1,3 @@
+query CountPostComment($postId: ID!) {
+  countPostComment(postId: $postId)
+}

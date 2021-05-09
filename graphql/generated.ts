@@ -612,6 +612,8 @@ export type Query = {
   users?: Maybe<Array<Maybe<UsersPermissionsUser>>>;
   usersConnection?: Maybe<UsersPermissionsUserConnection>;
   me?: Maybe<UsersPermissionsMe>;
+  /** Count comment of its post */
+  countPostComment: Scalars['Int'];
   /** Get specific post by its slug */
   postBySlug?: Maybe<Post>;
   /** Get featured post */
@@ -748,6 +750,11 @@ export type QueryUsersConnectionArgs = {
   limit?: Maybe<Scalars['Int']>;
   start?: Maybe<Scalars['Int']>;
   where?: Maybe<Scalars['JSON']>;
+};
+
+
+export type QueryCountPostCommentArgs = {
+  postId: Scalars['ID'];
 };
 
 
@@ -1449,6 +1456,33 @@ export type UpdateUserPayload = {
   user?: Maybe<UsersPermissionsUser>;
 };
 
+export type CommentsQueryVariables = Exact<{
+  postId: Scalars['ID'];
+}>;
+
+
+export type CommentsQuery = (
+  { __typename?: 'Query' }
+  & { comments?: Maybe<Array<Maybe<(
+    { __typename?: 'Comment' }
+    & Pick<Comment, 'id' | 'content' | 'createdAt'>
+    & { user?: Maybe<(
+      { __typename?: 'UsersPermissionsUser' }
+      & Pick<UsersPermissionsUser, 'id' | 'username'>
+    )> }
+  )>>> }
+);
+
+export type CountPostCommentQueryVariables = Exact<{
+  postId: Scalars['ID'];
+}>;
+
+
+export type CountPostCommentQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'countPostComment'>
+);
+
 export type FeaturedPostQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1547,6 +1581,80 @@ export type PostsConnectionQuery = (
 );
 
 
+export const CommentsDocument = gql`
+    query Comments($postId: ID!) {
+  comments(where: {post: $postId}) {
+    id
+    content
+    createdAt
+    user {
+      id
+      username
+    }
+  }
+}
+    `;
+
+/**
+ * __useCommentsQuery__
+ *
+ * To run a query within a React component, call `useCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCommentsQuery({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function useCommentsQuery(baseOptions: Apollo.QueryHookOptions<CommentsQuery, CommentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CommentsQuery, CommentsQueryVariables>(CommentsDocument, options);
+      }
+export function useCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CommentsQuery, CommentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CommentsQuery, CommentsQueryVariables>(CommentsDocument, options);
+        }
+export type CommentsQueryHookResult = ReturnType<typeof useCommentsQuery>;
+export type CommentsLazyQueryHookResult = ReturnType<typeof useCommentsLazyQuery>;
+export type CommentsQueryResult = Apollo.QueryResult<CommentsQuery, CommentsQueryVariables>;
+export const CountPostCommentDocument = gql`
+    query CountPostComment($postId: ID!) {
+  countPostComment(postId: $postId)
+}
+    `;
+
+/**
+ * __useCountPostCommentQuery__
+ *
+ * To run a query within a React component, call `useCountPostCommentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCountPostCommentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCountPostCommentQuery({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function useCountPostCommentQuery(baseOptions: Apollo.QueryHookOptions<CountPostCommentQuery, CountPostCommentQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CountPostCommentQuery, CountPostCommentQueryVariables>(CountPostCommentDocument, options);
+      }
+export function useCountPostCommentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CountPostCommentQuery, CountPostCommentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CountPostCommentQuery, CountPostCommentQueryVariables>(CountPostCommentDocument, options);
+        }
+export type CountPostCommentQueryHookResult = ReturnType<typeof useCountPostCommentQuery>;
+export type CountPostCommentLazyQueryHookResult = ReturnType<typeof useCountPostCommentLazyQuery>;
+export type CountPostCommentQueryResult = Apollo.QueryResult<CountPostCommentQuery, CountPostCommentQueryVariables>;
 export const FeaturedPostDocument = gql`
     query FeaturedPost {
   featuredPost {

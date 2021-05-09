@@ -1,0 +1,11 @@
+query Comments($postId: ID!) {
+  comments(where: { post: $postId }) {
+    id
+    content
+    createdAt
+    user {
+      id
+      username
+    }
+  }
+}
