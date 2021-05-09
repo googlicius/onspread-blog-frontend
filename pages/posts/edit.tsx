@@ -8,7 +8,7 @@ const PostEdit = () => {
         <title>Post Edit</title>
       </Head>
 
-      <Navigation isDark={true} />
+      <Navigation isTransparentBg={false} />
 
       <div className="container">
         <div className="row">
