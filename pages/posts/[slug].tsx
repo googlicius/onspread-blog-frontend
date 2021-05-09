@@ -37,7 +37,6 @@ interface ServerProps {
 const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
   const router = useRouter();
   const [totalHeart, setTotalHeart] = useState(0);
-  const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
   const { slug } = router.query;
   const [giveHeartMutation] = useGiveHeartMutation();
   const { data = postData } = usePostBySlugQuery({
@@ -52,6 +51,8 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
     },
   });
   const me = useSelector(selectMe);
+
+  const isCommentModalOpen = !!router.query['display-comments'];
 
   const imageUrl = useMemo(() => {
     if (!data?.postBySlug) {
@@ -73,7 +74,13 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
   }, 1000);
 
   const toggleCommentModal = () => {
-    setIsCommentModalOpen(!isCommentModalOpen);
+    if (isCommentModalOpen) {
+      router.back();
+    } else {
+      router.push(`/posts/${slug}?display-comments=1`, undefined, {
+        shallow: true,
+      });
+    }
   };
 
   useEffect(() => {
@@ -86,6 +93,11 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
     <>
       <Head>
         <title>{data?.postBySlug?.title}</title>
+        {data?.postBySlug && (
+          <>
+            <meta property="og:image" content={data.postBySlug.image?.url} />
+          </>
+        )}
       </Head>
 
       <Navigation>
