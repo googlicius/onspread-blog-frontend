@@ -89,6 +89,20 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
     }
   }, [data]);
 
+  useEffect(() => {
+    router.beforePopState((state) => {
+      state.options.scroll = false;
+      state.options.shallow = true;
+      return true;
+    });
+
+    return function cleanUp() {
+      router.beforePopState(() => {
+        return true;
+      });
+    };
+  }, []);
+
   return (
     <>
       <Head>
