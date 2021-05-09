@@ -1483,6 +1483,26 @@ export type CountPostCommentQuery = (
   & Pick<Query, 'countPostComment'>
 );
 
+export type CreateCommentMutationVariables = Exact<{
+  input?: Maybe<CreateCommentInput>;
+}>;
+
+
+export type CreateCommentMutation = (
+  { __typename?: 'Mutation' }
+  & { createComment?: Maybe<(
+    { __typename?: 'createCommentPayload' }
+    & { comment?: Maybe<(
+      { __typename?: 'Comment' }
+      & Pick<Comment, 'id' | 'content' | 'createdAt'>
+      & { user?: Maybe<(
+        { __typename?: 'UsersPermissionsUser' }
+        & Pick<UsersPermissionsUser, 'id' | 'username'>
+      )> }
+    )> }
+  )> }
+);
+
 export type FeaturedPostQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1655,6 +1675,47 @@ export function useCountPostCommentLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type CountPostCommentQueryHookResult = ReturnType<typeof useCountPostCommentQuery>;
 export type CountPostCommentLazyQueryHookResult = ReturnType<typeof useCountPostCommentLazyQuery>;
 export type CountPostCommentQueryResult = Apollo.QueryResult<CountPostCommentQuery, CountPostCommentQueryVariables>;
+export const CreateCommentDocument = gql`
+    mutation CreateComment($input: createCommentInput) {
+  createComment(input: $input) {
+    comment {
+      id
+      content
+      createdAt
+      user {
+        id
+        username
+      }
+    }
+  }
+}
+    `;
+export type CreateCommentMutationFn = Apollo.MutationFunction<CreateCommentMutation, CreateCommentMutationVariables>;
+
+/**
+ * __useCreateCommentMutation__
+ *
+ * To run a mutation, you first call `useCreateCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCommentMutation, { data, loading, error }] = useCreateCommentMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateCommentMutation(baseOptions?: Apollo.MutationHookOptions<CreateCommentMutation, CreateCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, options);
+      }
+export type CreateCommentMutationHookResult = ReturnType<typeof useCreateCommentMutation>;
+export type CreateCommentMutationResult = Apollo.MutationResult<CreateCommentMutation>;
+export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<CreateCommentMutation, CreateCommentMutationVariables>;
 export const FeaturedPostDocument = gql`
     query FeaturedPost {
   featuredPost {

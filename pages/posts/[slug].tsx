@@ -15,15 +15,15 @@ import Navigation from '@/components/layout/Navigation';
 import PageHeader from '@/components/layout/PageHeader';
 import ReactMarkdown from 'react-markdown';
 import ViewCommentsBtn from '@/components/posts/ViewCommentsBtn';
+import Comments from '@/components/posts/Comments/Comments';
 import client from '@/apollo-client';
 import debounce from 'lodash/debounce';
 import { selectMe } from '@/redux/meProducer';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { ReactSVG } from 'react-svg';
-import formatDistance from 'date-fns/formatDistance';
-import styles from './PostDetail.module.scss';
-import cs from 'classnames';
+import { Modal, ModalBody, ModalHeader } from 'reactstrap';
+import Loading from '@/components/Loading/Loading';
 
 interface Props {
   postData: PostBySlugQuery;
@@ -37,6 +37,7 @@ interface ServerProps {
 const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
   const router = useRouter();
   const [totalHeart, setTotalHeart] = useState(0);
+  const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
   const { slug } = router.query;
   const [giveHeartMutation] = useGiveHeartMutation();
   const { data = postData } = usePostBySlugQuery({
@@ -45,7 +46,7 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
     },
     skip: !!postData,
   });
-  const { data: commentData } = useCommentsQuery({
+  const { data: commentData, refetch: refetchComments } = useCommentsQuery({
     variables: {
       postId: data.postBySlug.id,
     },
@@ -71,6 +72,10 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
     setTotalHeart(heartData.giveHeart);
   }, 1000);
 
+  const toggleCommentModal = () => {
+    setIsCommentModalOpen(!isCommentModalOpen);
+  };
+
   useEffect(() => {
     if (data?.postBySlug) {
       setTotalHeart(data.postBySlug.heart);
@@ -91,7 +96,7 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
         )}
       </Navigation>
 
-      {!data?.postBySlug && <div>Loading...</div>}
+      {!data?.postBySlug && <Loading />}
 
       {data?.postBySlug && (
         <>
@@ -114,71 +119,41 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
                   <ViewCommentsBtn
                     className="pl-0"
                     count={countCommentData.countPostComment}
-                    data-bs-toggle="modal"
-                    data-bs-target="#commentModal"
+                    onClick={toggleCommentModal}
                   />
                 </div>
               </div>
             </div>
           </div>
 
-          <div
-            className="modal right fade"
-            id="commentModal"
-            role="dialog"
-            aria-labelledby="myModalLabel"
+          <Modal
+            isOpen={isCommentModalOpen}
+            modalClassName="right"
+            toggle={toggleCommentModal}
           >
-            <div className="modal-dialog" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h3>Comments ({countCommentData.countPostComment})</h3>
-                  <button
-                    type="button"
-                    className="close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <ReactSVG src="/assets/icon/close.svg" />
-                  </button>
-                </div>
+            <ModalHeader
+              tag="h3"
+              close={
+                <button
+                  type="button"
+                  className="close"
+                  onClick={toggleCommentModal}
+                >
+                  <ReactSVG src="/assets/icon/close.svg" />
+                </button>
+              }
+            >
+              Comments ({countCommentData.countPostComment})
+            </ModalHeader>
 
-                <div className="modal-body">
-                  <div className="mt-3">
-                    <input
-                      placeholder="Share your thought"
-                      className="form-control"
-                    />
-
-                    <hr className="mt-5" />
-                  </div>
-
-                  {commentData?.comments &&
-                    commentData.comments.map((comment, index) => (
-                      <div key={index} className={styles.comment}>
-                        <div className={cs(styles.comment__user, 'd-flex')}>
-                          <div className={`${styles.avatar} mr-3`}></div>
-                          <div className="username">
-                            {comment.user.username}
-                            <div className="text-secondary">
-                              {formatDistance(
-                                new Date(comment.createdAt),
-                                new Date(),
-                              )}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className={`${styles.comment__content} my-3`}>
-                          {comment.content}
-                        </div>
-
-                        <hr />
-                      </div>
-                    ))}
-                </div>
-              </div>
-            </div>
-          </div>
+            <ModalBody>
+              <Comments
+                commentData={commentData}
+                postId={postData.postBySlug.id}
+                onCommentSaved={refetchComments}
+              />
+            </ModalBody>
+          </Modal>
         </>
       )}
     </>

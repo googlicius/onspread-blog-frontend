@@ -3,6 +3,12 @@ import { clearLoggedInUser, selectMe } from '@/redux/meProducer';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import cs from 'classnames';
+import {
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  UncontrolledDropdown,
+} from 'reactstrap';
 
 interface Props {
   isTransparentBg?: boolean;
@@ -93,29 +99,24 @@ export default function Navigation(props: Props): JSX.Element {
           {children}
           {me.value ? (
             <>
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle pr-0"
-                  id="dropdownMenuButton"
-                  data-bs-toggle="dropdown"
-                  href="#"
+              <UncontrolledDropdown tag="li" className="nav-item">
+                <DropdownToggle
+                  tag="a"
+                  role="button"
+                  className="pointer nav-link pr-0"
+                  caret={true}
                 >
                   {me.value.username}
-                </a>
+                </DropdownToggle>
 
-                <div
-                  className="dropdown-menu dropdown-menu-right"
-                  aria-labelledby="dropdownMenuButton"
-                >
-                  <Link href="/me">
-                    <a className="dropdown-item">Profile</a>
-                  </Link>
+                <DropdownMenu right>
+                  <DropdownItem>
+                    <Link href="/me">Profile</Link>
+                  </DropdownItem>
 
-                  <a className="dropdown-item" href="#" onClick={handleLogOut}>
-                    Logout
-                  </a>
-                </div>
-              </li>
+                  <DropdownItem onClick={handleLogOut}>Logout</DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
             </>
           ) : (
             <li className="nav-item">

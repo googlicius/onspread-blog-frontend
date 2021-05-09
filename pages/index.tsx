@@ -10,6 +10,7 @@ import PostPreview from '@/components/posts/PostPreview';
 import { useRouter } from 'next/router';
 import HomeFeaturePosPreview from '@/components/posts/HomeFeaturePosPreview';
 import cs from 'classnames';
+import Loading from '@/components/Loading/Loading';
 
 const Home = () => {
   const router = useRouter();
@@ -42,7 +43,7 @@ const Home = () => {
       >
         <div className="row">
           <div className="col-lg-8 col-md-10 mx-auto">
-            {!data?.postsConnection && <div>Loading...</div>}
+            {!data?.postsConnection && <Loading />}
             {data?.postsConnection?.values && (
               <>
                 {data.postsConnection.values.map((post) => (
