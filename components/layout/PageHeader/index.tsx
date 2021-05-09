@@ -13,7 +13,10 @@ export const PageHeader: FC<Props> = ({
   imageUrl = '/assets/img/home-bg.jpg',
 }) => {
   return (
-    <div className="masthead" style={{ backgroundImage: `url('${imageUrl}')` }}>
+    <header
+      className="masthead"
+      style={{ backgroundImage: `url('${imageUrl}')` }}
+    >
       <div className="overlay"></div>
       <div className="container">
         <div className="row">
@@ -25,7 +28,7 @@ export const PageHeader: FC<Props> = ({
           </div>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 
