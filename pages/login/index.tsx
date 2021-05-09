@@ -26,6 +26,8 @@ const Login = () => {
   const me = useSelector(selectMe);
   const dispatch = useDispatch();
 
+  const loading = isSubmitting || me.status === 'loading';
+
   const onSubmit = async (formData: FormData) => {
     try {
       const res = await loginMutation({
@@ -59,10 +61,10 @@ const Login = () => {
         <title>Login</title>
       </Head>
 
-      <Navigation isDark={true} />
+      <Navigation isTransparentBg={false} />
 
-      <div className="container">
-        <div className="row mt-5">
+      <div className="container mt-7">
+        <div className="row">
           <div className="col-md-5 mx-auto">
             <div className="myform form ">
               <div className="logo mb-3">
@@ -128,9 +130,14 @@ const Login = () => {
                 <div className="text-center ">
                   <button
                     type="submit"
-                    disabled={isSubmitting || me.status === 'loading'}
+                    disabled={loading}
                     className=" btn btn-block mybtn btn-primary tx-tfm"
                   >
+                    {loading && (
+                      <div className="spinner-border mr-3" role="status">
+                        <span className="sr-only">Loading...</span>
+                      </div>
+                    )}
                     Login
                   </button>
                 </div>

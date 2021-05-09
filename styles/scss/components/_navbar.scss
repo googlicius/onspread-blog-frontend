@@ -1,7 +1,6 @@
 // Styling for the navbar
 #mainNav {
   border-bottom: 1px solid transparent;
-  background: transparent;
   padding-top: 10px;
   padding-bottom: 10px;
 
@@ -70,12 +69,9 @@
     -webkit-transition: -webkit-transform 0.2s;
     -moz-transition: -moz-transform 0.2s;
     transition: transform 0.2s;
-    border-bottom: 1px solid darken($white, 0.05);
     background-color: fade-out($white, 0.1);
 
     .navbar-brand {
-      color: $gray-900;
-
       &:focus,
       &:hover {
         color: $primary;
@@ -85,8 +81,6 @@
     .navbar-nav {
       > li.nav-item {
         > a {
-          color: $gray-900;
-
           &:focus,
           &:hover {
             color: $primary;
@@ -103,5 +97,9 @@
     -ms-transform: translate3d(0, 100%, 0);
     -o-transform: translate3d(0, 100%, 0);
     transform: translate3d(0, 100%, 0);
+  }
+
+  &.transparent-bg {
+    background: transparent !important;
   }
 }

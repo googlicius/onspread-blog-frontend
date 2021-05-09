@@ -5,11 +5,12 @@ import Link from 'next/link';
 import cs from 'classnames';
 
 interface Props {
-  isDark?: boolean;
+  isTransparentBg?: boolean;
   children?;
 }
 
-export default function Navigation({ isDark, children }: Props): JSX.Element {
+export default function Navigation(props: Props): JSX.Element {
+  const { isTransparentBg = true, children } = props;
   const navElementRef = useRef<HTMLElement>(null);
   const me = useSelector(selectMe);
   const dispatch = useDispatch();
@@ -21,10 +22,6 @@ export default function Navigation({ isDark, children }: Props): JSX.Element {
 
   // Handle scroll event.
   useEffect(() => {
-    if (isDark) {
-      return;
-    }
-
     let previousTop = 0;
     const headerHeight = navElementRef.current.clientHeight;
     const handleShowHideHeader = () => {
@@ -34,18 +31,22 @@ export default function Navigation({ isDark, children }: Props): JSX.Element {
 
       const currentTop = window.scrollY;
       //if scrolling up...
-      if (currentTop < previousTop) {
+      if (currentTop === 0 || currentTop < previousTop) {
         if (
           window.scrollY &&
           navElementRef.current.classList.contains('is-fixed')
         ) {
           navElementRef.current.classList.add('is-visible');
         } else {
+          // Reached the top
           navElementRef.current.classList.remove('is-visible', 'is-fixed');
+          if (isTransparentBg) {
+            navElementRef.current.classList.add('transparent-bg');
+          }
         }
       } else {
         //if scrolling down...
-        navElementRef.current.classList.remove('is-visible');
+        navElementRef.current.classList.remove('is-visible', 'transparent-bg');
         if (
           currentTop > headerHeight &&
           !navElementRef.current.classList.contains('is-fixed')
@@ -56,25 +57,23 @@ export default function Navigation({ isDark, children }: Props): JSX.Element {
       previousTop = currentTop;
     };
 
+    window.removeEventListener('scroll', handleShowHideHeader);
     window.addEventListener('scroll', handleShowHideHeader);
+
+    if (!isTransparentBg && navElementRef.current) {
+      navElementRef.current.classList.remove('transparent-bg');
+    }
 
     return function cleanUp() {
       window.removeEventListener('scroll', handleShowHideHeader);
     };
-  }, [isDark]);
+  }, [isTransparentBg]);
 
   return (
     <nav
-      className={cs(
-        'navbar',
-        'navbar-expand-lg',
-        {
-          'navbar-light fixed-top': !isDark,
-        },
-        {
-          'navbar-dark bg-dark': isDark,
-        },
-      )}
+      className={cs('navbar navbar-expand-lg navbar-dark bg-dark fixed-top', {
+        'transparent-bg': isTransparentBg,
+      })}
       ref={navElementRef}
       id="mainNav"
     >
@@ -84,8 +83,13 @@ export default function Navigation({ isDark, children }: Props): JSX.Element {
             <strong>ONSPREAD</strong>
           </a>
         </Link>
+        <div>
+          {/* <button className="btn ml-4 p-0">
+            <ReactSVG src="/assets/icon/search.svg" />
+          </button> */}
+        </div>
 
-        <ul className="navbar-nav d-flex flex-row">
+        <ul className="navbar-nav d-flex align-tems-center flex-row">
           {children}
           {me.value ? (
             <>
@@ -103,9 +107,9 @@ export default function Navigation({ isDark, children }: Props): JSX.Element {
                   className="dropdown-menu dropdown-menu-right"
                   aria-labelledby="dropdownMenuButton"
                 >
-                  <a className="dropdown-item" href="#" onClick={handleLogOut}>
-                    Profile
-                  </a>
+                  <Link href="/me">
+                    <a className="dropdown-item">Profile</a>
+                  </Link>
 
                   <a className="dropdown-item" href="#" onClick={handleLogOut}>
                     Logout

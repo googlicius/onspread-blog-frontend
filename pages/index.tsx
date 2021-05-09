@@ -8,8 +8,8 @@ import Navigation from '@/components/layout/Navigation';
 import Pagination from '@/components/Pagination';
 import PostPreview from '@/components/posts/PostPreview';
 import { useRouter } from 'next/router';
-import get from 'lodash/get';
 import HomeFeaturePosPreview from '@/components/posts/HomeFeaturePosPreview';
+import cs from 'classnames';
 
 const Home = () => {
   const router = useRouter();
@@ -23,7 +23,7 @@ const Home = () => {
     skip: page > 1,
   });
 
-  const featuredPost = get(featuredPostData, 'featuredPost');
+  const featuredPost = featuredPostData?.featuredPost;
 
   return (
     <>
@@ -31,11 +31,15 @@ const Home = () => {
         <title>Posts</title>
       </Head>
 
-      <Navigation isDark={!featuredPost} />
+      <Navigation isTransparentBg={!!featuredPost} />
 
       {featuredPost && <HomeFeaturePosPreview post={featuredPost as Post} />}
 
-      <div className="container">
+      <div
+        className={cs('container', {
+          'mt-7': page > 1,
+        })}
+      >
         <div className="row">
           <div className="col-lg-8 col-md-10 mx-auto">
             {!data?.postsConnection && <div>Loading...</div>}
