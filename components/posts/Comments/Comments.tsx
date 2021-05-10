@@ -75,7 +75,12 @@ const Comments = ({ commentData, postId, onCommentSaved }: Props) => {
         commentData.comments.map((comment, index) => (
           <div key={index} className={styles.comment}>
             <div className={cs(styles.comment__user, 'd-flex')}>
-              <div className={`${styles.avatar} mr-3`}></div>
+              <div className={`${styles.avatar} mr-3`}>
+                <img
+                  src={comment.user.avatar?.url}
+                  alt={comment.user.avatar?.alternativeText}
+                />
+              </div>
               <div className="username">
                 {comment.user.username}
                 <div className="text-secondary">
