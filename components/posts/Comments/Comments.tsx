@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useCreateCommentMutation } from '@/graphql/generated';
 import { useSelector } from 'react-redux';
 import { selectMe } from '@/redux/meProducer';
+import get from 'lodash/get';
 
 interface Props {
   commentData: CommentsQuery;
@@ -77,8 +78,8 @@ const Comments = ({ commentData, postId, onCommentSaved }: Props) => {
             <div className={cs(styles.comment__user, 'd-flex')}>
               <div className={`${styles.avatar} mr-3`}>
                 <img
-                  src={comment.user.avatar?.url}
-                  alt={comment.user.avatar?.alternativeText}
+                  src={get(comment, 'user.avatar.formats.thumbnail.url')}
+                  alt={get(comment, 'user.avatar.alternativeText')}
                 />
               </div>
               <div className="username">

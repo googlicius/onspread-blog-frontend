@@ -8,6 +8,7 @@ query Comments($postId: ID!) {
       username
       avatar {
         url
+        formats
         alternativeText
       }
     }

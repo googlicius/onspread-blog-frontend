@@ -1481,7 +1481,7 @@ export type CommentsQuery = (
       & Pick<UsersPermissionsUser, 'id' | 'username'>
       & { avatar?: Maybe<(
         { __typename?: 'UploadFile' }
-        & Pick<UploadFile, 'url' | 'alternativeText'>
+        & Pick<UploadFile, 'url' | 'formats' | 'alternativeText'>
       )> }
     )> }
   )>>> }
@@ -1626,6 +1626,7 @@ export const CommentsDocument = gql`
       username
       avatar {
         url
+        formats
         alternativeText
       }
     }
