@@ -8,4 +8,7 @@ module.exports = {
       },
     ];
   },
+  sassOptions: {
+    prependData: `@use 'styles/scss/variables' as *;`,
+  },
 };

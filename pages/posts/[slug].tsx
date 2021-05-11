@@ -2,7 +2,6 @@ import {
   PostBySlugDocument,
   PostBySlugQuery,
   CountPostCommentQuery,
-  useCommentsQuery,
   useGiveHeartMutation,
   usePostBySlugQuery,
   CountPostCommentDocument,
@@ -45,11 +44,7 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
     },
     skip: !!postData,
   });
-  const { data: commentData, refetch: refetchComments } = useCommentsQuery({
-    variables: {
-      postId: data.postBySlug.id,
-    },
-  });
+
   const me = useSelector(selectMe);
 
   const isCommentModalOpen = !!router.query['display-comments'];
@@ -173,11 +168,7 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
             </ModalHeader>
 
             <ModalBody>
-              <Comments
-                commentData={commentData}
-                postId={postData.postBySlug.id}
-                onCommentSaved={refetchComments}
-              />
+              <Comments postId={postData.postBySlug.id} />
             </ModalBody>
           </Modal>
         </>

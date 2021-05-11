@@ -1,4 +1,4 @@
-import { CommentsQuery } from '@/graphql/generated';
+import { useCommentsQuery } from '@/graphql/generated';
 import formatDistance from 'date-fns/formatDistance';
 import cs from 'classnames';
 import styles from './Comments.module.scss';
@@ -9,16 +9,14 @@ import { selectMe } from '@/redux/meProducer';
 import get from 'lodash/get';
 
 interface Props {
-  commentData: CommentsQuery;
   postId: string;
-  onCommentSaved: () => void;
 }
 
 interface CommentFormData {
   content: string;
 }
 
-const Comments = ({ commentData, postId, onCommentSaved }: Props) => {
+const Comments = ({ postId }: Props) => {
   const {
     register,
     handleSubmit,
@@ -26,6 +24,12 @@ const Comments = ({ commentData, postId, onCommentSaved }: Props) => {
     formState: { errors, isSubmitting },
   } = useForm<CommentFormData>();
   const me = useSelector(selectMe);
+
+  const { data, refetch } = useCommentsQuery({
+    variables: {
+      postId,
+    },
+  });
 
   const [createCommentMutation] = useCreateCommentMutation();
 
@@ -47,7 +51,7 @@ const Comments = ({ commentData, postId, onCommentSaved }: Props) => {
     });
 
     reset();
-    onCommentSaved();
+    refetch();
   };
 
   return (
@@ -72,8 +76,8 @@ const Comments = ({ commentData, postId, onCommentSaved }: Props) => {
         <hr className="mt-5" />
       </div>
 
-      {commentData?.comments &&
-        commentData.comments.map((comment, index) => (
+      {data?.comments && data?.comments.length > 0 ? (
+        data.comments.map((comment, index) => (
           <div key={index} className={styles.comment}>
             <div className={cs(styles.comment__user, 'd-flex')}>
               <div className={`${styles.avatar} mr-3`}>
@@ -96,7 +100,10 @@ const Comments = ({ commentData, postId, onCommentSaved }: Props) => {
 
             <hr />
           </div>
-        ))}
+        ))
+      ) : (
+        <i className={styles.comment__empty}>There is no comment yet</i>
+      )}
     </>
   );
 };
