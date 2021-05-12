@@ -130,15 +130,14 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
           <div className="container">
             <div className="row">
               <div className="col-lg-8 col-md-10 mx-auto">
-                {data.postBySlug.contentType ===
-                Enum_Post_Contenttype.Markdown ? (
-                  <ReactMarkdown>{data.postBySlug.content}</ReactMarkdown>
-                ) : (
+                {data.postBySlug.contentType === Enum_Post_Contenttype.Html ? (
                   <div
                     dangerouslySetInnerHTML={{
                       __html: data.postBySlug.content,
                     }}
                   />
+                ) : (
+                  <ReactMarkdown>{data.postBySlug.content}</ReactMarkdown>
                 )}
 
                 <div className="mt-3 d-flex flex-item-center">
