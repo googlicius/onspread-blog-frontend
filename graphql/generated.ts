@@ -188,6 +188,11 @@ export type CommentInput = {
 
 
 
+export enum Enum_Post_Contenttype {
+  Markdown = 'Markdown',
+  Html = 'Html'
+}
+
 export type FileInfoInput = {
   name?: Maybe<Scalars['String']>;
   alternativeText?: Maybe<Scalars['String']>;
@@ -237,7 +242,7 @@ export type LocaleInput = {
 };
 
 
-export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnection_Id | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | CreateCategoryPayload | UpdateCategoryPayload | DeleteCategoryPayload | Comment | CommentConnection | CommentAggregator | CommentGroupBy | CommentConnectionId | CommentConnection_Id | CommentConnectionCreatedAt | CommentConnectionUpdatedAt | CommentConnectionContent | CommentConnectionUser | CommentConnectionPost | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Post | PostConnection | PostAggregator | PostAggregatorSum | PostAggregatorAvg | PostAggregatorMin | PostAggregatorMax | PostGroupBy | PostConnectionId | PostConnection_Id | PostConnectionCreatedAt | PostConnectionUpdatedAt | PostConnectionTitle | PostConnectionContent | PostConnectionImage | PostConnectionCategory | PostConnectionUser | PostConnectionSlug | PostConnectionDescription | PostConnectionHeart | PostConnectionHomeFeatured | PostConnectionPublished_At | CreatePostPayload | UpdatePostPayload | DeletePostPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnection_Id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnection_Id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnection_Id | UsersPermissionsUserConnectionCreatedAt | UsersPermissionsUserConnectionUpdatedAt | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionAvatar | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
+export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnection_Id | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | CreateCategoryPayload | UpdateCategoryPayload | DeleteCategoryPayload | Comment | CommentConnection | CommentAggregator | CommentGroupBy | CommentConnectionId | CommentConnection_Id | CommentConnectionCreatedAt | CommentConnectionUpdatedAt | CommentConnectionContent | CommentConnectionUser | CommentConnectionPost | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Post | PostConnection | PostAggregator | PostAggregatorSum | PostAggregatorAvg | PostAggregatorMin | PostAggregatorMax | PostGroupBy | PostConnectionId | PostConnection_Id | PostConnectionCreatedAt | PostConnectionUpdatedAt | PostConnectionTitle | PostConnectionContent | PostConnectionImage | PostConnectionCategory | PostConnectionUser | PostConnectionSlug | PostConnectionDescription | PostConnectionHeart | PostConnectionHomeFeatured | PostConnectionContentType | PostConnectionPublished_At | CreatePostPayload | UpdatePostPayload | DeletePostPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnection_Id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnection_Id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnection_Id | UsersPermissionsUserConnectionCreatedAt | UsersPermissionsUserConnectionUpdatedAt | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionAvatar | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -429,6 +434,7 @@ export type Post = {
   description?: Maybe<Scalars['String']>;
   heart?: Maybe<Scalars['Int']>;
   homeFeatured?: Maybe<Scalars['Boolean']>;
+  contentType?: Maybe<Enum_Post_Contenttype>;
   published_at?: Maybe<Scalars['DateTime']>;
 };
 
@@ -477,6 +483,12 @@ export type PostConnectionCategory = {
 
 export type PostConnectionContent = {
   __typename?: 'PostConnectionContent';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<PostConnection>;
+};
+
+export type PostConnectionContentType = {
+  __typename?: 'PostConnectionContentType';
   key?: Maybe<Scalars['String']>;
   connection?: Maybe<PostConnection>;
 };
@@ -568,6 +580,7 @@ export type PostGroupBy = {
   description?: Maybe<Array<Maybe<PostConnectionDescription>>>;
   heart?: Maybe<Array<Maybe<PostConnectionHeart>>>;
   homeFeatured?: Maybe<Array<Maybe<PostConnectionHomeFeatured>>>;
+  contentType?: Maybe<Array<Maybe<PostConnectionContentType>>>;
   published_at?: Maybe<Array<Maybe<PostConnectionPublished_At>>>;
 };
 
@@ -581,6 +594,7 @@ export type PostInput = {
   description?: Maybe<Scalars['String']>;
   heart?: Maybe<Scalars['Int']>;
   homeFeatured?: Maybe<Scalars['Boolean']>;
+  contentType?: Maybe<Enum_Post_Contenttype>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -1386,6 +1400,7 @@ export type EditPostInput = {
   description?: Maybe<Scalars['String']>;
   heart?: Maybe<Scalars['Int']>;
   homeFeatured?: Maybe<Scalars['Boolean']>;
+  contentType?: Maybe<Enum_Post_Contenttype>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -1576,7 +1591,7 @@ export type PostBySlugQuery = (
   { __typename?: 'Query' }
   & { postBySlug?: Maybe<(
     { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'title' | 'description' | 'content' | 'heart'>
+    & Pick<Post, 'id' | 'title' | 'description' | 'content' | 'contentType' | 'heart'>
     & { image?: Maybe<(
       { __typename?: 'UploadFile' }
       & Pick<UploadFile, 'url' | 'provider'>
@@ -1882,6 +1897,7 @@ export const PostBySlugDocument = gql`
     title
     description
     content
+    contentType
     heart
     image {
       url

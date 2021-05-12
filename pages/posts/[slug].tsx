@@ -5,6 +5,7 @@ import {
   useGiveHeartMutation,
   usePostBySlugQuery,
   CountPostCommentDocument,
+  Enum_Post_Contenttype,
 } from '@/graphql/generated';
 import React, { useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
@@ -129,7 +130,16 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
           <div className="container">
             <div className="row">
               <div className="col-lg-8 col-md-10 mx-auto">
-                <ReactMarkdown>{data.postBySlug.content}</ReactMarkdown>
+                {data.postBySlug.contentType ===
+                Enum_Post_Contenttype.Markdown ? (
+                  <ReactMarkdown>{data.postBySlug.content}</ReactMarkdown>
+                ) : (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: data.postBySlug.content,
+                    }}
+                  />
+                )}
 
                 <div className="mt-3 d-flex flex-item-center">
                   <HeartBtn
