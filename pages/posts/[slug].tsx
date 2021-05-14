@@ -11,6 +11,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import HeartBtn from '@/components/posts/HeartBtn';
 import Link from 'next/link';
+import { GetServerSideProps } from 'next';
 import Navigation from '@/components/layout/Navigation';
 import PageHeader from '@/components/layout/PageHeader';
 import ReactMarkdown from 'react-markdown';
@@ -28,10 +29,6 @@ import Loading from '@/components/Loading/Loading';
 interface Props {
   postData: PostBySlugQuery;
   countCommentData: CountPostCommentQuery;
-}
-
-interface ServerProps {
-  props: Props;
 }
 
 const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
@@ -99,6 +96,12 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
     };
   }, []);
 
+  useEffect(() => {
+    document.querySelectorAll('oembed[url]').forEach((element) => {
+      iframely.load(element, element.attributes['url'].value);
+    });
+  }, [data]);
+
   return (
     <>
       <Head>
@@ -113,7 +116,11 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
       <Navigation>
         {me.value?.id === data.postBySlug?.user?.id && (
           <li className="nav-item mr-3 d-flex align-items-center">
-            <Link href={`/posts/edit?slug=${slug}`}>Edit</Link>
+            <Link
+              href={`/posts/edit?slug=${encodeURIComponent(slug as string)}`}
+            >
+              Edit
+            </Link>
           </li>
         )}
       </Navigation>
@@ -190,7 +197,9 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
 // Next.js will pre-render this page on each request using the data
 // returned by getServerSideProps.
 
-export async function getServerSideProps({ params }): Promise<ServerProps> {
+export const getServerSideProps: GetServerSideProps<Props> = async ({
+  params,
+}) => {
   const { data: postData } = await client.query<PostBySlugQuery>({
     query: PostBySlugDocument,
     variables: {
@@ -211,6 +220,6 @@ export async function getServerSideProps({ params }): Promise<ServerProps> {
       countCommentData,
     },
   };
-}
+};
 
 export default PostDetail;

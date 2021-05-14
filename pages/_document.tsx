@@ -15,6 +15,10 @@ class MyDocument extends Document {
           <Main />
           <NextScript />
           <Footer />
+          <script
+            src={`//cdn.iframe.ly/embed.js?api_key=${process.env.NEXT_PUBLIC_IFRAMELY_API_KEY}`}
+            async
+          ></script>
         </body>
       </Html>
     );

@@ -22,7 +22,7 @@ const HomeFeaturePosPreview = ({ post }: Props) => {
               <h2 className="subheading">{post.description}</h2>
 
               <div className="mt-5">
-                <Link href={`/posts/${post.slug}`}>
+                <Link href={`/posts/${encodeURIComponent(post.slug)}`}>
                   <a className="btn btn-link btn-read-continue px-0">
                     Continue Reading
                   </a>

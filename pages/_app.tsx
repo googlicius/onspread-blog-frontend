@@ -9,16 +9,21 @@ import store from '@/redux/store';
 import 'nprogress/nprogress.css';
 import '@/styles/scss/styles.scss';
 
-NProgress.configure({
-  minimum: 0.3,
-  easing: 'ease',
-  speed: 800,
-  showSpinner: false,
-});
+let progressBarTimeout = null;
 
-Router.events.on('routeChangeStart', () => NProgress.start());
-Router.events.on('routeChangeComplete', () => NProgress.done());
-Router.events.on('routeChangeError', () => NProgress.done());
+const startProgressBar = () => {
+  clearTimeout(progressBarTimeout);
+  progressBarTimeout = setTimeout(NProgress.start, 200);
+};
+
+const stopProgressBar = () => {
+  clearTimeout(progressBarTimeout);
+  NProgress.done();
+};
+
+Router.events.on('routeChangeStart', startProgressBar);
+Router.events.on('routeChangeComplete', stopProgressBar);
+Router.events.on('routeChangeError', stopProgressBar);
 
 const InitApp: FC = ({ children }) => {
   const dispatch = useDispatch();

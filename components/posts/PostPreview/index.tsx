@@ -41,7 +41,7 @@ const PostPreview: FC<Props> = ({ post }) => {
         )}
 
         <div className="post-preview">
-          <Link href={`/posts/${post.slug}`}>
+          <Link href={`/posts/${encodeURIComponent(post.slug)}`}>
             <a>
               <h2 className="post-title">{post.title}</h2>
               <h3 className="post-subtitle">{post.description}</h3>

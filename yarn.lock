@@ -6483,6 +6483,11 @@ stealthy-require@^1.1.1:
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
   integrity sha1-NbCYdbT/SfJqd35QmzCQoyJr8ks=
 
+strapi-media-library@^1.0.0:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/strapi-media-library/-/strapi-media-library-1.0.2.tgz#b26db27b0163ed235d7f651e1f469f313e5ef368"
+  integrity sha512-dXvoA5k1yRv7JFbsPRrlHGAVlnmnkntSsCNloR/BtDc8/Ant29D9Wclm6EZhocQ23o1kJ2uq8BRuIKTfNjl9IA==
+
 stream-browserify@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/stream-browserify/-/stream-browserify-3.0.0.tgz#22b0a2850cdf6503e73085da1fc7b7d0c2122f2f"

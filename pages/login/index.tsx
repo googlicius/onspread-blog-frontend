@@ -8,13 +8,14 @@ import { meQueryAsync, selectMe } from '@/redux/meProducer';
 import { useLoginMutation } from '@/graphql/generated';
 import Navigation from '@/components/layout/Navigation';
 import styles from './index.module.scss';
+import { NextPage } from 'next';
 
 interface FormData {
   identifier: string;
   password: string;
 }
 
-const Login = () => {
+const Login: NextPage = () => {
   const emailInputRef = useRef<HTMLInputElement>(null);
   const {
     handleSubmit,
