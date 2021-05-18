@@ -42,12 +42,15 @@ const PostDetail = (props: Props): JSX.Element => {
   const isCommentModalOpen = !!router.query['display-comments'];
 
   const imageUrl = useMemo(() => {
-    if (!postData?.postBySlug) {
+    const theImageUrl = postData.postBySlug.image?.url;
+
+    if (!postData?.postBySlug || !theImageUrl) {
       return '';
     }
+
     return postData.postBySlug.image?.provider === 'local'
-      ? `${process.env.NEXT_PUBLIC_API_ENDPOINT}${postData.postBySlug.image?.url}`
-      : postData.postBySlug.image?.url;
+      ? `${process.env.NEXT_PUBLIC_API_ENDPOINT}${theImageUrl}`
+      : theImageUrl;
   }, [postData]);
 
   const giveHeart = debounce(async (heart: number) => {

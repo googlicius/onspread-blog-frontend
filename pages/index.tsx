@@ -1,29 +1,29 @@
-import {
-  Post,
-  useFeaturedPostQuery,
-  usePostsConnectionQuery,
-} from '@/graphql/generated';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { NextPageContext } from 'next';
+import cs from 'classnames';
+import {
+  FeaturedPostDocument,
+  FeaturedPostQuery,
+  Post,
+  PostsConnectionDocument,
+  PostsConnectionQuery,
+} from '@/graphql/generated';
 import Navigation from '@/components/layout/Navigation';
 import Pagination from '@/components/Pagination';
 import PostPreview from '@/components/posts/PostPreview';
-import { useRouter } from 'next/router';
 import HomeFeaturePosPreview from '@/components/posts/HomeFeaturePosPreview';
-import cs from 'classnames';
 import Loading from '@/components/Loading/Loading';
+import client from '@/apollo-client';
 
-const Home = () => {
+interface Props {
+  postsConnectionData: PostsConnectionQuery;
+  featuredPostData?: FeaturedPostQuery;
+}
+
+const Home = ({ postsConnectionData, featuredPostData }: Props) => {
   const router = useRouter();
   const { page = 1 } = router.query;
-  const { data } = usePostsConnectionQuery({
-    variables: {
-      start: (+page - 1) * +process.env.NEXT_PUBLIC_PER_PAGE,
-    },
-  });
-  const { data: featuredPostData } = useFeaturedPostQuery({
-    skip: page > 1,
-  });
-
   const featuredPost = featuredPostData?.featuredPost;
 
   return (
@@ -43,10 +43,10 @@ const Home = () => {
       >
         <div className="row">
           <div className="col-lg-8 col-md-10 mx-auto">
-            {!data?.postsConnection && <Loading />}
-            {data?.postsConnection?.values && (
+            {!postsConnectionData?.postsConnection && <Loading />}
+            {postsConnectionData?.postsConnection?.values && (
               <>
-                {data.postsConnection.values.map((post) => (
+                {postsConnectionData.postsConnection.values.map((post) => (
                   <PostPreview key={post.id} post={post as Post} />
                 ))}
 
@@ -54,7 +54,9 @@ const Home = () => {
 
                 <Pagination
                   currentPage={+page}
-                  totalCount={data.postsConnection.aggregate.totalCount}
+                  totalCount={
+                    postsConnectionData.postsConnection.aggregate.totalCount
+                  }
                   listPath={router.pathname}
                 />
               </>
@@ -64,6 +66,42 @@ const Home = () => {
       </div>
     </>
   );
+};
+
+// `getInitialProps` enables server-side rendering in a page and allows you
+// to do initial data population, it means sending the page with the data
+// already populated from the server. This is especially useful for SEO.
+
+Home.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
+  const { query } = ctx;
+  const page = query.page || 1;
+  const promises = [];
+
+  promises.push(
+    client.query<PostsConnectionQuery>({
+      query: PostsConnectionDocument,
+      variables: {
+        start: (+page - 1) * +process.env.NEXT_PUBLIC_PER_PAGE,
+      },
+    }),
+  );
+
+  if (+page === 1) {
+    promises.push(
+      client.query<FeaturedPostQuery>({
+        query: FeaturedPostDocument,
+      }),
+    );
+  }
+
+  const [postsConnectionResult, featuredPostResult] = await Promise.all(
+    promises,
+  );
+
+  return {
+    postsConnectionData: postsConnectionResult.data,
+    featuredPostData: featuredPostResult?.data,
+  };
 };
 
 export default Home;
