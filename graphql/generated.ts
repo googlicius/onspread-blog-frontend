@@ -1594,7 +1594,7 @@ export type PostBySlugQuery = (
     & Pick<Post, 'id' | 'title' | 'description' | 'content' | 'contentType' | 'heart'>
     & { image?: Maybe<(
       { __typename?: 'UploadFile' }
-      & Pick<UploadFile, 'url' | 'provider'>
+      & Pick<UploadFile, 'url' | 'provider' | 'formats'>
     )>, user?: Maybe<(
       { __typename?: 'UsersPermissionsUser' }
       & Pick<UsersPermissionsUser, 'id' | 'username'>
@@ -1620,7 +1620,7 @@ export type PostsConnectionQuery = (
         & Pick<UsersPermissionsUser, 'username'>
       )>, image?: Maybe<(
         { __typename?: 'UploadFile' }
-        & Pick<UploadFile, 'url' | 'formats'>
+        & Pick<UploadFile, 'url' | 'provider' | 'formats'>
       )> }
     )>>>, aggregate?: Maybe<(
       { __typename?: 'PostAggregator' }
@@ -1902,6 +1902,7 @@ export const PostBySlugDocument = gql`
     image {
       url
       provider
+      formats
     }
     user {
       id
@@ -1953,6 +1954,7 @@ export const PostsConnectionDocument = gql`
       }
       image {
         url
+        provider
         formats
       }
     }

@@ -12,6 +12,7 @@ query PostsConnection($sort: String = "published_at:desc", $start: Int) {
       }
       image {
         url
+        provider
         formats
       }
     }

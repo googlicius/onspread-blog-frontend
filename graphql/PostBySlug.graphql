@@ -9,6 +9,7 @@ query PostBySlug($slug: String!) {
     image {
       url
       provider
+      formats
     }
     user {
       id

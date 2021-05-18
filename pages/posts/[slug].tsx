@@ -3,7 +3,6 @@ import {
   PostBySlugQuery,
   CountPostCommentQuery,
   useGiveHeartMutation,
-  usePostBySlugQuery,
   CountPostCommentDocument,
   Enum_Post_Contenttype,
 } from '@/graphql/generated';
@@ -11,7 +10,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import HeartBtn from '@/components/posts/HeartBtn';
 import Link from 'next/link';
-import { GetServerSideProps } from 'next';
+import { NextPageContext } from 'next';
 import Navigation from '@/components/layout/Navigation';
 import PageHeader from '@/components/layout/PageHeader';
 import ReactMarkdown from 'react-markdown';
@@ -31,35 +30,30 @@ interface Props {
   countCommentData: CountPostCommentQuery;
 }
 
-const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
+const PostDetail = (props: Props): JSX.Element => {
+  const { postData, countCommentData } = props;
   const router = useRouter();
   const [totalHeart, setTotalHeart] = useState(0);
   const { slug } = router.query;
   const [giveHeartMutation] = useGiveHeartMutation();
-  const { data = postData } = usePostBySlugQuery({
-    variables: {
-      slug: slug as string,
-    },
-    skip: !!postData,
-  });
 
   const me = useSelector(selectMe);
 
   const isCommentModalOpen = !!router.query['display-comments'];
 
   const imageUrl = useMemo(() => {
-    if (!data?.postBySlug) {
+    if (!postData?.postBySlug) {
       return '';
     }
-    return data.postBySlug.image?.provider === 'local'
-      ? `${process.env.NEXT_PUBLIC_API_ENDPOINT}${data.postBySlug.image?.url}`
-      : data.postBySlug.image?.url;
-  }, [data]);
+    return postData.postBySlug.image?.provider === 'local'
+      ? `${process.env.NEXT_PUBLIC_API_ENDPOINT}${postData.postBySlug.image?.url}`
+      : postData.postBySlug.image?.url;
+  }, [postData]);
 
   const giveHeart = debounce(async (heart: number) => {
     const { data: heartData } = await giveHeartMutation({
       variables: {
-        postId: data.postBySlug.id,
+        postId: postData.postBySlug.id,
         heart,
       },
     });
@@ -77,10 +71,10 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
   };
 
   useEffect(() => {
-    if (data?.postBySlug) {
-      setTotalHeart(data.postBySlug.heart);
+    if (postData?.postBySlug) {
+      setTotalHeart(postData.postBySlug.heart);
     }
-  }, [data]);
+  }, [postData]);
 
   useEffect(() => {
     router.beforePopState((state) => {
@@ -96,25 +90,30 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
     };
   }, []);
 
-  useEffect(() => {
-    document.querySelectorAll('oembed[url]').forEach((element) => {
-      iframely.load(element, element.attributes['url'].value);
-    });
-  }, [data]);
+  // useEffect(() => {
+  //   if (iframely) {
+  //     document.querySelectorAll('oembed[url]').forEach((element) => {
+  //       iframely.load(element, element.attributes['url'].value);
+  //     });
+  //   }
+  // }, [data]);
 
   return (
     <>
       <Head>
-        <title>{data?.postBySlug?.title}</title>
-        {data?.postBySlug && (
+        <title>{postData?.postBySlug?.title}</title>
+        {postData?.postBySlug && (
           <>
-            <meta property="og:image" content={data.postBySlug.image?.url} />
+            <meta
+              property="og:image"
+              content={postData.postBySlug.image?.url}
+            />
           </>
         )}
       </Head>
 
       <Navigation>
-        {me.value?.id === data.postBySlug?.user?.id && (
+        {me.value?.id === postData.postBySlug?.user?.id && (
           <li className="nav-item mr-3 d-flex align-items-center">
             <Link
               href={`/posts/edit?slug=${encodeURIComponent(slug as string)}`}
@@ -125,26 +124,27 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
         )}
       </Navigation>
 
-      {!data?.postBySlug && <Loading />}
+      {!postData.postBySlug && <Loading />}
 
-      {data?.postBySlug && (
+      {postData.postBySlug && (
         <>
           <PageHeader
-            heading={data.postBySlug.title}
+            heading={postData.postBySlug.title}
             imageUrl={`${imageUrl}`}
           />
 
           <div className="container">
             <div className="row">
               <div className="col-lg-8 col-md-10 mx-auto">
-                {data.postBySlug.contentType === Enum_Post_Contenttype.Html ? (
+                {postData.postBySlug.contentType ===
+                Enum_Post_Contenttype.Html ? (
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: data.postBySlug.content,
+                      __html: postData.postBySlug.content,
                     }}
                   />
                 ) : (
-                  <ReactMarkdown>{data.postBySlug.content}</ReactMarkdown>
+                  <ReactMarkdown>{postData.postBySlug.content}</ReactMarkdown>
                 )}
 
                 <div className="mt-3 d-flex flex-item-center">
@@ -155,7 +155,7 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
                   />
                   <ViewCommentsBtn
                     className="pl-0"
-                    count={countCommentData.countPostComment}
+                    count={countCommentData?.countPostComment}
                     onClick={toggleCommentModal}
                   />
                 </div>
@@ -180,11 +180,11 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
                 </button>
               }
             >
-              Comments ({countCommentData.countPostComment})
+              Comments ({countCommentData?.countPostComment})
             </ModalHeader>
 
             <ModalBody>
-              <Comments postId={postData.postBySlug.id} />
+              <Comments postId={postData?.postBySlug.id} />
             </ModalBody>
           </Modal>
         </>
@@ -193,17 +193,12 @@ const PostDetail = ({ postData, countCommentData }: Props): JSX.Element => {
   );
 };
 
-// If you export an async function called getServerSideProps from a page,
-// Next.js will pre-render this page on each request using the data
-// returned by getServerSideProps.
-
-export const getServerSideProps: GetServerSideProps<Props> = async ({
-  params,
-}) => {
+PostDetail.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
+  const { query } = ctx;
   const { data: postData } = await client.query<PostBySlugQuery>({
     query: PostBySlugDocument,
     variables: {
-      slug: params.slug,
+      slug: query.slug,
     },
   });
 
@@ -215,10 +210,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   });
 
   return {
-    props: {
-      postData,
-      countCommentData,
-    },
+    postData,
+    countCommentData,
   };
 };
 
