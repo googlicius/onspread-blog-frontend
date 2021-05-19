@@ -75,28 +75,20 @@ const Home = ({ postsConnectionData, featuredPostData }: Props) => {
 Home.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
   const { query } = ctx;
   const page = query.page || 1;
-  const promises = [];
 
-  promises.push(
+  const [postsConnectionResult, featuredPostResult] = await Promise.all([
     client.query<PostsConnectionQuery>({
       query: PostsConnectionDocument,
       variables: {
         start: (+page - 1) * +process.env.NEXT_PUBLIC_PER_PAGE,
       },
     }),
-  );
-
-  if (+page === 1) {
-    promises.push(
-      client.query<FeaturedPostQuery>({
-        query: FeaturedPostDocument,
-      }),
-    );
-  }
-
-  const [postsConnectionResult, featuredPostResult] = await Promise.all(
-    promises,
-  );
+    client.query<FeaturedPostQuery>({
+      query: FeaturedPostDocument,
+      // We don't need to fetch featured post from page 2 afterward.
+      fetchPolicy: +page === 1 ? 'cache-first' : 'standby',
+    }),
+  ]);
 
   return {
     postsConnectionData: postsConnectionResult.data,
