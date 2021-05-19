@@ -25,6 +25,8 @@
   "plugins": ["@typescript-eslint", "react", "prettier"],
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "prettier/prettier": "error",

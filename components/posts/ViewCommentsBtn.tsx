@@ -11,7 +11,7 @@ const ViewCommentsBtn = forwardRef<HTMLButtonElement, IProps>(
       <button
         {...rest}
         ref={ref}
-        className={`btn btn-sm d-flex align-items-center ${className}`}
+        className={`btn btn-big d-flex align-items-center ${className}`}
       >
         <ReactSVG src="/assets/icon/chat_bubble_outline.svg" className="mr-2" />{' '}
         {count}

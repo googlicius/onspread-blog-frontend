@@ -1,0 +1,9 @@
+.my-editor {
+  :global {
+    .ck.ck-editor {
+      &__editable:not(.ck-focused) {
+        border-color: var(--ck-color-base-border);
+      }
+    }
+  }
+}

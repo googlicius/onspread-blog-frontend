@@ -33,7 +33,7 @@ const HeartBtn = forwardRef<HTMLButtonElement, Props>(
         {...rest}
         onClick={handleHeartClick}
         ref={ref}
-        className={`btn d-flex align-items-center ${className}`}
+        className={`btn btn-big d-flex align-items-center ${className}`}
       >
         <ReactSVG src="/assets/icon/heart-o.svg" className="mr-2" />{' '}
         {totalHeart + newHeart || null}

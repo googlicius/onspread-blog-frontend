@@ -12,11 +12,12 @@ import {
 
 interface Props {
   isTransparentBg?: boolean;
+  noHide?: boolean;
   children?;
 }
 
 export default function Navigation(props: Props): JSX.Element {
-  const { isTransparentBg = true, children } = props;
+  const { isTransparentBg = true, noHide = false, children } = props;
   const navElementRef = useRef<HTMLElement>(null);
   const me = useSelector(selectMe);
   const dispatch = useDispatch();
@@ -63,8 +64,10 @@ export default function Navigation(props: Props): JSX.Element {
       previousTop = currentTop;
     };
 
-    window.removeEventListener('scroll', handleShowHideHeader);
-    window.addEventListener('scroll', handleShowHideHeader);
+    if (!noHide) {
+      window.removeEventListener('scroll', handleShowHideHeader);
+      window.addEventListener('scroll', handleShowHideHeader);
+    }
 
     if (!isTransparentBg && navElementRef.current) {
       navElementRef.current.classList.remove('transparent-bg');
@@ -73,7 +76,7 @@ export default function Navigation(props: Props): JSX.Element {
     return function cleanUp() {
       window.removeEventListener('scroll', handleShowHideHeader);
     };
-  }, [isTransparentBg]);
+  }, [isTransparentBg, noHide]);
 
   return (
     <nav
