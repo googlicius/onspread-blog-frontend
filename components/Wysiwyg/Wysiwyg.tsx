@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import MediaLib from './MediaLib';
 import styles from './Wysiwyg.module.scss';
 
 interface Props {
@@ -41,42 +42,46 @@ const Wysiwyg = React.forwardRef<any, Props>(
     }
 
     return (
-      <div className={styles['my-editor']}>
-        <CKEditor
-          ref={ref}
-          editor={StrapiAdminEditor}
-          config={{
-            blockToolbar: [
-              'heading',
-              '|',
-              'bulletedList',
-              'numberedList',
-              '|',
-              'outdent',
-              'indent',
-              '|',
-              'blockQuote',
-              'insertImage',
-              '|',
-              'undo',
-              'redo',
-            ],
-            insertImage: {
-              openStrapiMediaLib: handleToggle,
-            },
-            placeholder,
-          }}
-          onReady={handleEditorReady}
-          onChange={(_, editor) => {
-            const newData = editor.getData();
+      <>
+        <div className={styles['my-editor']}>
+          <CKEditor
+            ref={ref}
+            editor={StrapiAdminEditor}
+            config={{
+              blockToolbar: [
+                'heading',
+                '|',
+                'bulletedList',
+                'numberedList',
+                '|',
+                'outdent',
+                'indent',
+                '|',
+                'blockQuote',
+                'insertImage',
+                '|',
+                'undo',
+                'redo',
+              ],
+              insertImage: {
+                openStrapiMediaLib: handleToggle,
+              },
+              placeholder,
+            }}
+            onReady={handleEditorReady}
+            onChange={(_, editor) => {
+              const newData = editor.getData();
 
-            if (onChange) {
-              onChange({ target: { name, value: newData } });
-            }
-          }}
-          data={value}
-        />
-      </div>
+              if (onChange) {
+                onChange({ target: { name, value: newData } });
+              }
+            }}
+            data={value}
+          />
+        </div>
+
+        <MediaLib isOpen={isOpen} toggle={handleToggle} />
+      </>
     );
   },
 );

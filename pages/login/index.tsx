@@ -128,7 +128,7 @@ const Login: NextPage = () => {
                   </p>
                 </div>
 
-                <div className="text-center ">
+                <div className="text-center">
                   <button
                     type="submit"
                     disabled={loading}

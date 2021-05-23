@@ -88,15 +88,18 @@ const Comments = ({ postId }: Props) => {
               </div>
               <div className="username">
                 {comment.user.username}
-                <div className="text-secondary">
+                <div className="text-secondary small">
                   {formatDistance(new Date(comment.createdAt), new Date())}
                 </div>
               </div>
             </div>
 
-            <div className={`${styles.comment__content} my-3`}>
-              {comment.content}
-            </div>
+            <div
+              className={`${styles.comment__content} my-3`}
+              dangerouslySetInnerHTML={{
+                __html: comment.content,
+              }}
+            ></div>
 
             <hr />
           </div>

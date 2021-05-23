@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import PropTypes from 'prop-types';
 
 interface Props {
@@ -7,11 +6,11 @@ interface Props {
   imageUrl?: string;
 }
 
-export const PageHeader: FC<Props> = ({
+export const PageHeader = ({
   heading,
   subHeading,
   imageUrl = '/assets/img/home-bg.jpg',
-}) => {
+}: Props) => {
   return (
     <header
       className="masthead"

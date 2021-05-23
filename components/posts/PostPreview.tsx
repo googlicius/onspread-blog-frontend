@@ -1,15 +1,14 @@
-import React, { FC, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import Link from 'next/link';
 import { Post } from '@/graphql/generated';
 import format from 'date-fns/format';
-import styles from './PostPreview.module.scss';
 import classNames from 'classnames';
 
 interface Props {
   post: Post;
 }
 
-const PostPreview: FC<Props> = ({ post }) => {
+const PostPreview = ({ post }: Props) => {
   const thumbnailImage = useMemo(() => {
     const path = post.image?.formats?.small?.url || post.image?.url;
     return post.image?.provider === 'local'
@@ -20,16 +19,16 @@ const PostPreview: FC<Props> = ({ post }) => {
   return (
     <>
       <div
-        className={classNames(`d-flex ${styles['post-preview-container']}`, {
+        className={classNames('d-flex post-preview-container', {
           'flex-row': !post.image,
         })}
       >
         {post.image && (
-          <div className={styles['feature-image-wrapper']}>
+          <div className="feature-image-wrapper">
             <Link href={`/posts/${post.slug}`}>
               <a>
                 <div
-                  className={styles['feature-image']}
+                  className="feature-image"
                   style={{
                     backgroundImage: `url(${thumbnailImage})`,
                     backgroundSize: 'cover',

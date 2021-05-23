@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import Link from 'next/link';
 import cs from 'classnames';
 import PropTypes from 'prop-types';
@@ -10,12 +10,12 @@ interface Props {
   perPage?: number;
 }
 
-const Pagination: FC<Props> = ({
+const Pagination = ({
   perPage = +process.env.NEXT_PUBLIC_PER_PAGE,
   currentPage,
   totalCount,
   listPath,
-}) => {
+}: Props) => {
   const pages = useMemo(() => {
     const totalPages = Math.ceil(totalCount / perPage);
     const pages: number[] = [];
