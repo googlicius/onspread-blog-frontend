@@ -1,29 +1,24 @@
-import { Enum_Post_Contenttype, PostBySlugQuery } from '@/graphql/generated';
+import { Enum_Post_Contenttype } from '@/graphql/generated';
 import { useForm } from 'react-hook-form';
 import cs from 'classnames';
-import Navigation from '../layout/Navigation';
-import Wysiwyg from '../Wysiwyg/Wysiwyg';
-
-interface FormData {
-  title: string;
-  content: string;
-  contentType: Enum_Post_Contenttype;
-}
+import Navigation from '../../layout/Navigation';
+import Wysiwyg from '../../Wysiwyg/Wysiwyg';
+import { FormData, Step1FormData } from './interface';
 
 interface Props {
-  postData: PostBySlugQuery;
-  onChange: (formData: FormData) => void;
+  formData: FormData;
+  onChange: (formData: Step1FormData) => void;
 }
 
-const EditFormStep1 = ({ postData, onChange }: Props) => {
+const EditFormStep1 = ({ formData, onChange }: Props) => {
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors, isDirty },
   } = useForm();
 
-  const onSubmit = (formData: FormData) => {
-    onChange(formData);
+  const onSubmit = (step1FormData: Step1FormData) => {
+    onChange(step1FormData);
   };
 
   return (
@@ -47,6 +42,7 @@ const EditFormStep1 = ({ postData, onChange }: Props) => {
               type="hidden"
               defaultValue={Enum_Post_Contenttype.Html}
             />
+
             <div className="form-group">
               <label>Title</label>
               <input
@@ -56,7 +52,7 @@ const EditFormStep1 = ({ postData, onChange }: Props) => {
                 className={cs('form-control', {
                   'is-invalid': !!errors.title,
                 })}
-                defaultValue={postData.postBySlug.title}
+                defaultValue={formData.title}
                 placeholder="Title"
               />
               <div className="invalid-feedback">{errors.title?.message}</div>
@@ -76,7 +72,7 @@ const EditFormStep1 = ({ postData, onChange }: Props) => {
                       message: 'Content is required.',
                     },
                   })}
-                  value={postData.postBySlug.content}
+                  value={formData.content}
                   placeholder="Type the content here"
                 />
               </div>

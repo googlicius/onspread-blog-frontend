@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import MediaLib from './MediaLib';
 import styles from './Wysiwyg.module.scss';
 
 interface Props {
@@ -79,8 +78,6 @@ const Wysiwyg = React.forwardRef<any, Props>(
             data={value}
           />
         </div>
-
-        <MediaLib isOpen={isOpen} toggle={handleToggle} />
       </>
     );
   },

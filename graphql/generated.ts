@@ -1591,7 +1591,7 @@ export type PostBySlugQuery = (
   { __typename?: 'Query' }
   & { postBySlug?: Maybe<(
     { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'title' | 'description' | 'content' | 'contentType' | 'heart'>
+    & Pick<Post, 'id' | 'slug' | 'title' | 'description' | 'content' | 'contentType' | 'heart' | 'published_at'>
     & { image?: Maybe<(
       { __typename?: 'UploadFile' }
       & Pick<UploadFile, 'url' | 'provider' | 'formats'>
@@ -1910,11 +1910,13 @@ export const PostBySlugDocument = gql`
     query PostBySlug($slug: String!) {
   postBySlug(slug: $slug) {
     id
+    slug
     title
     description
     content
     contentType
     heart
+    published_at
     image {
       url
       provider

@@ -1,11 +1,13 @@
 query PostBySlug($slug: String!) {
   postBySlug(slug: $slug) {
     id
+    slug
     title
     description
     content
     contentType
     heart
+    published_at
     image {
       url
       provider
