@@ -41,6 +41,26 @@ const PostDetail = (props: Props): JSX.Element => {
 
   const isCommentModalOpen = !!router.query['display-comments'];
 
+  useEffect(() => {
+    if (postData?.postBySlug) {
+      setTotalHeart(postData.postBySlug.heart);
+    }
+  }, [postData]);
+
+  useEffect(() => {
+    router.beforePopState((state) => {
+      state.options.scroll = false;
+      state.options.shallow = true;
+      return true;
+    });
+
+    return function cleanUp() {
+      router.beforePopState(() => {
+        return true;
+      });
+    };
+  }, []);
+
   const imageUrl = useMemo(() => {
     const theImageUrl = postData.postBySlug.image?.url;
 
@@ -72,26 +92,6 @@ const PostDetail = (props: Props): JSX.Element => {
       });
     }
   };
-
-  useEffect(() => {
-    if (postData?.postBySlug) {
-      setTotalHeart(postData.postBySlug.heart);
-    }
-  }, [postData]);
-
-  useEffect(() => {
-    router.beforePopState((state) => {
-      state.options.scroll = false;
-      state.options.shallow = true;
-      return true;
-    });
-
-    return function cleanUp() {
-      router.beforePopState(() => {
-        return true;
-      });
-    };
-  }, []);
 
   // useEffect(() => {
   //   if (iframely) {

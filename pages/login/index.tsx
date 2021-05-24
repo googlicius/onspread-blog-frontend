@@ -29,6 +29,16 @@ const Login: NextPage = () => {
 
   const loading = isSubmitting || me.status === 'loading';
 
+  useEffect(() => {
+    emailInputRef.current?.focus();
+  }, [emailInputRef]);
+
+  useEffect(() => {
+    if (me.value) {
+      router.push('/');
+    }
+  }, [me]);
+
   const onSubmit = async (formData: FormData) => {
     try {
       const res = await loginMutation({
@@ -45,16 +55,6 @@ const Login: NextPage = () => {
       // Throw error
     }
   };
-
-  useEffect(() => {
-    emailInputRef.current?.focus();
-  }, [emailInputRef]);
-
-  useEffect(() => {
-    if (me.value) {
-      router.push('/');
-    }
-  }, [me]);
 
   return (
     <>
@@ -93,7 +93,6 @@ const Login: NextPage = () => {
                     className={cs('form-control', {
                       'is-invalid': !!errors.identifier,
                     })}
-                    aria-describedby="emailHelp"
                     placeholder="Enter email"
                   />
                   <div className="invalid-feedback">
@@ -114,7 +113,6 @@ const Login: NextPage = () => {
                     className={cs('form-control', {
                       'is-invalid': !!errors.password,
                     })}
-                    aria-describedby="emailHelp"
                     placeholder="Enter Password"
                   />
                   <div className="invalid-feedback">

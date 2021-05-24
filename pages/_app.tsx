@@ -1,11 +1,13 @@
 import { FC, useEffect } from 'react';
 import NProgress from 'nprogress';
 import { Provider, useDispatch } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import Router from 'next/router';
 import { ApolloProvider } from '@apollo/client';
 import client from '@/apollo-client';
 import { meQueryAsync } from '@/redux/meProducer';
 import store from '@/redux/store';
+import 'react-toastify/dist/ReactToastify.css';
 import 'nprogress/nprogress.css';
 import '@/styles/scss/styles.scss';
 
@@ -41,6 +43,18 @@ function MyApp({ Component, pageProps }): JSX.Element {
       <Provider store={store}>
         <InitApp>
           <Component {...pageProps} />
+          <ToastContainer
+            position="top-center"
+            autoClose={3000}
+            newestOnTop={false}
+            closeOnClick
+            hideProgressBar
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            toastStyle={{ fontSize: '14px' }}
+          />
         </InitApp>
       </Provider>
     </ApolloProvider>

@@ -37,7 +37,7 @@ const Wysiwyg = React.forwardRef<any, Props>(
     }, []);
 
     if (!editorLoaded) {
-      return null;
+      return <div>Loading editor...</div>;
     }
 
     return (

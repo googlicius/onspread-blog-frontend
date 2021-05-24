@@ -1,9 +1,11 @@
 import Navigation from '@/components/layout/Navigation';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, Controller } from 'react-hook-form';
 // import cs from 'classnames';
 import { FormData, Step2FormData } from './interface';
 import EditedPostPreview from './EditedPostPreview';
 import { Post } from '@/graphql/generated';
+import Option from '@/types/Option';
+import CategorySelect from './CategorySelect';
 
 interface Props {
   post: Post;
@@ -13,10 +15,11 @@ interface Props {
 }
 
 const EditFormStep2 = ({ post, formData, onChange, goBack }: Props) => {
-  const methods = useForm();
+  const methods = useForm<Step2FormData>();
   const {
     handleSubmit,
     getValues,
+    control,
     formState: { isSubmitting },
   } = methods;
 
@@ -56,25 +59,31 @@ const EditFormStep2 = ({ post, formData, onChange, goBack }: Props) => {
 
               <EditedPostPreview post={post} formData={formData} />
 
-              {/* <div className="form-group">
-                <label>Description</label>
-                <input
-                  {...register('description', {
-                    required: {
-                      value: true,
-                      message: 'Description is required.',
-                    },
-                  })}
-                  className={cs('form-control', {
-                    'is-invalid': !!errors.description,
-                  })}
-                  defaultValue={formData.description}
-                  placeholder="Description"
-                />
-                <div className="invalid-feedback">
-                  {errors.description?.message}
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label>
+                      <strong>Category</strong>
+                    </label>
+                    <Controller
+                      name="category"
+                      control={control}
+                      defaultValue={getValues('category') || formData.category}
+                      render={({ field }) => {
+                        const { onChange, ...rest } = field;
+                        return (
+                          <CategorySelect
+                            {...rest}
+                            onChange={(data: Option) => {
+                              onChange(data.value);
+                            }}
+                          />
+                        );
+                      }}
+                    />
+                  </div>
                 </div>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>

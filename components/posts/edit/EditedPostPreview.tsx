@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from 'react';
-import Link from 'next/link';
-import { Post } from '@/graphql/generated';
-import format from 'date-fns/format';
-import classNames from 'classnames';
-import { FormData } from './interface';
 import { useFormContext } from 'react-hook-form';
+import Link from 'next/link';
+import classNames from 'classnames';
+import format from 'date-fns/format';
+import { Post } from '@/graphql/generated';
+import { FormData } from './interface';
 
 interface Props {
   post: Post;
@@ -36,17 +36,15 @@ const EditedPostPreview = ({ post, formData }: Props) => {
       >
         {post.image && (
           <div className="feature-image-wrapper">
-            <Link href={`#`}>
-              <a>
-                <div
-                  className="feature-image"
-                  style={{
-                    backgroundImage: `url(${thumbnailImage})`,
-                    backgroundSize: 'cover',
-                  }}
-                />
-              </a>
-            </Link>
+            <a>
+              <div
+                className="feature-image"
+                style={{
+                  backgroundImage: `url(${thumbnailImage})`,
+                  backgroundSize: 'cover',
+                }}
+              />
+            </a>
           </div>
         )}
 
@@ -61,6 +59,7 @@ const EditedPostPreview = ({ post, formData }: Props) => {
                 <textarea
                   {...register('description')}
                   autoFocus
+                  rows={4}
                   onBlur={() => editField(null)}
                   className="form-control"
                   defaultValue={formData.description}

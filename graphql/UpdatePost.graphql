@@ -2,6 +2,13 @@ mutation UpdatePost($input: updatePostInput) {
   updatePost(input: $input) {
     post {
       id
+      title
+      description
+      content
+      category {
+        id
+        name
+      }
     }
   }
 }

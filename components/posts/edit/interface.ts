@@ -8,6 +8,7 @@ export interface Step1FormData {
 
 export interface Step2FormData {
   description?: string;
+  category: string;
 }
 
 export interface FormData extends Step1FormData, Step2FormData {}

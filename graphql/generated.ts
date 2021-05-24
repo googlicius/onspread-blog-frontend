@@ -1481,6 +1481,26 @@ export type UpdateUserPayload = {
   user?: Maybe<UsersPermissionsUser>;
 };
 
+export type CategoriesConnectionQueryVariables = Exact<{
+  start?: Maybe<Scalars['Int']>;
+  search?: Maybe<Scalars['String']>;
+}>;
+
+
+export type CategoriesConnectionQuery = (
+  { __typename?: 'Query' }
+  & { categoriesConnection?: Maybe<(
+    { __typename?: 'CategoryConnection' }
+    & { values?: Maybe<Array<Maybe<(
+      { __typename?: 'Category' }
+      & Pick<Category, 'id' | 'name'>
+    )>>>, aggregate?: Maybe<(
+      { __typename?: 'CategoryAggregator' }
+      & Pick<CategoryAggregator, 'totalCount'>
+    )> }
+  )> }
+);
+
 export type CommentsQueryVariables = Exact<{
   postId: Scalars['ID'];
 }>;
@@ -1592,7 +1612,10 @@ export type PostBySlugQuery = (
   & { postBySlug?: Maybe<(
     { __typename?: 'Post' }
     & Pick<Post, 'id' | 'slug' | 'title' | 'description' | 'content' | 'contentType' | 'heart' | 'published_at'>
-    & { image?: Maybe<(
+    & { category?: Maybe<(
+      { __typename?: 'Category' }
+      & Pick<Category, 'id'>
+    )>, image?: Maybe<(
       { __typename?: 'UploadFile' }
       & Pick<UploadFile, 'url' | 'provider' | 'formats'>
     )>, user?: Maybe<(
@@ -1640,12 +1663,58 @@ export type UpdatePostMutation = (
     { __typename?: 'updatePostPayload' }
     & { post?: Maybe<(
       { __typename?: 'Post' }
-      & Pick<Post, 'id'>
+      & Pick<Post, 'id' | 'title' | 'description' | 'content'>
+      & { category?: Maybe<(
+        { __typename?: 'Category' }
+        & Pick<Category, 'id' | 'name'>
+      )> }
     )> }
   )> }
 );
 
 
+export const CategoriesConnectionDocument = gql`
+    query CategoriesConnection($start: Int = 0, $search: String) {
+  categoriesConnection(start: $start, where: {name_contains: $search}) {
+    values {
+      id
+      name
+    }
+    aggregate {
+      totalCount
+    }
+  }
+}
+    `;
+
+/**
+ * __useCategoriesConnectionQuery__
+ *
+ * To run a query within a React component, call `useCategoriesConnectionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCategoriesConnectionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCategoriesConnectionQuery({
+ *   variables: {
+ *      start: // value for 'start'
+ *      search: // value for 'search'
+ *   },
+ * });
+ */
+export function useCategoriesConnectionQuery(baseOptions?: Apollo.QueryHookOptions<CategoriesConnectionQuery, CategoriesConnectionQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CategoriesConnectionQuery, CategoriesConnectionQueryVariables>(CategoriesConnectionDocument, options);
+      }
+export function useCategoriesConnectionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CategoriesConnectionQuery, CategoriesConnectionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CategoriesConnectionQuery, CategoriesConnectionQueryVariables>(CategoriesConnectionDocument, options);
+        }
+export type CategoriesConnectionQueryHookResult = ReturnType<typeof useCategoriesConnectionQuery>;
+export type CategoriesConnectionLazyQueryHookResult = ReturnType<typeof useCategoriesConnectionLazyQuery>;
+export type CategoriesConnectionQueryResult = Apollo.QueryResult<CategoriesConnectionQuery, CategoriesConnectionQueryVariables>;
 export const CommentsDocument = gql`
     query Comments($postId: ID!) {
   comments(where: {post: $postId}) {
@@ -1917,6 +1986,9 @@ export const PostBySlugDocument = gql`
     contentType
     heart
     published_at
+    category {
+      id
+    }
     image {
       url
       provider
@@ -2016,6 +2088,13 @@ export const UpdatePostDocument = gql`
   updatePost(input: $input) {
     post {
       id
+      title
+      description
+      content
+      category {
+        id
+        name
+      }
     }
   }
 }

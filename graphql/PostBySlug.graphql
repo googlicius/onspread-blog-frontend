@@ -8,6 +8,9 @@ query PostBySlug($slug: String!) {
     contentType
     heart
     published_at
+    category {
+      id
+    }
     image {
       url
       provider

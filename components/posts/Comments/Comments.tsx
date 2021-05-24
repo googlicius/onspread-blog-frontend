@@ -1,12 +1,12 @@
-import { useCommentsQuery } from '@/graphql/generated';
-import formatDistance from 'date-fns/formatDistance';
-import cs from 'classnames';
-import styles from './Comments.module.scss';
 import { useForm } from 'react-hook-form';
-import { useCreateCommentMutation } from '@/graphql/generated';
 import { useSelector } from 'react-redux';
-import { selectMe } from '@/redux/meProducer';
+import cs from 'classnames';
+import formatDistance from 'date-fns/formatDistance';
 import get from 'lodash/get';
+import { useCommentsQuery } from '@/graphql/generated';
+import { useCreateCommentMutation } from '@/graphql/generated';
+import { selectMe } from '@/redux/meProducer';
+import styles from './Comments.module.scss';
 
 interface Props {
   postId: string;
@@ -16,7 +16,7 @@ interface CommentFormData {
   content: string;
 }
 
-const Comments = ({ postId }: Props) => {
+const Comments = ({ postId }: Props): JSX.Element => {
   const {
     register,
     handleSubmit,
@@ -33,7 +33,7 @@ const Comments = ({ postId }: Props) => {
 
   const [createCommentMutation] = useCreateCommentMutation();
 
-  const onSubmit = async (formData: CommentFormData) => {
+  const onSubmit = async (formData: CommentFormData): Promise<void> => {
     if (!me.value) {
       return;
     }
