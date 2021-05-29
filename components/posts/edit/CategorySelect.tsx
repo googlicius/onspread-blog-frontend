@@ -1,7 +1,7 @@
-import { useCategoriesConnectionLazyQuery } from '@/graphql/generated';
-import Option from '@/types/Option';
 import React, { useEffect, useMemo, useState } from 'react';
 import ReactSelect from 'react-select';
+import { useCategoriesConnectionLazyQuery } from '@/graphql/generated';
+import Option from '@/types/Option';
 import debounce from 'lodash/debounce';
 
 interface Props extends React.ComponentProps<typeof ReactSelect> {}
@@ -36,18 +36,16 @@ const CategorySelect = React.forwardRef<ReactSelect, Props>(
       }
 
       const newOptions: Option[] = data.categoriesConnection.values.map(
-        (category) => {
-          return {
-            label: category.name,
-            value: category.id,
-          };
-        },
+        (category) => ({
+          label: category.name,
+          value: category.id,
+        }),
       );
 
-      setOptions((prevOption) => [...prevOption, ...newOptions]);
+      setOptions((prevOptions) => [...prevOptions, ...newOptions]);
     }, [data]);
 
-    const handleInputChange = (search: string) => {
+    const handleInputChange = (search: string): void => {
       categoriesConnection({
         variables: {
           search,
@@ -55,16 +53,11 @@ const CategorySelect = React.forwardRef<ReactSelect, Props>(
       });
     };
 
-    const handleFetchMore = async () => {
+    const handleFetchMore = (): void => {
       const currentTotalFetched = options.length;
       const totalCount = data?.categoriesConnection.aggregate.totalCount;
 
-      if (
-        !loading &&
-        totalCount &&
-        currentTotalFetched < totalCount &&
-        fetchMore
-      ) {
+      if (!loading && currentTotalFetched < totalCount && fetchMore) {
         fetchMore({
           variables: {
             start: currentTotalFetched + 1,
