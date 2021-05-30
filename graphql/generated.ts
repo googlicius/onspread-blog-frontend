@@ -1674,7 +1674,7 @@ export type UpdatePostMutation = (
 
 
 export const CategoriesConnectionDocument = gql`
-    query CategoriesConnection($start: Int = 0, $search: String) {
+    query CategoriesConnection($start: Int = 0, $search: String = "") {
   categoriesConnection(start: $start, where: {name_contains: $search}) {
     values {
       id
