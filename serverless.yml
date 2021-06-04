@@ -1,0 +1,12 @@
+plugins:
+  - serverless-dotenv-plugin
+
+onspreadBlogApplication:
+  component: '@sls-next/serverless-component@1.19.0' # it is recommended you pin the latest stable version of serverless-next.js
+  inputs:
+    bucketName: ${env.SLS_AWS_BUCKET_NAME}
+    bucketRegion: ${env.SLS_AWS_BUCKET_REGION}
+    build:
+      env:
+        NEXT_PUBLIC_GRAPHQL_URL: ${env.NEXT_PUBLIC_GRAPHQL_URL}
+        NEXT_PUBLIC_API_ENDPOINT: ${env.NEXT_PUBLIC_API_ENDPOINT}

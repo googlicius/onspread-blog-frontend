@@ -1,10 +1,21 @@
-import { ApolloClient, HttpLink, InMemoryCache, concat } from '@apollo/client';
+import {
+  ApolloClient,
+  HttpLink,
+  InMemoryCache,
+  concat,
+  ApolloLink,
+} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries';
 import { sha256 } from 'crypto-hash';
 
-const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_URL });
-const linkChain = createPersistedQueryLink({ sha256 }).concat(httpLink);
+let httpLink: ApolloLink = new HttpLink({
+  uri: process.env.NEXT_PUBLIC_GRAPHQL_URL,
+});
+
+if (process.env.NEXT_PUBLIC_PERSISTED_LINK_DISABLED !== 'true') {
+  httpLink = createPersistedQueryLink({ sha256 }).concat(httpLink);
+}
 
 const authLink = setContext(async (_, { headers }) => {
   const jwtToken =
@@ -22,7 +33,7 @@ const authLink = setContext(async (_, { headers }) => {
 const cache = new InMemoryCache();
 
 const client = new ApolloClient({
-  link: concat(authLink, linkChain),
+  link: concat(authLink, httpLink),
   uri: process.env.NEXT_PUBLIC_GRAPHQL_URL,
   cache,
   connectToDevTools: process.env.NODE_ENV !== 'production',
