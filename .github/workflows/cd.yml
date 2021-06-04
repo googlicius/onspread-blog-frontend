@@ -49,5 +49,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SLS_AWS_BUCKET_NAME: ${{ secrets.SLS_AWS_BUCKET_NAME }}
           SLS_AWS_BUCKET_REGION: ${{ secrets.AWS_REGION }}
+          SLS_AWS_DISTRIBUTION_ID: ${{ secrets.SLS_AWS_DISTRIBUTION_ID }}
           NEXT_PUBLIC_GRAPHQL_URL: ${{ secrets.NEXT_PUBLIC_GRAPHQL_URL }}
           NEXT_PUBLIC_API_ENDPOINT: ${{ secrets.NEXT_PUBLIC_API_ENDPOINT }}
