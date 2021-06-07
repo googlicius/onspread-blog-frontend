@@ -40,6 +40,7 @@ export type Category = {
   _id: Scalars['ID'];
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
+  /** Name of the category */
   name: Scalars['String'];
 };
 
@@ -193,6 +194,12 @@ export enum Enum_Post_Contenttype {
   Html = 'Html'
 }
 
+export enum Enum_Post_Displaytype {
+  WithImage = 'WithImage',
+  FullscreenImage = 'FullscreenImage',
+  NoImage = 'NoImage'
+}
+
 export type FileInfoInput = {
   name?: Maybe<Scalars['String']>;
   alternativeText?: Maybe<Scalars['String']>;
@@ -242,7 +249,7 @@ export type LocaleInput = {
 };
 
 
-export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnection_Id | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | CreateCategoryPayload | UpdateCategoryPayload | DeleteCategoryPayload | Comment | CommentConnection | CommentAggregator | CommentGroupBy | CommentConnectionId | CommentConnection_Id | CommentConnectionCreatedAt | CommentConnectionUpdatedAt | CommentConnectionContent | CommentConnectionUser | CommentConnectionPost | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Post | PostConnection | PostAggregator | PostAggregatorSum | PostAggregatorAvg | PostAggregatorMin | PostAggregatorMax | PostGroupBy | PostConnectionId | PostConnection_Id | PostConnectionCreatedAt | PostConnectionUpdatedAt | PostConnectionTitle | PostConnectionContent | PostConnectionImage | PostConnectionCategory | PostConnectionUser | PostConnectionSlug | PostConnectionDescription | PostConnectionHeart | PostConnectionHomeFeatured | PostConnectionContentType | PostConnectionPublished_At | CreatePostPayload | UpdatePostPayload | DeletePostPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnection_Id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnection_Id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnection_Id | UsersPermissionsUserConnectionCreatedAt | UsersPermissionsUserConnectionUpdatedAt | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionAvatar | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
+export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnection_Id | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | CreateCategoryPayload | UpdateCategoryPayload | DeleteCategoryPayload | Comment | CommentConnection | CommentAggregator | CommentGroupBy | CommentConnectionId | CommentConnection_Id | CommentConnectionCreatedAt | CommentConnectionUpdatedAt | CommentConnectionContent | CommentConnectionUser | CommentConnectionPost | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Post | PostConnection | PostAggregator | PostAggregatorSum | PostAggregatorAvg | PostAggregatorMin | PostAggregatorMax | PostGroupBy | PostConnectionId | PostConnection_Id | PostConnectionCreatedAt | PostConnectionUpdatedAt | PostConnectionTitle | PostConnectionContent | PostConnectionImage | PostConnectionCategory | PostConnectionUser | PostConnectionSlug | PostConnectionDescription | PostConnectionHeart | PostConnectionHomeFeatured | PostConnectionContentType | PostConnectionDisplayType | PostConnectionPublished_At | CreatePostPayload | UpdatePostPayload | DeletePostPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnection_Id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnection_Id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnection_Id | UsersPermissionsUserConnectionCreatedAt | UsersPermissionsUserConnectionUpdatedAt | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionAvatar | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -435,6 +442,7 @@ export type Post = {
   heart?: Maybe<Scalars['Int']>;
   homeFeatured?: Maybe<Scalars['Boolean']>;
   contentType?: Maybe<Enum_Post_Contenttype>;
+  displayType?: Maybe<Enum_Post_Displaytype>;
   published_at?: Maybe<Scalars['DateTime']>;
 };
 
@@ -501,6 +509,12 @@ export type PostConnectionCreatedAt = {
 
 export type PostConnectionDescription = {
   __typename?: 'PostConnectionDescription';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<PostConnection>;
+};
+
+export type PostConnectionDisplayType = {
+  __typename?: 'PostConnectionDisplayType';
   key?: Maybe<Scalars['String']>;
   connection?: Maybe<PostConnection>;
 };
@@ -581,6 +595,7 @@ export type PostGroupBy = {
   heart?: Maybe<Array<Maybe<PostConnectionHeart>>>;
   homeFeatured?: Maybe<Array<Maybe<PostConnectionHomeFeatured>>>;
   contentType?: Maybe<Array<Maybe<PostConnectionContentType>>>;
+  displayType?: Maybe<Array<Maybe<PostConnectionDisplayType>>>;
   published_at?: Maybe<Array<Maybe<PostConnectionPublished_At>>>;
 };
 
@@ -595,6 +610,7 @@ export type PostInput = {
   heart?: Maybe<Scalars['Int']>;
   homeFeatured?: Maybe<Scalars['Boolean']>;
   contentType?: Maybe<Enum_Post_Contenttype>;
+  displayType?: Maybe<Enum_Post_Displaytype>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -1401,6 +1417,7 @@ export type EditPostInput = {
   heart?: Maybe<Scalars['Int']>;
   homeFeatured?: Maybe<Scalars['Boolean']>;
   contentType?: Maybe<Enum_Post_Contenttype>;
+  displayType?: Maybe<Enum_Post_Displaytype>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -1611,7 +1628,7 @@ export type PostBySlugQuery = (
   { __typename?: 'Query' }
   & { postBySlug?: Maybe<(
     { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'slug' | 'title' | 'description' | 'content' | 'contentType' | 'heart' | 'published_at'>
+    & Pick<Post, 'id' | 'slug' | 'title' | 'description' | 'content' | 'contentType' | 'displayType' | 'heart' | 'published_at'>
     & { category?: Maybe<(
       { __typename?: 'Category' }
       & Pick<Category, 'id'>
@@ -1621,6 +1638,10 @@ export type PostBySlugQuery = (
     )>, user?: Maybe<(
       { __typename?: 'UsersPermissionsUser' }
       & Pick<UsersPermissionsUser, 'id' | 'username'>
+      & { avatar?: Maybe<(
+        { __typename?: 'UploadFile' }
+        & Pick<UploadFile, 'url' | 'formats' | 'alternativeText'>
+      )> }
     )> }
   )> }
 );
@@ -1663,7 +1684,7 @@ export type UpdatePostMutation = (
     { __typename?: 'updatePostPayload' }
     & { post?: Maybe<(
       { __typename?: 'Post' }
-      & Pick<Post, 'id' | 'title' | 'description' | 'content'>
+      & Pick<Post, 'id' | 'title' | 'description' | 'content' | 'contentType' | 'displayType'>
       & { category?: Maybe<(
         { __typename?: 'Category' }
         & Pick<Category, 'id' | 'name'>
@@ -1984,6 +2005,7 @@ export const PostBySlugDocument = gql`
     description
     content
     contentType
+    displayType
     heart
     published_at
     category {
@@ -1997,6 +2019,11 @@ export const PostBySlugDocument = gql`
     user {
       id
       username
+      avatar {
+        url
+        formats
+        alternativeText
+      }
     }
   }
 }
@@ -2091,6 +2118,8 @@ export const UpdatePostDocument = gql`
       title
       description
       content
+      contentType
+      displayType
       category {
         id
         name

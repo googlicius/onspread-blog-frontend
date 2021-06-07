@@ -9,7 +9,7 @@ import {
   PostsConnectionDocument,
   PostsConnectionQuery,
 } from '@/graphql/generated';
-import Navigation from '@/components/layout/Navigation';
+import Navigation from '@/components/layout/Navigation/Navigation';
 import Pagination from '@/components/Pagination';
 import PostPreview from '@/components/posts/PostPreview';
 import HomeFeaturePosPreview from '@/components/posts/HomeFeaturePosPreview';

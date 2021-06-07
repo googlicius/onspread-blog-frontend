@@ -6,7 +6,7 @@ import Head from 'next/head';
 import cs from 'classnames';
 import { meQueryAsync, selectMe } from '@/redux/meProducer';
 import { useLoginMutation } from '@/graphql/generated';
-import Navigation from '@/components/layout/Navigation';
+import Navigation from '@/components/layout/Navigation/Navigation';
 import styles from './index.module.scss';
 import { NextPage } from 'next';
 

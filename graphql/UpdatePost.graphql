@@ -5,6 +5,8 @@ mutation UpdatePost($input: updatePostInput) {
       title
       description
       content
+      contentType
+      displayType
       category {
         id
         name

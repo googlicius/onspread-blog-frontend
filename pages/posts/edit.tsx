@@ -43,6 +43,7 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
     const {
       content,
       contentType,
+      displayType,
       title,
       description,
       category,
@@ -51,6 +52,7 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
     setPostModifiedData({
       content,
       contentType,
+      displayType,
       title,
       description,
       category: category.id,

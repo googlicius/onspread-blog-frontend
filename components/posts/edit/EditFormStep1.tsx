@@ -1,7 +1,7 @@
 import { Enum_Post_Contenttype } from '@/graphql/generated';
 import { useForm } from 'react-hook-form';
 import cs from 'classnames';
-import Navigation from '../../layout/Navigation';
+import Navigation from '../../layout/Navigation/Navigation';
 import Wysiwyg from '../../Wysiwyg/Wysiwyg';
 import { FormData, Step1FormData } from './interface';
 
@@ -27,7 +27,7 @@ const EditFormStep1 = ({ formData, onChange }: Props) => {
         <li className="nav-item mr-3 d-flex align-items-center">
           <button
             disabled={isSubmitting || !isDirty}
-            className="btn btn-success"
+            className="btn btn-success btn-sm"
           >
             Next
           </button>

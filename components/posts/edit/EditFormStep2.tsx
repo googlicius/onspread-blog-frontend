@@ -1,9 +1,10 @@
-import Navigation from '@/components/layout/Navigation';
+import Navigation from '@/components/layout/Navigation/Navigation';
 import { FormProvider, useForm, Controller } from 'react-hook-form';
+import ReactSelect from 'react-select';
 // import cs from 'classnames';
 import { FormData, Step2FormData } from './interface';
 import EditedPostPreview from './EditedPostPreview';
-import { Post } from '@/graphql/generated';
+import { Enum_Post_Displaytype, Post } from '@/graphql/generated';
 import Option from '@/types/Option';
 import CategorySelect from './CategorySelect';
 
@@ -13,6 +14,25 @@ interface Props {
   onChange: (formData: Step2FormData) => void;
   goBack: (formData: Step2FormData) => void;
 }
+
+const DisplayTypeOptions: Option[] = [
+  {
+    label: 'Select a type...',
+    value: null,
+  },
+  {
+    value: Enum_Post_Displaytype.WithImage,
+    label: 'With Image',
+  },
+  {
+    value: Enum_Post_Displaytype.FullscreenImage,
+    label: 'Fullscreen Image',
+  },
+  {
+    value: Enum_Post_Displaytype.NoImage,
+    label: 'No Image',
+  },
+];
 
 const EditFormStep2 = ({ post, formData, onChange, goBack }: Props) => {
   const methods = useForm<Step2FormData>();
@@ -38,7 +58,7 @@ const EditFormStep2 = ({ post, formData, onChange, goBack }: Props) => {
           <li className="nav-item mr-3 d-flex align-items-center">
             <button
               type="button"
-              className="btn btn-success"
+              className="btn btn-success btn-sm"
               onClick={handleGoBack}
             >
               Back
@@ -46,7 +66,7 @@ const EditFormStep2 = ({ post, formData, onChange, goBack }: Props) => {
           </li>
 
           <li className="nav-item mr-3 d-flex align-items-center">
-            <button disabled={isSubmitting} className="btn btn-success">
+            <button disabled={isSubmitting} className="btn btn-success btn-sm">
               Save
             </button>
           </li>
@@ -77,6 +97,40 @@ const EditFormStep2 = ({ post, formData, onChange, goBack }: Props) => {
                             onChange={(data: Option) => {
                               onChange(data.value);
                             }}
+                          />
+                        );
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label>
+                      <strong>Display Type</strong>
+                    </label>
+                    <Controller
+                      name="displayType"
+                      control={control}
+                      defaultValue={
+                        getValues('displayType') || formData.displayType
+                      }
+                      render={({ field }) => {
+                        const { onChange, value, ...rest } = field;
+
+                        return (
+                          <ReactSelect
+                            {...rest}
+                            value={
+                              value &&
+                              DisplayTypeOptions.find(
+                                (option) => option.value === value,
+                              )
+                            }
+                            onChange={(option) => {
+                              onChange(option.value);
+                            }}
+                            options={DisplayTypeOptions}
                           />
                         );
                       }}

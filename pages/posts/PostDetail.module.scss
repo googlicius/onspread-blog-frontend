@@ -1,9 +1,21 @@
 .post {
-  &___title {
-    font-size: 42px;
+  &__title {
+    font-size: 55px;
     font-weight: 700;
     line-height: 1.04;
-    font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  &__user-avatar {
+    width: 50px;
+    height: 50px;
+    background-color: #ccc;
+    border-radius: 50px;
+    
+    > img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50px;
+    }
   }
 
   &__content > h1 {
@@ -100,6 +112,23 @@
     pre {
       padding: 20px;
       background-color: #ccff90;
+    }
+
+    figure {
+      display: table;
+      clear: both;
+      text-align: center;
+      margin: 1em auto;
+
+      figcaption {
+        display: table-caption;
+        caption-side: bottom;
+        word-break: break-word;
+        color: #333;
+        padding: 0.6em;
+        font-size: 0.75em;
+        outline-offset: -1px;
+      }
     }
 
     // blockquote {

@@ -5,13 +5,15 @@ import {
   useGiveHeartMutation,
   CountPostCommentDocument,
   Enum_Post_Contenttype,
+  Enum_Post_Displaytype,
 } from '@/graphql/generated';
 import React, { useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
+import cs from 'classnames';
 import HeartBtn from '@/components/posts/HeartBtn';
 import Link from 'next/link';
 import { NextPageContext } from 'next';
-import Navigation from '@/components/layout/Navigation';
+import Navigation from '@/components/layout/Navigation/Navigation';
 import PageHeader from '@/components/layout/PageHeader';
 import ReactMarkdown from 'react-markdown';
 import ViewCommentsBtn from '@/components/posts/ViewCommentsBtn';
@@ -25,6 +27,8 @@ import { ReactSVG } from 'react-svg';
 import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 import Loading from '@/components/Loading/Loading';
 import styles from './PostDetail.module.scss';
+import format from 'date-fns/format';
+import get from 'lodash/get';
 
 interface Props {
   postData: PostBySlugQuery;
@@ -116,7 +120,13 @@ const PostDetail = (props: Props): JSX.Element => {
         )}
       </Head>
 
-      <Navigation>
+      <Navigation
+        isTransparentBg={
+          !!imageUrl &&
+          postData.postBySlug.displayType ===
+            Enum_Post_Displaytype.FullscreenImage
+        }
+      >
         {me.value?.id === postData.postBySlug?.user?.id && (
           <li className="nav-item mr-3 d-flex align-items-center">
             <Link
@@ -132,15 +142,61 @@ const PostDetail = (props: Props): JSX.Element => {
 
       {postData.postBySlug && (
         <>
-          <PageHeader
-            heading={postData.postBySlug.title}
-            imageUrl={`${imageUrl}`}
-          />
+          {imageUrl &&
+            postData.postBySlug.displayType ===
+              Enum_Post_Displaytype.FullscreenImage && (
+              <PageHeader
+                heading={postData.postBySlug.title}
+                imageUrl={`${imageUrl}`}
+              />
+            )}
 
           <div className="container">
             <div className="row">
               <div className="col-lg-8 col-md-10 mx-auto">
                 <div className={styles.post}>
+                  {postData.postBySlug.displayType !==
+                    Enum_Post_Displaytype.FullscreenImage && (
+                    <h1 className={cs(styles.post__title, 'mt-7', 'mb-4')}>
+                      {postData.postBySlug.title}
+                    </h1>
+                  )}
+
+                  {/* Author info and published date */}
+                  <div className="d-flex mb-4 align-items-center">
+                    <div className={`${styles['post__user-avatar']} mr-3`}>
+                      <img
+                        src={get(
+                          postData.postBySlug,
+                          'user.avatar.formats.thumbnail.url',
+                        )}
+                        alt={get(
+                          postData.postBySlug,
+                          'user.avatar.alternativeText',
+                        )}
+                      />
+                    </div>
+
+                    <strong className="mr-3">
+                      <Link href={'#'}>
+                        {postData.postBySlug.user?.username}
+                      </Link>
+                    </strong>
+
+                    <small>
+                      {format(
+                        new Date(postData.postBySlug.published_at),
+                        process.env.NEXT_PUBLIC_DATE_DISPLAY_FORMAT,
+                      )}
+                    </small>
+                  </div>
+
+                  {imageUrl &&
+                    postData.postBySlug.displayType ===
+                      Enum_Post_Displaytype.WithImage && (
+                      <img className="mb-4" src={imageUrl} />
+                    )}
+
                   {postData.postBySlug.contentType ===
                   Enum_Post_Contenttype.Html ? (
                     <div
