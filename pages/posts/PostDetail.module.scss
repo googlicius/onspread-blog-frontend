@@ -1,15 +1,129 @@
-.comment {
-  &__user {
-    font-size: 18px;
-    .avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50px;
-      background-color: #ccc;
-    }
+.post {
+  &___title {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.04;
+    font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
   }
 
-  &__content {
-    font-size: 16px;
+  &__content > h1 {
+    font-size: 42px;
+    line-height: 1.04;
+    margin-bottom: 29px;
   }
+
+  // &__content > h2 {
+  //   color: rgba(0, 0, 0, 0.54);
+  //   margin-top: -22px;
+  //   margin-bottom: 29px;
+  // }
+
+  &__content {
+    font-size: 19px;
+
+    h1,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-weight: 700;
+    }
+
+    // .article_content img {
+    //   max-width: 100%;
+    // }
+
+    ul,
+    ol {
+      padding-left: 30px;
+
+      li {
+        margin-bottom: 30px;
+      }
+    }
+
+    p {
+      margin-bottom: 29px;
+    }
+
+    .article_content li:not(:last-child) p {
+      margin-bottom: 14px;
+    }
+
+    p:first-child,
+    h1:first-child,
+    h2:first-child,
+    h3:first-child,
+    h4:first-child,
+    h5:first-child,
+    h6:first-child {
+      margin-top: 10px;
+    }
+
+    hr {
+      margin-top: 52px;
+      margin-bottom: 42px;
+      display: block;
+      border: 0;
+      text-align: center;
+      overflow: visible;
+      height: 0;
+
+      &::before {
+        --x-height-multiplier: 0.342;
+        --baseline-multiplier: 0.22;
+        font-family: medium-content-slab-serif-font, Georgia, Cambria,
+          'Times New Roman', Times, serif;
+        font-weight: 400;
+        font-style: italic;
+        font-size: 30px;
+        letter-spacing: 0.6em;
+        content: '...';
+        display: inline-block;
+        margin-left: 0.6em;
+        color: rgba(0, 0, 0, 0.68);
+        position: relative;
+        top: -30px;
+      }
+    }
+
+    span.dropcap {
+      float: left;
+      font-size: 56px;
+      line-height: 40px;
+      padding-top: 11px;
+      padding-right: 5px;
+      padding-left: 3px;
+      font-weight: 600;
+    }
+
+    pre {
+      padding: 20px;
+      background-color: #ccff90;
+    }
+
+    // blockquote {
+    //   padding: 0.5rem 1rem;
+    //   margin-bottom: 29px;
+    //   border-left: 0.25rem solid #292929;
+    //   margin-left: -1rem;
+    //   font-style: italic;
+    // }
+
+    // .article_content blockquote > p:first-child {
+    //   margin-top: 0px;
+    // }
+
+    // .article_content blockquote > p:last-child,
+    // .article_content blockquote > ol:last-child,
+    // .article_content blockquote > ul:last-child,
+    // .article_content blockquote > ol:last-child > li:last-child p,
+    // .article_content blockquote > ul:last-child > li:last-child p {
+    //   margin-bottom: 0px;
+    // }
+  }
+
+  // .article_content h2 {
+  //   font-weight: 100;
+  // }
 }

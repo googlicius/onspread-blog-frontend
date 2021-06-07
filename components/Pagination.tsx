@@ -27,7 +27,7 @@ const Pagination = ({
 
   return (
     <nav className="mt-5" aria-label="Page navigation">
-      <ul className="pagination pagination-lg justify-content-end">
+      <ul className="pagination justify-content-end">
         {currentPage > 1 && (
           <li className="page-item">
             <Link href={`${listPath}?page=${currentPage - 1}`}>

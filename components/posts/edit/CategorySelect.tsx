@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { forwardRef, useEffect, useMemo, useState } from 'react';
 import ReactSelect from 'react-select';
 import { useCategoriesConnectionLazyQuery } from '@/graphql/generated';
 import Option from '@/types/Option';
@@ -6,7 +6,7 @@ import debounce from 'lodash/debounce';
 
 interface Props extends React.ComponentProps<typeof ReactSelect> {}
 
-const CategorySelect = React.forwardRef<ReactSelect, Props>(
+const CategorySelect = forwardRef<ReactSelect, Props>(
   ({ value, ...rest }, ref) => {
     const [options, setOptions] = useState<Option[]>([]);
     const [

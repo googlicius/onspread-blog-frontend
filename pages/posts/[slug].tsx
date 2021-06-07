@@ -24,6 +24,7 @@ import { useSelector } from 'react-redux';
 import { ReactSVG } from 'react-svg';
 import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 import Loading from '@/components/Loading/Loading';
+import styles from './PostDetail.module.scss';
 
 interface Props {
   postData: PostBySlugQuery;
@@ -139,16 +140,21 @@ const PostDetail = (props: Props): JSX.Element => {
           <div className="container">
             <div className="row">
               <div className="col-lg-8 col-md-10 mx-auto">
-                {postData.postBySlug.contentType ===
-                Enum_Post_Contenttype.Html ? (
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: postData.postBySlug.content,
-                    }}
-                  />
-                ) : (
-                  <ReactMarkdown>{postData.postBySlug.content}</ReactMarkdown>
-                )}
+                <div className={styles.post}>
+                  {postData.postBySlug.contentType ===
+                  Enum_Post_Contenttype.Html ? (
+                    <div
+                      className={styles.post__content}
+                      dangerouslySetInnerHTML={{
+                        __html: postData.postBySlug.content,
+                      }}
+                    />
+                  ) : (
+                    <ReactMarkdown className={styles.post__content}>
+                      {postData.postBySlug.content}
+                    </ReactMarkdown>
+                  )}
+                </div>
 
                 <div className="mt-3 d-flex flex-item-center">
                   <HeartBtn
@@ -172,7 +178,7 @@ const PostDetail = (props: Props): JSX.Element => {
             toggle={toggleCommentModal}
           >
             <ModalHeader
-              tag="h3"
+              tag="h5"
               close={
                 <button
                   type="button"
