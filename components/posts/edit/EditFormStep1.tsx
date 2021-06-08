@@ -1,33 +1,51 @@
 import { Enum_Post_Contenttype } from '@/graphql/generated';
-import { useForm } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import cs from 'classnames';
 import Navigation from '../../layout/Navigation/Navigation';
 import Wysiwyg from '../../Wysiwyg/Wysiwyg';
-import { FormData, Step1FormData } from './interface';
+import { FormData } from './interface';
+import { useRouter } from 'next/router';
 
 interface Props {
-  formData: FormData;
-  onChange: (formData: Step1FormData) => void;
+  defaultValues: FormData;
+  onNextStep: () => void;
 }
 
-const EditFormStep1 = ({ formData, onChange }: Props) => {
+const EditFormStep1 = ({ defaultValues, onNextStep }: Props) => {
   const {
     register,
-    handleSubmit,
+    getValues,
     formState: { isSubmitting, errors, isDirty },
-  } = useForm();
+  } = useFormContext();
+  const router = useRouter();
 
-  const onSubmit = (step1FormData: Step1FormData) => {
-    onChange(step1FormData);
+  const handleCancel = () => {
+    if (isDirty) {
+      if (confirm('Do you want to cancel editing?')) {
+        router.back();
+      }
+      return;
+    }
+    router.back();
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <>
       <Navigation noHide isTransparentBg={false}>
         <li className="nav-item mr-3 d-flex align-items-center">
           <button
+            type="button"
+            className="btn btn-secondary btn-sm"
+            onClick={handleCancel}
+          >
+            Cancel
+          </button>
+
+          <button
+            type="button"
             disabled={isSubmitting || !isDirty}
             className="btn btn-success btn-sm"
+            onClick={onNextStep}
           >
             Next
           </button>
@@ -52,7 +70,7 @@ const EditFormStep1 = ({ formData, onChange }: Props) => {
                 className={cs('form-control', {
                   'is-invalid': !!errors.title,
                 })}
-                defaultValue={formData.title}
+                defaultValue={defaultValues.title}
                 placeholder="Title"
               />
               <div className="invalid-feedback">{errors.title?.message}</div>
@@ -72,7 +90,7 @@ const EditFormStep1 = ({ formData, onChange }: Props) => {
                       message: 'Content is required.',
                     },
                   })}
-                  value={formData.content}
+                  value={getValues('content') || defaultValues.content}
                   placeholder="Type the content here"
                 />
               </div>
@@ -81,7 +99,7 @@ const EditFormStep1 = ({ formData, onChange }: Props) => {
           </div>
         </div>
       </div>
-    </form>
+    </>
   );
 };
 

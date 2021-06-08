@@ -1,0 +1,17 @@
+mutation CreatePost($input: createPostInput) {
+  createPost(input: $input) {
+    post {
+      id
+      slug
+      title
+      description
+      content
+      contentType
+      displayType
+      category {
+        id
+        name
+      }
+    }
+  }
+}

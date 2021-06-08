@@ -6,6 +6,7 @@ import {
   CountPostCommentDocument,
   Enum_Post_Contenttype,
   Enum_Post_Displaytype,
+  Post,
 } from '@/graphql/generated';
 import React, { useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
@@ -29,6 +30,7 @@ import Loading from '@/components/Loading/Loading';
 import styles from './PostDetail.module.scss';
 import format from 'date-fns/format';
 import get from 'lodash/get';
+import TogglePublish from './TogglePublish';
 
 interface Props {
   postData: PostBySlugQuery;
@@ -128,13 +130,19 @@ const PostDetail = (props: Props): JSX.Element => {
         }
       >
         {me.value?.id === postData.postBySlug?.user?.id && (
-          <li className="nav-item mr-3 d-flex align-items-center">
-            <Link
-              href={`/posts/edit?slug=${encodeURIComponent(slug as string)}`}
-            >
-              Edit
-            </Link>
-          </li>
+          <>
+            <li className="nav-item mr-3 d-flex align-items-center">
+              <Link
+                href={`/posts/edit?slug=${encodeURIComponent(slug as string)}`}
+              >
+                Edit
+              </Link>
+            </li>
+
+            <li className="nav-item mr-3 d-flex align-items-center">
+              <TogglePublish post={postData.postBySlug as Post} />
+            </li>
+          </>
         )}
       </Navigation>
 

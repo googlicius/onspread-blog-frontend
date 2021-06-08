@@ -1,0 +1,7 @@
+mutation PublishPost($id: ID!) {
+  publishPost(id: $id) {
+    id
+    slug
+    published_at
+  }
+}

@@ -1,0 +1,7 @@
+mutation UnPublishPost($id: ID!) {
+  unPublishPost(id: $id) {
+    id
+    slug
+    published_at
+  }
+}

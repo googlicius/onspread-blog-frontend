@@ -3,12 +3,14 @@ import { clearLoggedInUser, selectMe } from '@/redux/meProducer';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import cs from 'classnames';
+import get from 'lodash/get';
 import {
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
   UncontrolledDropdown,
 } from 'reactstrap';
+import styles from './Navigation.module.scss';
 
 interface Props {
   isTransparentBg?: boolean;
@@ -107,15 +109,24 @@ export default function Navigation(props: Props): JSX.Element {
                   tag="a"
                   role="button"
                   className="pointer nav-link pr-0"
-                  caret={true}
                 >
-                  {me.value.username}
+                  {/* {me.value.username} */}
+                  <div className={cs(styles.navigation__avatar)}>
+                    <img
+                      src={get(me.value, 'avatar.formats.thumbnail.url')}
+                      alt={get(me.value, 'user.avatar.alternativeText')}
+                    />
+                  </div>
                 </DropdownToggle>
 
                 <DropdownMenu right>
-                  <DropdownItem>
-                    <Link href="/me">Profile</Link>
-                  </DropdownItem>
+                  <Link href="/posts/edit">
+                    <a className="dropdown-item">Create new post</a>
+                  </Link>
+
+                  <Link href="/me">
+                    <a className="dropdown-item">Profile</a>
+                  </Link>
 
                   <DropdownItem onClick={handleLogOut}>Logout</DropdownItem>
                 </DropdownMenu>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -8,17 +9,14 @@ import {
   Post,
   PostBySlugDocument,
   PostBySlugQuery,
+  useCreatePostMutation,
   useUpdatePostMutation,
 } from '@/graphql/generated';
 import client from '@/apollo-client';
 import { selectMe } from '@/redux/meProducer';
 import EditFormStep1 from '@/components/posts/edit/EditFormStep1';
 import EditFormStep2 from '@/components/posts/edit/EditFormStep2';
-import {
-  Step1FormData,
-  Step2FormData,
-  FormData,
-} from '@/components/posts/edit/interface';
+import { FormData } from '@/components/posts/edit/interface';
 import Loading from '@/components/Loading/Loading';
 
 interface Props {
@@ -27,13 +25,22 @@ interface Props {
 
 const PostEdit = ({ postData }: Props): JSX.Element => {
   const router = useRouter();
-  const [postModifiedData, setPostModifiedData] = useState<FormData>(null);
+  const [formDefaultValues, setFormDefaultValues] = useState<FormData>(null);
   const [step, setStep] = useState(1);
 
   const me = useSelector(selectMe);
   const [updatePostMutation] = useUpdatePostMutation();
+  const [createPostMutation] = useCreatePostMutation();
+  const methods = useForm();
+  const { handleSubmit } = methods;
 
   useEffect(() => {
+    // Creating new post...
+    if (!postData) {
+      return;
+    }
+
+    // Editing post...
     if (me.value?.id !== postData.postBySlug?.user?.id) {
       router.back();
     }
@@ -41,59 +48,54 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
 
   useEffect(() => {
     const {
-      content,
-      contentType,
-      displayType,
-      title,
-      description,
-      category,
-    } = postData.postBySlug;
+      content = null,
+      contentType = null,
+      displayType = null,
+      title = null,
+      description = null,
+      category = null,
+    } = postData?.postBySlug || {};
 
-    setPostModifiedData({
+    setFormDefaultValues({
       content,
       contentType,
       displayType,
       title,
       description,
-      category: category.id,
+      category: category?.id,
     });
-  }, []);
+  }, [postData]);
 
-  const handleStep1DataChange = (step1FormData: Step1FormData): void => {
-    setPostModifiedData((prevValue) => ({
-      ...prevValue,
-      ...step1FormData,
-    }));
-    setStep(2);
-  };
-
-  const handleStep2DataChange = async (
-    step2FormData: Step2FormData,
-  ): Promise<void> => {
-    await updatePostMutation({
-      variables: {
-        input: {
-          where: {
-            id: postData.postBySlug.id,
-          },
-          data: {
-            ...postModifiedData,
-            ...step2FormData,
+  const onSubmit = async (data: FormData): Promise<void> => {
+    if (!postData) {
+      const { data: createPostData } = await createPostMutation({
+        variables: {
+          input: {
+            data: {
+              ...data,
+              user: me.value.id,
+            },
           },
         },
-      },
-    });
+      });
+
+      router.push(`/posts/${createPostData.createPost.post.slug}`);
+    } else {
+      const { data: updatePostData } = await updatePostMutation({
+        variables: {
+          input: {
+            where: {
+              id: postData.postBySlug.id,
+            },
+            data,
+          },
+        },
+      });
+
+      router.push(`/posts/${updatePostData.updatePost.post.slug}`);
+    }
 
     toast.dark('Post updated successfully');
-    router.push(`/posts/${postData.postBySlug.slug}`);
-  };
-
-  const handleBackToStep1 = (step2FormData: Step2FormData): void => {
-    setPostModifiedData({
-      ...postModifiedData,
-      ...step2FormData,
-    });
-    setStep(1);
   };
 
   const renderFormByStep = (stepp: number): JSX.Element => {
@@ -101,18 +103,17 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
       case 1:
         return (
           <EditFormStep1
-            formData={postModifiedData}
-            onChange={handleStep1DataChange}
+            defaultValues={formDefaultValues}
+            onNextStep={() => setStep(2)}
           />
         );
 
       case 2:
         return (
           <EditFormStep2
-            post={postData.postBySlug as Post}
-            formData={postModifiedData}
-            onChange={handleStep2DataChange}
-            goBack={handleBackToStep1}
+            post={postData?.postBySlug as Post}
+            defaultValues={formDefaultValues}
+            goBack={() => setStep(1)}
           />
         );
     }
@@ -124,13 +125,28 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
         <title>Post Edit</title>
       </Head>
 
-      {postModifiedData ? renderFormByStep(step) : <Loading />}
+      {formDefaultValues ? (
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {renderFormByStep(step)}
+          </form>
+        </FormProvider>
+      ) : (
+        <Loading />
+      )}
     </>
   );
 };
 
 PostEdit.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
   const { query } = ctx;
+
+  if (!query.slug) {
+    return {
+      postData: null,
+    };
+  }
+
   const { data: postData } = await client.query<PostBySlugQuery>({
     query: PostBySlugDocument,
     variables: {

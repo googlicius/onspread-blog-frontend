@@ -130,10 +130,13 @@ const Login: NextPage = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className=" btn btn-big btn-block mybtn btn-primary tx-tfm"
+                    className=" btn btn-block mybtn btn-primary tx-tfm"
                   >
                     {loading && (
-                      <div className="spinner-border mr-3" role="status">
+                      <div
+                        className="spinner-border spinner-border-sm mr-3"
+                        role="status"
+                      >
                         <span className="sr-only">Loading...</span>
                       </div>
                     )}
@@ -148,10 +151,7 @@ const Login: NextPage = () => {
 
                 <div className="mb-3">
                   <p className="text-center">
-                    <a
-                      href="#"
-                      className={` btn btn-big mybtn ${styles.google}`}
-                    >
+                    <a href="#" className={` btn mybtn ${styles.google}`}>
                       <i className="fa fa-google-plus"></i> Signup using Google
                     </a>
                   </p>
