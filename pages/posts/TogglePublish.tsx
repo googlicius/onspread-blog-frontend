@@ -7,11 +7,11 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 interface Props {
-  post: Post;
+  post?: Post;
 }
 
 const TogglePublish = ({ post }: Props): JSX.Element => {
-  const [isPublished, setIsPublished] = useState(!!post.published_at);
+  const [isPublished, setIsPublished] = useState(!!post?.published_at);
   const [
     publishPostMutation,
     { loading: pulishLoading },

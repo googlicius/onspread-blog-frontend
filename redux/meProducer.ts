@@ -1,4 +1,4 @@
-import { MeDocument, MeQuery } from '@/graphql/generated';
+import { MeDocument, MeQuery, UsersPermissionsMe } from '@/graphql/generated';
 import { MeState, RootState } from './interface';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import client from '@/apollo-client';
@@ -13,21 +13,24 @@ const initialState: MeState = {
 // will call the thunk with the `dispatch` function as the first argument. Async
 // code can then be executed and other actions can be dispatched. Thunks are
 // typically used to make async requests.
-export const meQueryAsync = createAsyncThunk('me/query', async () => {
-  if (
-    typeof window !== 'undefined' &&
-    !!localStorage.getItem(process.env.NEXT_PUBLIC_JWT_TOKEN_KEY)
-  ) {
-    const res = await client.query<MeQuery>({
-      query: MeDocument,
-      fetchPolicy: 'no-cache',
-    });
-    return res.data.me;
-  }
+export const meQueryAsync = createAsyncThunk(
+  'me/query',
+  async (): Promise<UsersPermissionsMe> => {
+    if (
+      typeof window !== 'undefined' &&
+      !!localStorage.getItem(process.env.NEXT_PUBLIC_JWT_TOKEN_KEY)
+    ) {
+      const res = await client.query<MeQuery>({
+        query: MeDocument,
+        fetchPolicy: 'no-cache',
+      });
+      return res.data.me as UsersPermissionsMe;
+    }
 
-  // The value we return becomes the `fulfilled` action payload
-  return null;
-});
+    // The value we return becomes the `fulfilled` action payload
+    return null;
+  },
+);
 
 const meSlice = createSlice({
   name: 'me',
