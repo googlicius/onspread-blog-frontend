@@ -1,8 +1,12 @@
 .my-editor {
   :global {
     .ck.ck-editor {
-      &__editable:not(.ck-focused) {
-        border-color: var(--ck-color-base-border);
+      &__editable {
+        min-height: 200px;
+
+        &:not(.ck-focused) {
+          border-color: var(--ck-color-base-border);
+        }
       }
     }
   }

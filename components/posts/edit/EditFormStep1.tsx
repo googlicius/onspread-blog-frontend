@@ -16,17 +16,25 @@ const EditFormStep1 = ({ defaultValues, onNextStep }: Props) => {
     register,
     getValues,
     formState: { isSubmitting, errors, isDirty },
+    trigger,
   } = useFormContext();
   const router = useRouter();
 
   const handleCancel = () => {
-    if (isDirty) {
-      if (confirm('Do you want to cancel editing?')) {
-        router.back();
-      }
-      return;
-    }
+    // if (isDirty) {
+    //   if (confirm('Do you want to cancel editing?')) {
+    //     router.back();
+    //   }
+    //   return;
+    // }
     router.back();
+  };
+
+  const handleNextStep = async () => {
+    const result = await trigger(['title', 'content']);
+    if (result) {
+      onNextStep();
+    }
   };
 
   return (
@@ -45,7 +53,7 @@ const EditFormStep1 = ({ defaultValues, onNextStep }: Props) => {
             type="button"
             disabled={isSubmitting || !isDirty}
             className="btn btn-success btn-sm"
-            onClick={onNextStep}
+            onClick={handleNextStep}
           >
             Next
           </button>
@@ -55,6 +63,10 @@ const EditFormStep1 = ({ defaultValues, onNextStep }: Props) => {
       <div className="container mt-7">
         <div className="row">
           <div className="col-lg-8 col-md-10 mx-auto">
+            <h2 className="mb-4">
+              {defaultValues.title ? 'Edit Post' : 'Create new Post'}
+            </h2>
+
             <input
               {...register('contentType', { required: true })}
               type="hidden"

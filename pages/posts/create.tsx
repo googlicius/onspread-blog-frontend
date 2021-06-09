@@ -4,31 +4,20 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import { NextPageContext } from 'next';
-import {
-  Post,
-  PostBySlugDocument,
-  PostBySlugQuery,
-  useUpdatePostMutation,
-} from '@/graphql/generated';
-import client from '@/apollo-client';
+import { useCreatePostMutation } from '@/graphql/generated';
 import { selectMe } from '@/redux/meProducer';
 import EditFormStep1 from '@/components/posts/edit/EditFormStep1';
 import EditFormStep2 from '@/components/posts/edit/EditFormStep2';
 import { FormData } from '@/components/posts/edit/interface';
 import Loading from '@/components/Loading/Loading';
 
-interface Props {
-  postData: PostBySlugQuery;
-}
-
-const PostEdit = ({ postData }: Props): JSX.Element => {
+const PostCreate = (): JSX.Element => {
   const router = useRouter();
   const [formDefaultValues, setFormDefaultValues] = useState<FormData>(null);
   const [step, setStep] = useState(1);
 
   const me = useSelector(selectMe);
-  const [updatePostMutation] = useUpdatePostMutation();
+  const [createPostMutation] = useCreatePostMutation();
   const methods = useForm();
   const {
     handleSubmit,
@@ -36,37 +25,22 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
   } = methods;
 
   const checkPageUnSaved = useCallback(() => {
-    if (isDirty && !confirm('Do you want to cancel editing?')) {
+    if (isDirty && !confirm('Do you want to cancel creating?')) {
       router.events.emit('routeChangeComplete');
       throw 'Abort route change. Please ignore this error.';
     }
   }, [isDirty]);
 
   useEffect(() => {
-    if (me.value?.id !== postData.postBySlug?.user?.id) {
-      router.back();
-    }
-  }, [me, postData]);
-
-  useEffect(() => {
-    const {
-      content,
-      contentType,
-      displayType,
-      title,
-      description,
-      category,
-    } = postData.postBySlug;
-
     setFormDefaultValues({
-      content,
-      contentType,
-      displayType,
-      title,
-      description,
-      category: category.id,
+      content: null,
+      contentType: null,
+      displayType: null,
+      title: null,
+      description: null,
+      category: null,
     });
-  }, [postData]);
+  }, []);
 
   useEffect(() => {
     router.events.on('routeChangeStart', checkPageUnSaved);
@@ -77,26 +51,26 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
   }, [checkPageUnSaved]);
 
   const onSubmit = async (data: FormData): Promise<void> => {
-    const { data: updatePostData } = await updatePostMutation({
+    const { data: createPostData } = await createPostMutation({
       variables: {
         input: {
-          where: {
-            id: postData.postBySlug.id,
+          data: {
+            ...data,
+            user: me.value.id,
           },
-          data,
         },
       },
     });
 
     router.events.off('routeChangeStart', checkPageUnSaved);
-    router.push(`/posts/${updatePostData.updatePost.post.slug}`);
+    router.push(`/posts/${createPostData.createPost.post.slug}`);
     toast.dark('Post updated successfully');
   };
 
   return (
     <>
       <Head>
-        <title>Post Edit</title>
+        <title>Post Create</title>
       </Head>
 
       {formDefaultValues ? (
@@ -112,7 +86,6 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
                 ),
                 2: (
                   <EditFormStep2
-                    post={postData?.postBySlug as Post}
                     defaultValues={formDefaultValues}
                     goBack={() => setStep(1)}
                   />
@@ -128,19 +101,4 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
   );
 };
 
-PostEdit.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
-  const { query } = ctx;
-
-  const { data: postData } = await client.query<PostBySlugQuery>({
-    query: PostBySlugDocument,
-    variables: {
-      slug: query.slug,
-    },
-  });
-
-  return {
-    postData,
-  };
-};
-
-export default PostEdit;
+export default PostCreate;

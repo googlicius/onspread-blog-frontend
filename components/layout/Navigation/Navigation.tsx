@@ -120,8 +120,8 @@ export default function Navigation(props: Props): JSX.Element {
                 </DropdownToggle>
 
                 <DropdownMenu right>
-                  <Link href="/posts/edit">
-                    <a className="dropdown-item">Create new post</a>
+                  <Link href="/posts/create">
+                    <a className="dropdown-item">Create new Post</a>
                   </Link>
 
                   <Link href="/me">

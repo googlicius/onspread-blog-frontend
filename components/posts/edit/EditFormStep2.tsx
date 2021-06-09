@@ -73,6 +73,12 @@ const EditFormStep2 = ({ post, defaultValues, goBack }: Props) => {
                   <Controller
                     name="category"
                     control={control}
+                    rules={{
+                      required: {
+                        value: true,
+                        message: 'Category is required',
+                      },
+                    }}
                     defaultValue={defaultValues.category}
                     render={({ field }) => {
                       const { onChange, ...rest } = field;
