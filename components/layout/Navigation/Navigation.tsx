@@ -32,20 +32,22 @@ export default function Navigation(props: Props): JSX.Element {
 
   // Handle scroll event.
   useEffect(() => {
-    let previousTop1 = 0;
+    let previousTop = 0;
     let previousTop2 = 0;
     const headerHeight = navElementRef.current.clientHeight;
 
-    const handleScrollUp = debounce(() => {
+    const handleScrollUp = () => {
       const currentTop = window.scrollY;
-      if (currentTop === 0 || currentTop < previousTop1) {
+      if (currentTop === 0 || currentTop < previousTop) {
         if (
           window.scrollY &&
           navElementRef.current.classList.contains('is-fixed')
         ) {
           // Only visible if a long enough scroll.
-          previousTop1 - currentTop >= 50 &&
+          if (previousTop - currentTop >= 50) {
             navElementRef.current.classList.add('is-visible');
+            previousTop = currentTop;
+          }
         } else {
           // Reached the top
           navElementRef.current.classList.remove('is-visible', 'is-fixed');
@@ -54,8 +56,7 @@ export default function Navigation(props: Props): JSX.Element {
           }
         }
       }
-      previousTop1 = currentTop;
-    }, 20);
+    };
 
     const hanldeScrollDown = () => {
       const currentTop = window.scrollY;
@@ -71,7 +72,7 @@ export default function Navigation(props: Props): JSX.Element {
 
         if (
           currentTop > headerHeight &&
-          // currentTop - previousTop > 50 &&
+          // currentTop - previousTop2 > 50 &&
           !navElementRef.current.classList.contains('is-fixed')
         ) {
           navElementRef.current.classList.add('is-fixed');
@@ -80,12 +81,17 @@ export default function Navigation(props: Props): JSX.Element {
       previousTop2 = currentTop;
     };
 
+    const handleScrollDebounced = debounce(() => {
+      previousTop = window.scrollY;
+    }, 50);
+
     const handleShowHideHeader = () => {
       if (!navElementRef.current) {
         return;
       }
       handleScrollUp();
       hanldeScrollDown();
+      handleScrollDebounced();
     };
 
     if (!noHide) {
