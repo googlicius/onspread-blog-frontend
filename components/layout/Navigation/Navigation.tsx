@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { clearLoggedInUser, selectMe } from '@/redux/meProducer';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
@@ -24,61 +24,70 @@ export default function Navigation(props: Props): JSX.Element {
   const navElementRef = useRef<HTMLElement>(null);
   const me = useSelector(selectMe);
   const dispatch = useDispatch();
-  // const router = useRouter();
-  const [previousTop, setPreviousTop] = useState(0);
-
-  const headerHeight = useMemo(() => {
-    return navElementRef.current && navElementRef.current.clientHeight;
-  }, [navElementRef]);
 
   const handleLogOut = async () => {
     localStorage.removeItem(process.env.NEXT_PUBLIC_JWT_TOKEN_KEY);
     dispatch(clearLoggedInUser());
   };
 
-  const handleShowHideHeader = debounce(() => {
-    if (!navElementRef.current) {
-      return;
-    }
-
-    const currentTop = window.scrollY;
-    // if scrolling up...
-    if (currentTop === 0 || currentTop < previousTop) {
-      if (
-        window.scrollY &&
-        navElementRef.current.classList.contains('is-fixed')
-      ) {
-        // Only visible if a long enough scroll.
-        previousTop - currentTop >= 80 &&
-          navElementRef.current.classList.add('is-visible');
-      } else {
-        // Reached the top
-        navElementRef.current.classList.remove('is-visible', 'is-fixed');
-        if (isTransparentBg) {
-          navElementRef.current.classList.add('transparent-bg');
-        }
-      }
-    }
-
-    // else scrolling down...
-    else {
-      // Fix blinking navbar.
-      setTimeout(() => {
-        navElementRef.current.classList.remove('is-visible', 'transparent-bg');
-      }, 50);
-
-      if (
-        currentTop > headerHeight &&
-        !navElementRef.current.classList.contains('is-fixed')
-      ) {
-        navElementRef.current.classList.add('is-fixed');
-      }
-    }
-    setPreviousTop(currentTop);
-  }, 20);
-
   // Handle scroll event.
   useEffect(() => {
+    let previousTop1 = 0;
+    let previousTop2 = 0;
+    const headerHeight = navElementRef.current.clientHeight;
+
+    const handleScrollUp = debounce(() => {
+      const currentTop = window.scrollY;
+      if (currentTop === 0 || currentTop < previousTop1) {
+        if (
+          window.scrollY &&
+          navElementRef.current.classList.contains('is-fixed')
+        ) {
+          // Only visible if a long enough scroll.
+          previousTop1 - currentTop >= 50 &&
+            navElementRef.current.classList.add('is-visible');
+        } else {
+          // Reached the top
+          navElementRef.current.classList.remove('is-visible', 'is-fixed');
+          if (isTransparentBg) {
+            navElementRef.current.classList.add('transparent-bg');
+          }
+        }
+      }
+      previousTop1 = currentTop;
+    }, 20);
+
+    const hanldeScrollDown = () => {
+      const currentTop = window.scrollY;
+
+      if (currentTop > 0 && currentTop >= previousTop2) {
+        // Fix blinking navbar.
+        setTimeout(() => {
+          navElementRef.current.classList.remove(
+            'is-visible',
+            'transparent-bg',
+          );
+        }, 50);
+
+        if (
+          currentTop > headerHeight &&
+          // currentTop - previousTop > 50 &&
+          !navElementRef.current.classList.contains('is-fixed')
+        ) {
+          navElementRef.current.classList.add('is-fixed');
+        }
+      }
+      previousTop2 = currentTop;
+    };
+
+    const handleShowHideHeader = () => {
+      if (!navElementRef.current) {
+        return;
+      }
+      handleScrollUp();
+      hanldeScrollDown();
+    };
+
     if (!noHide) {
       window.removeEventListener('scroll', handleShowHideHeader);
       window.addEventListener('scroll', handleShowHideHeader);
@@ -91,7 +100,7 @@ export default function Navigation(props: Props): JSX.Element {
     return function cleanUp() {
       window.removeEventListener('scroll', handleShowHideHeader);
     };
-  }, [isTransparentBg, noHide, handleShowHideHeader]);
+  }, [isTransparentBg, noHide]);
 
   return (
     <nav
