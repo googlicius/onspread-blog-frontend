@@ -6,8 +6,6 @@
 
   @media (min-width: 576px) {
     flex-direction: row-reverse;
-    padding-bottom: 2rem;
-    padding-top: 2rem;
   }
 
   .feature-image-wrapper {
@@ -32,6 +30,7 @@
   }
 
   .post-preview {
+    width: 100%;
     > a {
       color: $gray-900;
 
