@@ -3,6 +3,7 @@ import { clearLoggedInUser, selectMe } from '@/redux/meProducer';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import cs from 'classnames';
+import debounce from 'lodash/debounce';
 import get from 'lodash/get';
 import {
   DropdownItem,
@@ -33,19 +34,21 @@ export default function Navigation(props: Props): JSX.Element {
   useEffect(() => {
     let previousTop = 0;
     const headerHeight = navElementRef.current.clientHeight;
-    const handleShowHideHeader = () => {
+    const handleShowHideHeader = debounce(() => {
       if (!navElementRef.current) {
         return;
       }
 
       const currentTop = window.scrollY;
-      //if scrolling up...
+      // if scrolling up...
       if (currentTop === 0 || currentTop < previousTop) {
         if (
           window.scrollY &&
           navElementRef.current.classList.contains('is-fixed')
         ) {
-          navElementRef.current.classList.add('is-visible');
+          // Only visible if a long enough scroll.
+          previousTop - currentTop >= 80 &&
+            navElementRef.current.classList.add('is-visible');
         } else {
           // Reached the top
           navElementRef.current.classList.remove('is-visible', 'is-fixed');
@@ -53,8 +56,10 @@ export default function Navigation(props: Props): JSX.Element {
             navElementRef.current.classList.add('transparent-bg');
           }
         }
-      } else {
-        //if scrolling down...
+      }
+
+      // else scrolling down...
+      else {
         navElementRef.current.classList.remove('is-visible', 'transparent-bg');
         if (
           currentTop > headerHeight &&
@@ -64,7 +69,7 @@ export default function Navigation(props: Props): JSX.Element {
         }
       }
       previousTop = currentTop;
-    };
+    }, 20);
 
     if (!noHide) {
       window.removeEventListener('scroll', handleShowHideHeader);

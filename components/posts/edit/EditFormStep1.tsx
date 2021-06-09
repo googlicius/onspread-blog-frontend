@@ -21,12 +21,6 @@ const EditFormStep1 = ({ defaultValues, onNextStep }: Props) => {
   const router = useRouter();
 
   const handleCancel = () => {
-    // if (isDirty) {
-    //   if (confirm('Do you want to cancel editing?')) {
-    //     router.back();
-    //   }
-    //   return;
-    // }
     router.back();
   };
 
