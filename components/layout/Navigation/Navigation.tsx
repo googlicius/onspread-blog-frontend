@@ -19,6 +19,8 @@ interface Props {
   children?;
 }
 
+const SCROLL_GAP = 50;
+
 export default function Navigation(props: Props): JSX.Element {
   const { isTransparentBg = true, noHide = false, children } = props;
   const navElementRef = useRef<HTMLElement>(null);
@@ -33,7 +35,6 @@ export default function Navigation(props: Props): JSX.Element {
   // Handle scroll event.
   useEffect(() => {
     let previousTop = 0;
-    let previousTop2 = 0;
     const headerHeight = navElementRef.current.clientHeight;
 
     const handleScrollUp = () => {
@@ -44,7 +45,7 @@ export default function Navigation(props: Props): JSX.Element {
           navElementRef.current.classList.contains('is-fixed')
         ) {
           // Only visible if a long enough scroll.
-          if (previousTop - currentTop >= 50) {
+          if (previousTop - currentTop >= SCROLL_GAP) {
             navElementRef.current.classList.add('is-visible');
             previousTop = currentTop;
           }
@@ -61,24 +62,25 @@ export default function Navigation(props: Props): JSX.Element {
     const hanldeScrollDown = () => {
       const currentTop = window.scrollY;
 
-      if (currentTop > 0 && currentTop >= previousTop2) {
-        // Fix blinking navbar.
-        setTimeout(() => {
-          navElementRef.current.classList.remove(
-            'is-visible',
-            'transparent-bg',
-          );
-        }, 50);
+      if (currentTop > 0 && currentTop > previousTop) {
+        if (currentTop - previousTop > SCROLL_GAP) {
+          // Fix blinking navbar.
+          setTimeout(() => {
+            navElementRef.current.classList.remove(
+              'is-visible',
+              'transparent-bg',
+            );
+            previousTop = currentTop;
+          }, SCROLL_GAP + 20);
+        }
 
         if (
           currentTop > headerHeight &&
-          // currentTop - previousTop2 > 50 &&
           !navElementRef.current.classList.contains('is-fixed')
         ) {
           navElementRef.current.classList.add('is-fixed');
         }
       }
-      previousTop2 = currentTop;
     };
 
     const handleScrollDebounced = debounce(() => {
