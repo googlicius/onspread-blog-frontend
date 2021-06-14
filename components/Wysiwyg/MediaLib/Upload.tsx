@@ -35,7 +35,7 @@ const Upload = ({ toggle, onBack, onFilesChange }: Props) => {
           <ArrowBack />
         </button>
 
-        <h5 className="modal-title">Upload assets</h5>
+        <h5 className="modal-title">Upload images</h5>
 
         <button type="button" className="close" onClick={toggle}>
           <CloseSvg />

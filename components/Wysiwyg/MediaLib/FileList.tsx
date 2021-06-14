@@ -1,5 +1,6 @@
 import { Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import PropTypes from 'prop-types';
+import cs from 'classnames';
 import { FilesConnectionQuery, UploadFile } from '@/graphql/generated';
 import SearchSvg from '@/components/svgs/SearchSvg';
 import CloseSvg from '@/components/svgs/CloseSvg';
@@ -40,7 +41,7 @@ const FileList = ({
               </InputGroupText>
             </InputGroupAddon>
 
-            <Input className="shadow-none" placeholder="Search..." />
+            <Input className="shadow-none" placeholder="Search images..." />
           </InputGroup>
         </form>
 
@@ -49,10 +50,13 @@ const FileList = ({
         </button>
       </div>
 
-      <div className="modal-body">
+      <div
+        className={cs('modal-body', styles['media-lib__file-list'])}
+        style={{ maxHeight: `${window.innerHeight - 200}px` }}
+      >
         <div className="d-flex flex-column align-items-end mb-3">
           <button className="btn btn-primary" onClick={onAddMoreAssetsClick}>
-            Add more assets
+            Add more images
           </button>
         </div>
 

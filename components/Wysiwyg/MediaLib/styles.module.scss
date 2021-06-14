@@ -16,6 +16,10 @@
     }
   }
 
+  &__file-list {
+    overflow-y: scroll;
+  }
+
   &__file-item {
     .selected {
       box-shadow: 0 0 0 4px rgba(121, 82, 179, 0.4);

@@ -64,7 +64,7 @@ const UploadList = ({
         </button>
 
         <button className="btn btn-success" onClick={onUpload}>
-          Upload {uploadFiles.length} assets to the library
+          Upload {uploadFiles.length} image(s) to the library
         </button>
       </div>
     </>
