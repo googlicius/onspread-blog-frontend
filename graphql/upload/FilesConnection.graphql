@@ -1,0 +1,20 @@
+query FilesConnection($sort: String, $limit: Int, $start: Int, $where: JSON) {
+  filesConnection(sort: $sort, limit: $limit, start: $start, where: $where) {
+    values {
+      id
+      name
+      size
+      ext
+      mime
+      width
+      height
+      formats
+      url
+      provider
+    }
+    aggregate {
+      count
+      totalCount
+    }
+  }
+}

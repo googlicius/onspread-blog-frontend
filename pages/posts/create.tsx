@@ -24,7 +24,7 @@ const PostCreate = (): JSX.Element => {
     formState: { isDirty },
   } = methods;
 
-  const checkPageUnSaved = useCallback(() => {
+  const checkUnSavedForm = useCallback(() => {
     if (isDirty && !confirm('Do you want to cancel creating?')) {
       router.events.emit('routeChangeComplete');
       throw 'Abort route change. Please ignore this error.';
@@ -33,22 +33,22 @@ const PostCreate = (): JSX.Element => {
 
   useEffect(() => {
     setFormDefaultValues({
+      title: null,
       content: null,
       contentType: null,
       displayType: null,
-      title: null,
       description: null,
       category: null,
     });
   }, []);
 
   useEffect(() => {
-    router.events.on('routeChangeStart', checkPageUnSaved);
+    router.events.on('routeChangeStart', checkUnSavedForm);
 
     return function cleanUp() {
-      router.events.off('routeChangeStart', checkPageUnSaved);
+      router.events.off('routeChangeStart', checkUnSavedForm);
     };
-  }, [checkPageUnSaved]);
+  }, [checkUnSavedForm]);
 
   const onSubmit = async (data: FormData): Promise<void> => {
     const { data: createPostData } = await createPostMutation({
@@ -62,7 +62,7 @@ const PostCreate = (): JSX.Element => {
       },
     });
 
-    router.events.off('routeChangeStart', checkPageUnSaved);
+    router.events.off('routeChangeStart', checkUnSavedForm);
     router.push(`/posts/${createPostData.createPost.post.slug}`);
     toast.dark('Post updated successfully');
   };

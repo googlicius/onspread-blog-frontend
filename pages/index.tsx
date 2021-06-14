@@ -57,7 +57,6 @@ const Home = ({ postsConnectionData, featuredPostData }: Props) => {
                   totalCount={
                     postsConnectionData.postsConnection.aggregate.totalCount
                   }
-                  listPath={router.pathname}
                 />
               </>
             )}

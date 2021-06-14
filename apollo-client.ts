@@ -1,15 +1,15 @@
 import {
   ApolloClient,
-  HttpLink,
   InMemoryCache,
   concat,
   ApolloLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries';
+import { createUploadLink } from 'apollo-upload-client';
 import { sha256 } from 'crypto-hash';
 
-let httpLink: ApolloLink = new HttpLink({
+let httpLink: ApolloLink = new createUploadLink({
   uri: process.env.NEXT_PUBLIC_GRAPHQL_URL,
 });
 
@@ -30,14 +30,21 @@ const authLink = setContext(async (_, { headers }) => {
   };
 });
 
-const cache = new InMemoryCache();
+/**
+ * Method create Apollo Client for both client and server side.
+ */
+export const createApolloClient = () =>
+  new ApolloClient({
+    link: concat(authLink, httpLink),
+    uri: process.env.NEXT_PUBLIC_GRAPHQL_URL,
+    cache: new InMemoryCache(),
+    connectToDevTools: process.env.NODE_ENV !== 'production',
+    ssrMode: typeof window === 'undefined',
+  });
 
-const client = new ApolloClient({
-  link: concat(authLink, httpLink),
-  uri: process.env.NEXT_PUBLIC_GRAPHQL_URL,
-  cache,
-  connectToDevTools: process.env.NODE_ENV !== 'production',
-  ssrMode: false,
-});
+/**
+ * Client side Apollo Client.
+ */
+const client = createApolloClient();
 
 export default client;

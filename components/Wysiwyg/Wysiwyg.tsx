@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './Wysiwyg.module.scss';
+import MediaLib from './MediaLib/MediaLib';
+import { UploadFile } from '@/graphql/generated';
 
 interface Props {
   onChange: (input) => void;
@@ -35,6 +37,24 @@ const Wysiwyg = React.forwardRef<any, Props>(
       };
       setEditorLoaded(true);
     }, []);
+
+    const handleChange = (data: UploadFile) => {
+      if (data.mime.includes('image')) {
+        ckEditor.model.change((writer) => {
+          const imageElement = writer.createElement('image', {
+            src: data.url,
+            alt: data.alternativeText,
+          });
+
+          ckEditor.model.insertContent(
+            imageElement,
+            ckEditor.model.document.selection,
+          );
+        });
+      }
+
+      // Handle videos and other type of files by adding some code
+    };
 
     if (!editorLoaded) {
       return <div>Loading editor...</div>;
@@ -78,6 +98,12 @@ const Wysiwyg = React.forwardRef<any, Props>(
             data={value}
           />
         </div>
+
+        <MediaLib
+          isOpen={isOpen}
+          toggle={handleToggle}
+          onChange={handleChange}
+        />
       </>
     );
   },

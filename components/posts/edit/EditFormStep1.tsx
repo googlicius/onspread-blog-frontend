@@ -73,7 +73,7 @@ const EditFormStep1 = ({ defaultValues, onNextStep }: Props) => {
                 {...register('title', {
                   required: { value: true, message: 'Title is required.' },
                 })}
-                className={cs('form-control', {
+                className={cs('form-control', 'shadow-none', {
                   'is-invalid': !!errors.title,
                 })}
                 defaultValue={defaultValues.title}

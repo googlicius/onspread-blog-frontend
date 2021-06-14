@@ -1,20 +1,24 @@
 import React, { useMemo } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import cs from 'classnames';
 import PropTypes from 'prop-types';
 
 interface Props {
   currentPage: number;
   totalCount: number;
-  listPath: string;
+  listPath?: string;
   perPage?: number;
+  className?: string;
+  onNavigate?: (page: number) => void;
 }
 
 const Pagination = ({
+  className = 'mt-5',
   perPage = +process.env.NEXT_PUBLIC_PER_PAGE,
   currentPage,
   totalCount,
-  listPath,
+  listPath = '',
+  onNavigate,
 }: Props) => {
   const pages = useMemo(() => {
     const totalPages = Math.ceil(totalCount / perPage);
@@ -25,43 +29,77 @@ const Pagination = ({
     return pages;
   }, [totalCount, perPage]);
 
+  const router = useRouter();
+
+  const handleLinkClick = (e) => {
+    e.preventDefault();
+    const href = e.target.href;
+
+    if (onNavigate) {
+      const url = new URL(href);
+      onNavigate(parseInt(url.searchParams.get('page')));
+    } else {
+      router.push(href);
+    }
+  };
+
   return (
-    <nav className="mt-5" aria-label="Page navigation">
+    <nav className={className} aria-label="Page navigation">
       <ul className="pagination justify-content-end">
-        {currentPage > 1 && (
-          <li className="page-item">
-            <Link href={`${listPath}?page=${currentPage - 1}`}>
-              <a className="page-link">Previous</a>
-            </Link>
-          </li>
-        )}
+        <li
+          className={cs('page-item', {
+            disabled: currentPage === 1,
+          })}
+        >
+          <a
+            className="page-link"
+            href={`${listPath}?page=${currentPage - 1}`}
+            onClick={handleLinkClick}
+          >
+            Prev
+          </a>
+        </li>
+
         {pages.map((page) => (
           <li
             className={cs('page-item', { active: page === currentPage })}
             key={page}
           >
-            <Link href={`${listPath}?page=${page}`}>
-              <a className="page-link">{page}</a>
-            </Link>
+            <a
+              className="page-link"
+              href={`${listPath}?page=${page}`}
+              onClick={handleLinkClick}
+            >
+              {page}
+            </a>
           </li>
         ))}
-        {currentPage < pages.length && (
-          <li className="page-item">
-            <Link href={`${listPath}?page=${currentPage + 1}`}>
-              <a className="page-link">Next</a>
-            </Link>
-          </li>
-        )}
+
+        <li
+          className={cs('page-item', {
+            disabled: currentPage === pages.length,
+          })}
+        >
+          <a
+            className="page-link"
+            href={`${listPath}?page=${currentPage + 1}`}
+            onClick={handleLinkClick}
+          >
+            Next
+          </a>
+        </li>
       </ul>
     </nav>
   );
 };
 
 Pagination.propTypes = {
+  className: PropTypes.string,
   currentPage: PropTypes.number.isRequired,
-  listPath: PropTypes.string.isRequired,
+  listPath: PropTypes.string,
   totalCount: PropTypes.number.isRequired,
   perPage: PropTypes.number,
+  onNavigate: PropTypes.func,
 };
 
 export default Pagination;

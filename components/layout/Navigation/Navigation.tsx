@@ -62,7 +62,7 @@ export default function Navigation(props: Props): JSX.Element {
     const hanldeScrollDown = () => {
       const currentTop = window.scrollY;
 
-      if (currentTop > 0 && currentTop > previousTop) {
+      if (currentTop > previousTop) {
         if (currentTop - previousTop > SCROLL_GAP) {
           // Fix blinking navbar.
           setTimeout(() => {

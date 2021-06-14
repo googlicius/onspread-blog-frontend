@@ -440,6 +440,17 @@ export type MutationUnPublishPostArgs = {
   id: Scalars['ID'];
 };
 
+export type PermissionInput = {
+  type: Scalars['String'];
+  controller: Scalars['String'];
+  action: Scalars['String'];
+  enabled: Scalars['Boolean'];
+  policy?: Maybe<Scalars['String']>;
+  role?: Maybe<Scalars['ID']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
 export type Post = {
   __typename?: 'Post';
   id: Scalars['ID'];
@@ -1073,6 +1084,15 @@ export type UsersPermissionsMeRole = {
   name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
+  permissions?: Maybe<Array<Maybe<UsersPermissionsPermission>>>;
+};
+
+
+export type UsersPermissionsMeRolePermissionsArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
 };
 
 export type UsersPermissionsPermission = {
@@ -1421,6 +1441,17 @@ export type EditLocaleInput = {
   updated_by?: Maybe<Scalars['ID']>;
 };
 
+export type EditPermissionInput = {
+  type?: Maybe<Scalars['String']>;
+  controller?: Maybe<Scalars['String']>;
+  action?: Maybe<Scalars['String']>;
+  enabled?: Maybe<Scalars['Boolean']>;
+  policy?: Maybe<Scalars['String']>;
+  role?: Maybe<Scalars['ID']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
 export type EditPostInput = {
   title?: Maybe<Scalars['String']>;
   content?: Maybe<Scalars['String']>;
@@ -1741,6 +1772,41 @@ export type UpdatePostMutation = (
       )> }
     )> }
   )> }
+);
+
+export type FilesConnectionQueryVariables = Exact<{
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+}>;
+
+
+export type FilesConnectionQuery = (
+  { __typename?: 'Query' }
+  & { filesConnection?: Maybe<(
+    { __typename?: 'UploadFileConnection' }
+    & { values?: Maybe<Array<Maybe<(
+      { __typename?: 'UploadFile' }
+      & Pick<UploadFile, 'id' | 'name' | 'size' | 'ext' | 'mime' | 'width' | 'height' | 'formats' | 'url' | 'provider'>
+    )>>>, aggregate?: Maybe<(
+      { __typename?: 'UploadFileAggregator' }
+      & Pick<UploadFileAggregator, 'count' | 'totalCount'>
+    )> }
+  )> }
+);
+
+export type MutipleUploadMutationVariables = Exact<{
+  files: Array<Maybe<Scalars['Upload']>> | Maybe<Scalars['Upload']>;
+}>;
+
+
+export type MutipleUploadMutation = (
+  { __typename?: 'Mutation' }
+  & { multipleUpload: Array<Maybe<(
+    { __typename?: 'UploadFile' }
+    & Pick<UploadFile, 'id'>
+  )>> }
 );
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
@@ -2299,6 +2365,92 @@ export function useUpdatePostMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UpdatePostMutationHookResult = ReturnType<typeof useUpdatePostMutation>;
 export type UpdatePostMutationResult = Apollo.MutationResult<UpdatePostMutation>;
 export type UpdatePostMutationOptions = Apollo.BaseMutationOptions<UpdatePostMutation, UpdatePostMutationVariables>;
+export const FilesConnectionDocument = gql`
+    query FilesConnection($sort: String, $limit: Int, $start: Int, $where: JSON) {
+  filesConnection(sort: $sort, limit: $limit, start: $start, where: $where) {
+    values {
+      id
+      name
+      size
+      ext
+      mime
+      width
+      height
+      formats
+      url
+      provider
+    }
+    aggregate {
+      count
+      totalCount
+    }
+  }
+}
+    `;
+
+/**
+ * __useFilesConnectionQuery__
+ *
+ * To run a query within a React component, call `useFilesConnectionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFilesConnectionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFilesConnectionQuery({
+ *   variables: {
+ *      sort: // value for 'sort'
+ *      limit: // value for 'limit'
+ *      start: // value for 'start'
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useFilesConnectionQuery(baseOptions?: Apollo.QueryHookOptions<FilesConnectionQuery, FilesConnectionQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FilesConnectionQuery, FilesConnectionQueryVariables>(FilesConnectionDocument, options);
+      }
+export function useFilesConnectionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FilesConnectionQuery, FilesConnectionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FilesConnectionQuery, FilesConnectionQueryVariables>(FilesConnectionDocument, options);
+        }
+export type FilesConnectionQueryHookResult = ReturnType<typeof useFilesConnectionQuery>;
+export type FilesConnectionLazyQueryHookResult = ReturnType<typeof useFilesConnectionLazyQuery>;
+export type FilesConnectionQueryResult = Apollo.QueryResult<FilesConnectionQuery, FilesConnectionQueryVariables>;
+export const MutipleUploadDocument = gql`
+    mutation MutipleUpload($files: [Upload]!) {
+  multipleUpload(files: $files) {
+    id
+  }
+}
+    `;
+export type MutipleUploadMutationFn = Apollo.MutationFunction<MutipleUploadMutation, MutipleUploadMutationVariables>;
+
+/**
+ * __useMutipleUploadMutation__
+ *
+ * To run a mutation, you first call `useMutipleUploadMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMutipleUploadMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [mutipleUploadMutation, { data, loading, error }] = useMutipleUploadMutation({
+ *   variables: {
+ *      files: // value for 'files'
+ *   },
+ * });
+ */
+export function useMutipleUploadMutation(baseOptions?: Apollo.MutationHookOptions<MutipleUploadMutation, MutipleUploadMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<MutipleUploadMutation, MutipleUploadMutationVariables>(MutipleUploadDocument, options);
+      }
+export type MutipleUploadMutationHookResult = ReturnType<typeof useMutipleUploadMutation>;
+export type MutipleUploadMutationResult = Apollo.MutationResult<MutipleUploadMutation>;
+export type MutipleUploadMutationOptions = Apollo.BaseMutationOptions<MutipleUploadMutation, MutipleUploadMutationVariables>;
 export const MeDocument = gql`
     query Me {
   me {
