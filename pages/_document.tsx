@@ -27,9 +27,13 @@ class MyDocument extends Document<Props> {
           <Main />
           <NextScript />
           <Footer />
-          <script id="__APOLLO_STATE__" type="application/json">
-            {JSON.stringify(this.props.apolloState)}
-          </script>
+          <script
+            id="__APOLLO_STATE__"
+            type="application/json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(this.props.apolloState),
+            }}
+          />
           <script
             src={`//cdn.iframe.ly/embed.js?api_key=${process.env.NEXT_PUBLIC_IFRAMELY_API_KEY}`}
             async

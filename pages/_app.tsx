@@ -45,10 +45,11 @@ interface Props {
 function MyApp({ Component, pageProps }: Props): JSX.Element {
   // Restore cache generated from server if present.
   if (typeof window !== 'undefined') {
-    const apolloState = document.getElementById('__APOLLO_STATE__');
-    client.cache.restore(
-      JSON.parse(apolloState.innerHTML.replace(/&quot;/gi, '"')),
-    );
+    const cache = client.cache.extract();
+    if (!cache.ROOT_QUERY) {
+      const apolloState = document.getElementById('__APOLLO_STATE__');
+      client.cache.restore(JSON.parse(apolloState.innerHTML));
+    }
   }
 
   return (
