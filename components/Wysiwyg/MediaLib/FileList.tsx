@@ -1,4 +1,4 @@
-import { Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import PropTypes from 'prop-types';
 import cs from 'classnames';
 import { FilesConnectionQuery, UploadFile } from '@/graphql/generated';
@@ -8,6 +8,8 @@ import FileItem from './FileItem';
 import styles from './styles.module.scss';
 import Pagination from '@/components/Pagination';
 import { perPage } from './constants';
+import { useForm } from 'react-hook-form';
+import { useEffect, useRef } from 'react';
 
 interface Props {
   data: FilesConnectionQuery;
@@ -18,6 +20,11 @@ interface Props {
   onNavigate: (page: number) => void;
   onFileSelect: (file: UploadFile) => void;
   onFinishClick: () => void;
+  onSearch: (searchStr: string) => void;
+}
+
+interface SearchForm {
+  q: string;
 }
 
 const FileList = ({
@@ -29,11 +36,26 @@ const FileList = ({
   onNavigate,
   onFileSelect,
   onFinishClick,
+  onSearch,
 }: Props) => {
+  const modalBodyRef = useRef<HTMLDivElement>(null);
+  const { register, handleSubmit } = useForm<SearchForm>();
+
+  useEffect(() => {
+    // Scroll to top after navigate to another page.
+    modalBodyRef.current.scrollTo({
+      top: 0,
+    });
+  }, [data]);
+
+  const onSubmit = (formData: SearchForm) => {
+    onSearch(formData.q);
+  };
+
   return (
     <>
       <div className="modal-header d-flex align-items-center py-0">
-        <form className="flex-grow-1">
+        <form className="flex-grow-1" onSubmit={handleSubmit(onSubmit)}>
           <InputGroup className={styles['media-lib__input-group-search']}>
             <InputGroupAddon addonType="prepend">
               <InputGroupText>
@@ -41,7 +63,11 @@ const FileList = ({
               </InputGroupText>
             </InputGroupAddon>
 
-            <Input className="shadow-none" placeholder="Search images..." />
+            <input
+              {...register('q')}
+              className="form-control shadow-none"
+              placeholder="Search images..."
+            />
           </InputGroup>
         </form>
 
@@ -51,6 +77,7 @@ const FileList = ({
       </div>
 
       <div
+        ref={modalBodyRef}
         className={cs('modal-body', styles['media-lib__file-list'])}
         style={{ maxHeight: `${window.innerHeight - 200}px` }}
       >
@@ -83,7 +110,7 @@ const FileList = ({
           className="mt-2"
           currentPage={page}
           perPage={perPage}
-          totalCount={data.filesConnection.aggregate.totalCount}
+          totalCount={data.filesConnection.aggregate.count}
           listPath="images"
           onNavigate={onNavigate}
         />
@@ -111,6 +138,7 @@ FileList.propTypes = {
   onNavigate: PropTypes.func.isRequired,
   onFileSelect: PropTypes.func.isRequired,
   onFinishClick: PropTypes.func.isRequired,
+  onSearch: PropTypes.func.isRequired,
 };
 
 export default FileList;

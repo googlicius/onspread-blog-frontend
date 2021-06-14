@@ -108,6 +108,14 @@ const MediaLib = ({ isOpen, mutiple = false, toggle, onChange }: Props) => {
     setScreen(2);
   };
 
+  const handleSearch = (searchStr: string) => {
+    refetch({
+      where: {
+        name_contains: searchStr,
+      },
+    });
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -125,6 +133,7 @@ const MediaLib = ({ isOpen, mutiple = false, toggle, onChange }: Props) => {
               page={page}
               selectedFiles={selectedFiles}
               toggle={toggle}
+              onSearch={handleSearch}
               onNavigate={handleNavigate}
               onFileSelect={handleFileSelect}
               onFinishClick={handleFinishClick}
