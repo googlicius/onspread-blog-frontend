@@ -1,12 +1,13 @@
+import { useEffect, useMemo, useState } from 'react';
+import PropTypes from 'prop-types';
+import { Modal } from 'reactstrap';
 import {
   UploadFile,
   useFilesConnectionQuery,
   useMutipleUploadMutation,
 } from '@/graphql/generated';
-import { Modal } from 'reactstrap';
 import styles from './styles.module.scss';
 import FileList from './FileList';
-import { useEffect, useMemo, useState } from 'react';
 import Upload from './Upload';
 import UploadList from './UploadList';
 import { perPage } from './constants';
@@ -15,7 +16,7 @@ interface Props {
   isOpen: boolean;
   mutiple?: boolean;
   toggle: () => void;
-  onChange?: (file: UploadFile | UploadFile[]) => void;
+  onChange: (file: UploadFile | UploadFile[]) => void;
 }
 
 const MediaLib = ({ isOpen, mutiple = false, toggle, onChange }: Props) => {
@@ -160,6 +161,13 @@ const MediaLib = ({ isOpen, mutiple = false, toggle, onChange }: Props) => {
       }
     </Modal>
   );
+};
+
+MediaLib.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  mutiple: PropTypes.bool,
+  toggle: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default MediaLib;

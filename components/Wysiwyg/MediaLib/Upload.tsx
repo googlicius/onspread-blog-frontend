@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
 import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import { useDropzone } from 'react-dropzone';
@@ -6,12 +7,29 @@ import ArrowBack from '@/components/svgs/ArrowBack';
 import CloseSvg from '@/components/svgs/CloseSvg';
 import cs from 'classnames';
 import styles from './styles.module.scss';
+import downloadFile from '@/utils/download-file';
 
 interface Props {
   toggle: () => void;
   onBack: () => void;
   onFilesChange: (files: File[]) => void;
 }
+
+interface UrlUploadFormData {
+  urls: string;
+}
+
+const urlValidation = (url: string) => {
+  const urls = url.split('\n');
+  try {
+    urls.forEach((url) => {
+      new URL(url);
+    });
+    return true;
+  } catch (error) {
+    return 'Invalid URL.';
+  }
+};
 
 const Upload = ({ toggle, onBack, onFilesChange }: Props) => {
   const [activeTab, setActiveTab] = useState(1);
@@ -20,6 +38,12 @@ const Upload = ({ toggle, onBack, onFilesChange }: Props) => {
     accept: 'image/*',
     onDrop: onFilesChange,
   });
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<UrlUploadFormData>();
 
   useEffect(() => {
     // Tab 2 (From URL) autofocus on textarea.
@@ -27,6 +51,25 @@ const Upload = ({ toggle, onBack, onFilesChange }: Props) => {
       textareaRef.current.focus();
     }
   }, [activeTab]);
+
+  const onSubmitUrlUploadForm = async (formData: UrlUploadFormData) => {
+    const urls: string[] = formData.urls.split('\n');
+    const filePromises = urls.map(async (url) => {
+      try {
+        return await downloadFile(url);
+      } catch (error) {
+        return null;
+      }
+    });
+    const files: File[] = await Promise.all(filePromises);
+    const validFiles: File[] = files.filter((file) => file !== null);
+    if (validFiles.length === 0) {
+      setError('urls', {
+        message: 'Canot download any image.',
+      });
+    }
+    onFilesChange(validFiles);
+  };
 
   return (
     <>
@@ -70,16 +113,27 @@ const Upload = ({ toggle, onBack, onFilesChange }: Props) => {
           </TabPane>
 
           <TabPane tabId={2}>
-            <div className="form-group">
-              <label>URL</label>
-              <textarea
-                ref={textareaRef}
-                className="form-control shadow-none"
-              ></textarea>
-              <small className="form-text text-muted">
-                Separate your URL links by a carriage return.
-              </small>
-            </div>
+            <form onSubmit={handleSubmit(onSubmitUrlUploadForm)}>
+              <div className="form-group">
+                <label>URL</label>
+                <textarea
+                  {...register('urls', {
+                    required: { value: true, message: 'Url is required.' },
+                    validate: {
+                      url: urlValidation,
+                    },
+                  })}
+                  ref={textareaRef}
+                  className={cs('form-control shadow-none', {
+                    'is-invalid': !!errors.urls,
+                  })}
+                />
+                <div className="invalid-feedback">{errors.urls?.message}</div>
+                <small className="form-text text-muted">
+                  Separate your URL links by a carriage return.
+                </small>
+              </div>
+            </form>
           </TabPane>
         </TabContent>
       </div>
@@ -89,7 +143,14 @@ const Upload = ({ toggle, onBack, onFilesChange }: Props) => {
           Cancel
         </button>
 
-        {activeTab === 2 && <button className="btn btn-success">Next</button>}
+        {activeTab === 2 && (
+          <button
+            className="btn btn-success"
+            onClick={handleSubmit(onSubmitUrlUploadForm)}
+          >
+            Next
+          </button>
+        )}
       </div>
     </>
   );

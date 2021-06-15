@@ -43,11 +43,11 @@ interface Props {
 }
 
 function MyApp({ Component, pageProps }: Props): JSX.Element {
-  // Restore cache generated from server if present.
+  // Restore cache generated from server side.
   if (typeof window !== 'undefined') {
     const cache = client.cache.extract();
-    if (!cache.ROOT_QUERY) {
-      const apolloState = document.getElementById('__APOLLO_STATE__');
+    const apolloState = document.getElementById('__APOLLO_STATE__');
+    if (apolloState && !cache.ROOT_QUERY) {
       client.cache.restore(JSON.parse(apolloState.innerHTML));
     }
   }
