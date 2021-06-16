@@ -66,7 +66,7 @@ const FileItem = ({ file, selected, onSelect, onDelete }: Props) => {
           }
         </div>
 
-        {!file.id && (
+        {file.id.includes('temp_') && (
           <div className={styles['file-card__buttons']}>
             <button
               className="btn btn-light btn-sm mr-2"

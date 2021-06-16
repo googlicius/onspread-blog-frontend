@@ -11,6 +11,7 @@ import FileList from './FileList';
 import Upload from './Upload';
 import UploadList from './UploadList';
 import { perPage } from './constants';
+import ID from '@/utils/random-id';
 
 interface Props {
   isOpen: boolean;
@@ -19,19 +20,25 @@ interface Props {
   onChange: (file: UploadFile | UploadFile[]) => void;
 }
 
+interface TempFile {
+  file: File;
+  tmpId: string;
+}
+
 const MediaLib = ({ isOpen, mutiple = false, toggle, onChange }: Props) => {
   const [screen, setScreen] = useState(1);
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<TempFile[]>([]);
   const [page, setPage] = useState(1);
   const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
 
   const uploadFiles: Partial<UploadFile>[] = useMemo(() => {
-    return files.map((file) => {
+    return files.map(({ file, tmpId }) => {
       return {
         mime: file.type,
         size: file.size / 1000,
         name: file.name,
         url: URL.createObjectURL(file),
+        id: tmpId,
       };
     });
   }, [files]);
@@ -67,7 +74,12 @@ const MediaLib = ({ isOpen, mutiple = false, toggle, onChange }: Props) => {
 
   const handleFilesChange = (files: File[]) => {
     if (files.length > 0) {
-      setFiles(files);
+      setFiles(
+        files.map((file) => ({
+          tmpId: `temp_${ID()}`,
+          file,
+        })),
+      );
       setScreen(3);
     }
   };
@@ -103,10 +115,12 @@ const MediaLib = ({ isOpen, mutiple = false, toggle, onChange }: Props) => {
     toggle();
   };
 
-  const handleDeleteFile = () => {
-    // Temporary clear all.
-    setFiles([]);
-    setScreen(2);
+  const handleDeleteFile = (file: UploadFile) => {
+    const newFiles = files.filter(({ tmpId }) => tmpId !== file.id);
+    setFiles(newFiles);
+    if (newFiles.length === 0) {
+      setScreen(2);
+    }
   };
 
   const handleSearch = (searchStr: string) => {

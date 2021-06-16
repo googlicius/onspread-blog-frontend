@@ -4,7 +4,7 @@ interface Props {
   fill?: string;
 }
 
-const ArrowBack = ({ fill = 'currentColor' }: Props) => (
+const ArrowBackSvg = ({ fill = 'currentColor' }: Props) => (
   <svg
     version="1.1"
     xmlns="http://www.w3.org/2000/svg"
@@ -20,8 +20,8 @@ const ArrowBack = ({ fill = 'currentColor' }: Props) => (
   </svg>
 );
 
-ArrowBack.propTypes = {
+ArrowBackSvg.propTypes = {
   fill: PropTypes.string,
 };
 
-export default ArrowBack;
+export default ArrowBackSvg;

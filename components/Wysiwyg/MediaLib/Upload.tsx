@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
 import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import { useDropzone } from 'react-dropzone';
-import ArrowBack from '@/components/svgs/ArrowBack';
+import ArrowBackSvg from '@/components/svgs/ArrowBackSvg';
 import CloseSvg from '@/components/svgs/CloseSvg';
 import cs from 'classnames';
 import styles from './styles.module.scss';
@@ -75,7 +75,7 @@ const Upload = ({ toggle, onBack, onFilesChange }: Props) => {
     <>
       <div className="modal-header d-flex align-items-center">
         <button className="btn shadow-none" onClick={onBack}>
-          <ArrowBack />
+          <ArrowBackSvg />
         </button>
 
         <h5 className="modal-title">Upload images</h5>

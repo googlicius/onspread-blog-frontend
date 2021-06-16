@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import ArrowBack from '@/components/svgs/ArrowBack';
+import ArrowBackSvg from '@/components/svgs/ArrowBackSvg';
 import CloseSvg from '@/components/svgs/CloseSvg';
 import { UploadFile } from '@/graphql/generated';
 import FileItem from './FileItem';
@@ -33,7 +33,7 @@ const UploadList = ({
     <>
       <div className="modal-header d-flex align-items-center">
         <button className="btn shadow-none" onClick={handleBack}>
-          <ArrowBack />
+          <ArrowBackSvg />
         </button>
 
         <h5 className="modal-title">Selected files</h5>

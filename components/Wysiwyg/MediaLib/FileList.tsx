@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+import { useForm } from 'react-hook-form';
 import { InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import PropTypes from 'prop-types';
 import cs from 'classnames';
@@ -8,8 +10,6 @@ import FileItem from './FileItem';
 import styles from './styles.module.scss';
 import Pagination from '@/components/Pagination';
 import { perPage } from './constants';
-import { useForm } from 'react-hook-form';
-import { useEffect, useRef } from 'react';
 
 interface Props {
   data: FilesConnectionQuery;
