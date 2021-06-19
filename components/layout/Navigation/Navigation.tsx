@@ -12,6 +12,8 @@ import {
 } from 'reactstrap';
 import styles from './Navigation.module.scss';
 import debounce from 'lodash/debounce';
+import { useLogoutMutation } from '@/graphql/generated';
+import client from '@/apollo-client';
 
 interface Props {
   isTransparentBg?: boolean;
@@ -26,10 +28,15 @@ export default function Navigation(props: Props): JSX.Element {
   const navElementRef = useRef<HTMLElement>(null);
   const me = useSelector(selectMe);
   const dispatch = useDispatch();
+  const [logoutMutation] = useLogoutMutation();
 
   const handleLogOut = async () => {
-    localStorage.removeItem(process.env.NEXT_PUBLIC_JWT_TOKEN_KEY);
+    await logoutMutation();
+    const userId = me.value.id;
     dispatch(clearLoggedInUser());
+    client.cache.evict({
+      id: `UsersPermissionsMe:${userId}`,
+    });
   };
 
   // Handle scroll event.

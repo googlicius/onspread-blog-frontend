@@ -34,6 +34,11 @@ export type AdminUser = {
   lastname: Scalars['String'];
 };
 
+export enum CacheControlScope {
+  Public = 'PUBLIC',
+  Private = 'PRIVATE'
+}
+
 export type Category = {
   __typename?: 'Category';
   id: Scalars['ID'];
@@ -284,6 +289,7 @@ export type Mutation = {
   forgotPassword?: Maybe<UserPermissionsPasswordPayload>;
   resetPassword?: Maybe<UsersPermissionsLoginPayload>;
   emailConfirmation?: Maybe<UsersPermissionsLoginPayload>;
+  logout?: Maybe<Scalars['String']>;
   /** Give heart from user to post */
   giveHeart: Scalars['Int'];
   /** Publish post */
@@ -1553,8 +1559,23 @@ export type LoginMutation = (
   { __typename?: 'Mutation' }
   & { login: (
     { __typename?: 'UsersPermissionsLoginPayload' }
-    & Pick<UsersPermissionsLoginPayload, 'jwt'>
+    & { user: (
+      { __typename?: 'UsersPermissionsMe' }
+      & Pick<UsersPermissionsMe, 'id' | 'username' | 'email'>
+      & { avatar?: Maybe<(
+        { __typename?: 'UploadFile' }
+        & Pick<UploadFile, 'url' | 'formats' | 'alternativeText'>
+      )> }
+    ) }
   ) }
+);
+
+export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'logout'>
 );
 
 export type CategoriesConnectionQueryVariables = Exact<{
@@ -1704,6 +1725,7 @@ export type PostBySlugQuery = (
 export type PostsConnectionQueryVariables = Exact<{
   sort?: Maybe<Scalars['String']>;
   start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
 }>;
 
 
@@ -1723,7 +1745,7 @@ export type PostsConnectionQuery = (
       )> }
     )>>>, aggregate?: Maybe<(
       { __typename?: 'PostAggregator' }
-      & Pick<PostAggregator, 'totalCount'>
+      & Pick<PostAggregator, 'count' | 'totalCount'>
     )> }
   )> }
 );
@@ -1828,7 +1850,16 @@ export type MeQuery = (
 export const LoginDocument = gql`
     mutation Login($input: UsersPermissionsLoginInput!) {
   login(input: $input) {
-    jwt
+    user {
+      id
+      username
+      email
+      avatar {
+        url
+        formats
+        alternativeText
+      }
+    }
   }
 }
     `;
@@ -1858,6 +1889,36 @@ export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginM
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const LogoutDocument = gql`
+    mutation Logout {
+  logout
+}
+    `;
+export type LogoutMutationFn = Apollo.MutationFunction<LogoutMutation, LogoutMutationVariables>;
+
+/**
+ * __useLogoutMutation__
+ *
+ * To run a mutation, you first call `useLogoutMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLogoutMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [logoutMutation, { data, loading, error }] = useLogoutMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLogoutMutation(baseOptions?: Apollo.MutationHookOptions<LogoutMutation, LogoutMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument, options);
+      }
+export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
+export type LogoutMutationResult = Apollo.MutationResult<LogoutMutation>;
+export type LogoutMutationOptions = Apollo.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
 export const CategoriesConnectionDocument = gql`
     query CategoriesConnection($start: Int = 0, $search: String = "") {
   categoriesConnection(start: $start, where: {name_contains: $search}) {
@@ -2197,8 +2258,8 @@ export type PostBySlugQueryHookResult = ReturnType<typeof usePostBySlugQuery>;
 export type PostBySlugLazyQueryHookResult = ReturnType<typeof usePostBySlugLazyQuery>;
 export type PostBySlugQueryResult = Apollo.QueryResult<PostBySlugQuery, PostBySlugQueryVariables>;
 export const PostsConnectionDocument = gql`
-    query PostsConnection($sort: String = "published_at:desc", $start: Int) {
-  postsConnection(sort: $sort, limit: 10, start: $start) {
+    query PostsConnection($sort: String = "published_at:desc", $start: Int, $where: JSON) {
+  postsConnection(sort: $sort, limit: 10, start: $start, where: $where) {
     values {
       id
       title
@@ -2216,6 +2277,7 @@ export const PostsConnectionDocument = gql`
       }
     }
     aggregate {
+      count
       totalCount
     }
   }
@@ -2236,6 +2298,7 @@ export const PostsConnectionDocument = gql`
  *   variables: {
  *      sort: // value for 'sort'
  *      start: // value for 'start'
+ *      where: // value for 'where'
  *   },
  * });
  */

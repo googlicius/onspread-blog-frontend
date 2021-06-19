@@ -1,5 +1,5 @@
-query PostsConnection($sort: String = "published_at:desc", $start: Int) {
-  postsConnection(sort: $sort, limit: 10, start: $start) {
+query PostsConnection($sort: String = "published_at:desc", $start: Int, $where: JSON) {
+  postsConnection(sort: $sort, limit: 10, start: $start, where: $where) {
     values {
       id
       title
@@ -17,6 +17,7 @@ query PostsConnection($sort: String = "published_at:desc", $start: Int) {
       }
     }
     aggregate {
+      count
       totalCount
     }
   }

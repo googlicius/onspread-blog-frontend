@@ -55,7 +55,7 @@ const Upload = ({ toggle, onBack, onFilesChange }: Props) => {
 
         <TabContent activeTab={activeTab}>
           <TabPane tabId={1}>
-            <UploadDropZone onFilesChange={onFilesChange} />
+            <UploadDropZone onDrop={onFilesChange} />
           </TabPane>
 
           <TabPane tabId={2}>

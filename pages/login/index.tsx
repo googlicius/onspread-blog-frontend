@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import cs from 'classnames';
-import { meQueryAsync, selectMe } from '@/redux/meProducer';
+import { selectMe, setLoggedInUser } from '@/redux/meProducer';
 import { useLoginMutation } from '@/graphql/generated';
 import Navigation from '@/components/layout/Navigation/Navigation';
 import styles from './index.module.scss';
@@ -41,16 +41,12 @@ const Login: NextPage = () => {
 
   const onSubmit = async (formData: FormData) => {
     try {
-      const res = await loginMutation({
+      const { data } = await loginMutation({
         variables: {
           input: formData,
         },
       });
-      localStorage.setItem(
-        process.env.NEXT_PUBLIC_JWT_TOKEN_KEY,
-        res.data.login.jwt,
-      );
-      dispatch(meQueryAsync());
+      dispatch(setLoggedInUser(data.login.user));
     } catch (err) {
       // Throw error
     }

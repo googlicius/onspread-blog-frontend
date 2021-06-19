@@ -3,13 +3,13 @@ import { useDropzone } from 'react-dropzone';
 import styles from './styles.module.scss';
 
 interface Props {
-  onFilesChange: (files: File[]) => void;
+  onDrop: (files: File[]) => void;
 }
 
-const UploadDropZone = ({ onFilesChange }: Props) => {
+const UploadDropZone = ({ onDrop }: Props) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: 'image/*',
-    onDrop: onFilesChange,
+    onDrop,
   });
 
   return (

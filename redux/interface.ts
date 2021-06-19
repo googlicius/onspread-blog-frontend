@@ -2,7 +2,7 @@ import { UsersPermissionsMe } from '@/graphql/generated';
 
 export interface MeState {
   value?: UsersPermissionsMe;
-  status: 'idle' | 'loading';
+  status: 'init' | 'idle' | 'loading';
 }
 
 export interface RootState {

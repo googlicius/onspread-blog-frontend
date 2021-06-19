@@ -2,11 +2,18 @@ import { MeDocument, MeQuery, UsersPermissionsMe } from '@/graphql/generated';
 import { MeState, RootState } from './interface';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import client from '@/apollo-client';
+// import { getApolloStateByType } from '@/utils/get-apollo-state-by-type';
 
 const initialState: MeState = {
   value: null,
-  status: 'idle',
+  status: 'init',
 };
+
+// const me = getApolloStateByType<UsersPermissionsMe>('UsersPermissionsMe');
+
+// if (me) {
+//   initialState.value = me;
+// }
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
@@ -16,19 +23,15 @@ const initialState: MeState = {
 export const meQueryAsync = createAsyncThunk(
   'me/query',
   async (): Promise<UsersPermissionsMe> => {
-    if (
-      typeof window !== 'undefined' &&
-      !!localStorage.getItem(process.env.NEXT_PUBLIC_JWT_TOKEN_KEY)
-    ) {
+    try {
       const res = await client.query<MeQuery>({
         query: MeDocument,
-        fetchPolicy: 'no-cache',
       });
+      // The value we return becomes the `fulfilled` action payload
       return res.data.me as UsersPermissionsMe;
+    } catch (error) {
+      return null;
     }
-
-    // The value we return becomes the `fulfilled` action payload
-    return null;
   },
 );
 

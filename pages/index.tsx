@@ -55,7 +55,7 @@ const Home = ({ postsConnectionData, featuredPostData }: Props) => {
                 <Pagination
                   currentPage={+page}
                   totalCount={
-                    postsConnectionData.postsConnection.aggregate.totalCount
+                    postsConnectionData.postsConnection.aggregate.count
                   }
                 />
               </>
@@ -80,6 +80,9 @@ Home.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
       query: PostsConnectionDocument,
       variables: {
         start: (+page - 1) * +process.env.NEXT_PUBLIC_PER_PAGE,
+        where: {
+          published_at_null: false,
+        },
       },
     }),
     client.query<FeaturedPostQuery>({
