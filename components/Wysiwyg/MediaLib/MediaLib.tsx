@@ -85,9 +85,11 @@ const MediaLib = ({ isOpen, mutiple = false, toggle, onChange }: Props) => {
   };
 
   const handleUpload = () => {
+    const uploadFiles = files.map((file) => file.file);
+
     mutipleUploadMutation({
       variables: {
-        files,
+        files: uploadFiles,
       },
     });
   };
