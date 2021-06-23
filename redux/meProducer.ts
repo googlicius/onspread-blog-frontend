@@ -26,6 +26,7 @@ export const meQueryAsync = createAsyncThunk(
     try {
       const res = await client.query<MeQuery>({
         query: MeDocument,
+        fetchPolicy: 'no-cache',
       });
       // The value we return becomes the `fulfilled` action payload
       return res.data.me as UsersPermissionsMe;

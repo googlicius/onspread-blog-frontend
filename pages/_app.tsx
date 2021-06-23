@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import App from 'next/app';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
-import { ApolloProvider, concat } from '@apollo/client';
-import client, { authLink, httpLink } from '@/apollo-client';
+import { ApolloProvider } from '@apollo/client';
+import client from '@/apollo-client';
 import store from '@/redux/store';
 import 'react-toastify/dist/ReactToastify.css';
 import 'nprogress/nprogress.css';
@@ -84,16 +83,16 @@ function MyApp({ Component, pageProps }: Props): JSX.Element {
 // perform automatic static optimization, causing every page in your app to
 // be server-side rendered.
 //
-MyApp.getInitialProps = async (appContext) => {
-  const promises: Promise<any>[] = [App.getInitialProps(appContext)];
-  if (typeof window === 'undefined') {
-    client.setLink(concat(authLink(appContext.ctx), httpLink));
-    promises.push(store.dispatch(meQueryAsync()));
-  }
-  // calls page's `getInitialProps` and fills `appProps.pageProps`
-  const [appProps] = await Promise.all(promises);
+// MyApp.getInitialProps = async (appContext) => {
+//   const promises: Promise<any>[] = [App.getInitialProps(appContext)];
+//   if (typeof window === 'undefined') {
+//     client.setLink(concat(authLink(appContext.ctx), httpLink));
+//     promises.push(store.dispatch(meQueryAsync()));
+//   }
+//   // calls page's `getInitialProps` and fills `appProps.pageProps`
+//   const [appProps] = await Promise.all(promises);
 
-  return { ...appProps };
-};
+//   return { ...appProps };
+// };
 
 export default MyApp;
