@@ -6,6 +6,7 @@ import CloseSvg from '@/components/svgs/CloseSvg';
 import cs from 'classnames';
 import UploadUrl, { UploadUrlRef } from './UploadUrl';
 import UploadDropZone from './UploadDropZone';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   toggle: () => void;
@@ -15,6 +16,7 @@ interface Props {
 
 const Upload = ({ toggle, onBack, onFilesChange }: Props) => {
   const [activeTab, setActiveTab] = useState(1);
+  const { t } = useTranslation();
   const uploadUrlRef = useRef<UploadUrlRef>(null);
 
   useEffect(() => {
@@ -31,7 +33,7 @@ const Upload = ({ toggle, onBack, onFilesChange }: Props) => {
           <ArrowBackSvg />
         </button>
 
-        <h5 className="modal-title">Upload images</h5>
+        <h5 className="modal-title">{t('mediaLib:Upload images')}</h5>
 
         <button type="button" className="close" onClick={toggle}>
           <CloseSvg />
@@ -42,13 +44,13 @@ const Upload = ({ toggle, onBack, onFilesChange }: Props) => {
         <Nav tabs className="mb-3">
           <NavItem onClick={() => setActiveTab(1)}>
             <NavLink className={cs({ active: activeTab === 1 })}>
-              From computer
+              {t('mediaLib:From computer')}
             </NavLink>
           </NavItem>
 
           <NavItem onClick={() => setActiveTab(2)}>
             <NavLink className={cs({ active: activeTab === 2 })}>
-              From URL
+              {t('mediaLib:From URL')}
             </NavLink>
           </NavItem>
         </Nav>
@@ -66,7 +68,7 @@ const Upload = ({ toggle, onBack, onFilesChange }: Props) => {
 
       <div className="modal-footer d-flex justify-content-between">
         <button className="btn btn-outline" onClick={onBack}>
-          Cancel
+          {t('Cancel')}
         </button>
 
         {activeTab === 2 && (
@@ -74,7 +76,7 @@ const Upload = ({ toggle, onBack, onFilesChange }: Props) => {
             className="btn btn-success"
             onClick={uploadUrlRef.current.submit}
           >
-            Next
+            {t('Next')}
           </button>
         )}
       </div>

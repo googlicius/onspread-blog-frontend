@@ -9,6 +9,7 @@ import { useLoginMutation } from '@/graphql/generated';
 import Navigation from '@/components/layout/Navigation/Navigation';
 import styles from './index.module.scss';
 import { NextPage } from 'next';
+import { useTranslation } from 'react-i18next';
 
 interface FormData {
   identifier: string;
@@ -17,6 +18,7 @@ interface FormData {
 
 const Login: NextPage = () => {
   const emailInputRef = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
   const {
     handleSubmit,
     register,
@@ -55,7 +57,7 @@ const Login: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Login</title>
+        <title>{t('Login')}</title>
       </Head>
 
       <Navigation isTransparentBg={false} />
@@ -66,30 +68,30 @@ const Login: NextPage = () => {
             <div className="myform form ">
               <div className="logo mb-3">
                 <div className="col-md-12 text-center">
-                  <h1>Login</h1>
+                  <h1>{t('Login')}</h1>
                 </div>
               </div>
 
               {error && (
                 <div className="alert alert-warning">
-                  Email or password is invalid
+                  {t('Email or password is invalid')}
                 </div>
               )}
 
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-group">
-                  <label>Email address</label>
+                  <label>{t('Email address')}</label>
 
                   <input
                     {...register('identifier', {
-                      required: { value: true, message: 'Email is required' },
+                      required: { value: true, message: 'Email is required.' },
                     })}
                     ref={emailInputRef}
                     type="email"
                     className={cs('form-control', {
                       'is-invalid': !!errors.identifier,
                     })}
-                    placeholder="Enter email"
+                    placeholder={t('Enter email')}
                   />
                   <div className="invalid-feedback">
                     {errors.identifier?.message}
@@ -97,19 +99,19 @@ const Login: NextPage = () => {
                 </div>
 
                 <div className="form-group">
-                  <label>Password</label>
+                  <label>{t('Password')}</label>
                   <input
                     type="password"
                     {...register('password', {
                       required: {
                         value: true,
-                        message: 'Password is required',
+                        message: t('Password is required.'),
                       },
                     })}
                     className={cs('form-control', {
                       'is-invalid': !!errors.password,
                     })}
-                    placeholder="Enter Password"
+                    placeholder={t('Enter Password')}
                   />
                   <div className="invalid-feedback">
                     {errors.password?.message}
@@ -136,13 +138,13 @@ const Login: NextPage = () => {
                         <span className="sr-only">Loading...</span>
                       </div>
                     )}
-                    Login
+                    {t('Login')}
                   </button>
                 </div>
 
                 <div className={`mt-5 ${styles['login-or']}`}>
                   <hr className={styles['hr-or']} />
-                  <span className={styles['span-or']}>or</span>
+                  <span className={styles['span-or']}>{t('Or')}</span>
                 </div>
 
                 <div className="mb-3">

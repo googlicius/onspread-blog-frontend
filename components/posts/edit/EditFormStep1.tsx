@@ -4,6 +4,7 @@ import Navigation from '../../layout/Navigation/Navigation';
 import Wysiwyg from '../../Wysiwyg/Wysiwyg';
 import { FormData } from './interface';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   onNextStep: () => void;
@@ -17,6 +18,7 @@ const EditFormStep1 = ({ onNextStep }: Props) => {
     trigger,
   } = useFormContext<FormData>();
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handleCancel = () => {
     router.back();
@@ -38,7 +40,7 @@ const EditFormStep1 = ({ onNextStep }: Props) => {
             className="btn btn-secondary btn-sm"
             onClick={handleCancel}
           >
-            Cancel
+            {t('Cancel')}
           </button>
 
           <button
@@ -47,7 +49,7 @@ const EditFormStep1 = ({ onNextStep }: Props) => {
             className="btn btn-success btn-sm"
             onClick={handleNextStep}
           >
-            Next
+            {t('Next')}
           </button>
         </li>
       </Navigation>
@@ -56,7 +58,7 @@ const EditFormStep1 = ({ onNextStep }: Props) => {
         <div className="row">
           <div className="col-lg-8 col-md-10 mx-auto">
             <h2 className="mb-4">
-              {getValues('title') ? 'Edit Post' : 'Create new Post'}
+              {getValues('title') ? t('Edit Post') : t('Create new Post')}
             </h2>
 
             <input
@@ -65,21 +67,21 @@ const EditFormStep1 = ({ onNextStep }: Props) => {
             />
 
             <div className="form-group">
-              <label>Title</label>
+              <label>{t('Title')}</label>
               <input
                 {...register('title', {
-                  required: { value: true, message: 'Title is required.' },
+                  required: { value: true, message: t('Title is required.') },
                 })}
                 className={cs('form-control', 'shadow-none', {
                   'is-invalid': !!errors.title,
                 })}
-                placeholder="Title"
+                placeholder={t('Title')}
               />
               <div className="invalid-feedback">{errors.title?.message}</div>
             </div>
 
             <div className="form-group">
-              <label>Content</label>
+              <label>{t('Content')}</label>
               <div
                 className={cs({
                   'is-invalid': !!errors.content,
@@ -89,11 +91,11 @@ const EditFormStep1 = ({ onNextStep }: Props) => {
                   {...register('content', {
                     required: {
                       value: true,
-                      message: 'Content is required.',
+                      message: t('Content is required.'),
                     },
                   })}
                   value={getValues('content')}
-                  placeholder="Type the content here"
+                  placeholder={t('Type the content here')}
                 />
               </div>
               <div className="invalid-feedback">{errors.content?.message}</div>

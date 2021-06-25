@@ -4,6 +4,7 @@ import {
   useUnPublishPostMutation,
 } from '@/graphql/generated';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 interface Props {
@@ -20,6 +21,7 @@ const TogglePublish = ({ post }: Props): JSX.Element => {
     unPublishPostMutation,
     { loading: unPublishLoading },
   ] = useUnPublishPostMutation();
+  const { t } = useTranslation();
 
   const handlePublish = async (): Promise<void> => {
     try {
@@ -58,7 +60,7 @@ const TogglePublish = ({ post }: Props): JSX.Element => {
           disabled={pulishLoading || unPublishLoading}
           onClick={handlePublish}
         >
-          Publish
+          {t('Publish')}
         </button>
       ) : (
         <button
@@ -67,7 +69,7 @@ const TogglePublish = ({ post }: Props): JSX.Element => {
           disabled={pulishLoading || unPublishLoading}
           onClick={handleUnPublish}
         >
-          Unpublish
+          {t('Unpublish')}
         </button>
       )}
     </>

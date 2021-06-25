@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
+import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
 
 interface Props {
@@ -7,6 +8,7 @@ interface Props {
 }
 
 const UploadDropZone = ({ onDrop }: Props) => {
+  const { t } = useTranslation();
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: 'image/*',
     onDrop,
@@ -18,7 +20,11 @@ const UploadDropZone = ({ onDrop }: Props) => {
       {isDragActive ? (
         <p>Drop the files here ...</p>
       ) : (
-        <p>Drag and drop some files here, or click to select files</p>
+        <p>
+          {t(
+            'mediaLib:Drag and drop some files here, or click to select files',
+          )}
+        </p>
       )}
     </div>
   );

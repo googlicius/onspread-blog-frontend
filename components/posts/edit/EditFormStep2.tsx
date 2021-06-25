@@ -9,6 +9,7 @@ import { Enum_Post_Displaytype, Post, UploadFile } from '@/graphql/generated';
 import Option from '@/types/Option';
 import CategorySelect from './CategorySelect';
 import MediaLib from '@/components/Wysiwyg/MediaLib/MediaLib';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   post?: Post;
@@ -40,6 +41,7 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
     setValue,
     formState: { errors, isSubmitting },
   } = useFormContext<FormData>();
+  const { t } = useTranslation();
   const [isMediaLibOpen, setIsMediaLibOpen] = useState(false);
 
   const handleMediaChange = (data: UploadFile) => {
@@ -59,11 +61,11 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
             className="btn btn-success btn-sm"
             onClick={goBack}
           >
-            Back
+            {t('Back')}
           </button>
 
           <button disabled={isSubmitting} className="btn btn-success btn-sm">
-            Save
+            {t('Save')}
           </button>
         </li>
       </Navigation>
@@ -71,7 +73,7 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
       <div className="container mt-7">
         <div className="row">
           <div className="col-lg-8 col-md-10 mx-auto">
-            <h2>Preview</h2>
+            <h2>{t('Preview')}</h2>
 
             <EdittingPostPreview
               post={post}
@@ -82,7 +84,7 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
               <div className="col-md-6">
                 <div className="form-group">
                   <label>
-                    <strong>Category</strong>
+                    <strong>{t('Category')}</strong>
                   </label>
                   <Controller
                     name="category"
@@ -90,7 +92,7 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
                     rules={{
                       required: {
                         value: true,
-                        message: 'Category is required',
+                        message: t('Category is required.'),
                       },
                     }}
                     render={({ field }) => {
@@ -125,7 +127,7 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
               <div className="col-md-6">
                 <div className="form-group">
                   <label>
-                    <strong>Display Type</strong>
+                    <strong>{t('Display Type')}</strong>
                   </label>
                   <Controller
                     name="displayType"

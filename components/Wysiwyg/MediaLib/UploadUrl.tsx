@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import cs from 'classnames';
 import downloadFile from '@/utils/download-file';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   onFilesChange: (files: File[]) => void;
@@ -37,6 +38,7 @@ const UploadUrl = forwardRef<UploadUrlRef, Props>(({ onFilesChange }, ref) => {
     formState: { errors },
   } = useForm<UrlUploadFormData>();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const { t } = useTranslation();
 
   const onSubmit = async (formData: UrlUploadFormData) => {
     const urls: string[] = formData.urls.split('\n');
@@ -51,7 +53,7 @@ const UploadUrl = forwardRef<UploadUrlRef, Props>(({ onFilesChange }, ref) => {
     const validFiles: File[] = files.filter((file) => file !== null);
     if (validFiles.length === 0) {
       setError('urls', {
-        message: 'Canot download any image.',
+        message: t('mediaLib:Cannot download any image.'),
       });
     }
     onFilesChange(validFiles);
@@ -80,7 +82,7 @@ const UploadUrl = forwardRef<UploadUrlRef, Props>(({ onFilesChange }, ref) => {
         />
         <div className="invalid-feedback">{errors.urls?.message}</div>
         <small className="form-text text-muted">
-          Separate your URL links by a carriage return.
+          {t('mediaLib:Separate your URL links by a carriage return.')}
         </small>
       </div>
     </form>

@@ -12,6 +12,7 @@ import { FormData } from './interface';
 import styles from './EdittingPostPreview.module.scss';
 import cs from 'classnames';
 import TrashSvg from '@/components/svgs/TrashSvg';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   post?: Post;
@@ -21,6 +22,7 @@ interface Props {
 const EdittingPostPreview = ({ post, openMediaLib }: Props) => {
   const [editingField, setEditingField] = useState<string>(null);
   const { register, watch, getValues, setValue } = useFormContext<FormData>();
+  const { t } = useTranslation();
   const displayType = watch('displayType');
   const image = watch('image');
 
@@ -97,7 +99,9 @@ const EdittingPostPreview = ({ post, openMediaLib }: Props) => {
                     styles['feature-image'],
                   )}
                 >
-                  <span className="text-light">Click to select an image.</span>
+                  <span className="text-light">
+                    {t('Click to select an image.')}
+                  </span>
                 </div>
               )}
             </a>
@@ -120,7 +124,7 @@ const EdittingPostPreview = ({ post, openMediaLib }: Props) => {
                   className="form-control"
                 />
               ) : (
-                getValues('description') || <i>Enter description</i>
+                getValues('description') || <i>{t('Enter description')}</i>
               )}
             </h3>
           </a>

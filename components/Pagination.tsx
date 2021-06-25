@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import cs from 'classnames';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   currentPage: number;
@@ -20,6 +21,7 @@ const Pagination = ({
   listPath = '',
   onNavigate,
 }: Props) => {
+  const { t } = useTranslation();
   const pages = useMemo(() => {
     const totalPages = Math.ceil(totalCount / perPage);
     const pages: number[] = [];
@@ -56,7 +58,7 @@ const Pagination = ({
             href={`${listPath}?page=${currentPage - 1}`}
             onClick={handleLinkClick}
           >
-            Prev
+            {t('pagination:Prev')}
           </a>
         </li>
 
@@ -85,7 +87,7 @@ const Pagination = ({
             href={`${listPath}?page=${currentPage + 1}`}
             onClick={handleLinkClick}
           >
-            Next
+            {t('pagination:Next')}
           </a>
         </li>
       </ul>

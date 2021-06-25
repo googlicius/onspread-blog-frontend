@@ -7,6 +7,7 @@ import { useCommentsQuery } from '@/graphql/generated';
 import { useCreateCommentMutation } from '@/graphql/generated';
 import { selectMe } from '@/redux/meProducer';
 import styles from './Comments.module.scss';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   postId: string;
@@ -23,6 +24,7 @@ const Comments = ({ postId }: Props): JSX.Element => {
     reset,
     formState: { errors, isSubmitting },
   } = useForm<CommentFormData>();
+  const { t } = useTranslation();
   const me = useSelector(selectMe);
 
   const { data, refetch } = useCommentsQuery({
@@ -64,7 +66,7 @@ const Comments = ({ postId }: Props): JSX.Element => {
                 required: { value: true, message: 'Content is required' },
               })}
               disabled={isSubmitting}
-              placeholder="Share your thought"
+              placeholder={t('Share your thought')}
               className={cs('form-control', {
                 'is-invalid': !!errors.content,
               })}
@@ -105,7 +107,7 @@ const Comments = ({ postId }: Props): JSX.Element => {
           </div>
         ))
       ) : (
-        <i className={styles.comment__empty}>There is no comment yet</i>
+        <i className={styles.comment__empty}>{t('There is no comment yet')}</i>
       )}
     </>
   );

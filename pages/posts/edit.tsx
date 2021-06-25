@@ -16,6 +16,7 @@ import { selectMe } from '@/redux/meProducer';
 import EditFormStep1 from '@/components/posts/edit/EditFormStep1';
 import EditFormStep2 from '@/components/posts/edit/EditFormStep2';
 import { FormData } from '@/components/posts/edit/interface';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   postData: PostBySlugQuery;
@@ -25,6 +26,7 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const { postBySlug } = postData;
+  const { t } = useTranslation();
 
   const me = useSelector(selectMe);
   const [updatePostMutation] = useUpdatePostMutation();
@@ -45,7 +47,7 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
   } = methods;
 
   const checkPageUnSaved = useCallback(() => {
-    if (isDirty && !confirm('Do you want to cancel editing?')) {
+    if (isDirty && !confirm(t('Do you want to cancel editing?'))) {
       router.events.emit('routeChangeComplete');
       throw 'Abort route change. Please ignore this error.';
     }
@@ -79,13 +81,13 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
 
     router.events.off('routeChangeStart', checkPageUnSaved);
     router.push(`/posts/${updatePostData.updatePost.post.slug}`);
-    toast.dark('Post updated successfully');
+    toast.dark(t('Post updated successfully.'));
   };
 
   return (
     <>
       <Head>
-        <title>Post Edit</title>
+        <title>{t('Post Edit')}</title>
       </Head>
 
       <FormProvider {...methods}>

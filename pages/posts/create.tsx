@@ -13,6 +13,7 @@ import { selectMe } from '@/redux/meProducer';
 import EditFormStep1 from '@/components/posts/edit/EditFormStep1';
 import EditFormStep2 from '@/components/posts/edit/EditFormStep2';
 import { FormData } from '@/components/posts/edit/interface';
+import { useTranslation } from 'react-i18next';
 
 const PostCreate = (): JSX.Element => {
   const router = useRouter();
@@ -20,6 +21,7 @@ const PostCreate = (): JSX.Element => {
 
   const me = useSelector(selectMe);
   const [createPostMutation] = useCreatePostMutation();
+  const { t } = useTranslation();
   const methods = useForm<FormData>({
     defaultValues: {
       title: null,
@@ -36,7 +38,7 @@ const PostCreate = (): JSX.Element => {
   } = methods;
 
   const checkUnSavedForm = useCallback(() => {
-    if (isDirty && !confirm('Do you want to cancel creating?')) {
+    if (isDirty && !confirm(t('Do you want to cancel creating?'))) {
       router.events.emit('routeChangeComplete');
       throw 'Abort route change. Please ignore this error.';
     }
@@ -64,13 +66,13 @@ const PostCreate = (): JSX.Element => {
 
     router.events.off('routeChangeStart', checkUnSavedForm);
     router.push(`/posts/${createPostData.createPost.post.slug}`);
-    toast.dark('Post created successfully');
+    toast.dark(t('Post created successfully.'));
   };
 
   return (
     <>
       <Head>
-        <title>Post Create</title>
+        <title>{t('Post Create')}</title>
       </Head>
 
       <FormProvider {...methods}>

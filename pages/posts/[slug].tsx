@@ -31,6 +31,7 @@ import styles from './PostDetail.module.scss';
 import format from 'date-fns/format';
 import get from 'lodash/get';
 import TogglePublish from './TogglePublish';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   postData: PostBySlugQuery;
@@ -43,6 +44,7 @@ const PostDetail = (props: Props): JSX.Element => {
   const [totalHeart, setTotalHeart] = useState(0);
   const { slug } = router.query;
   const [giveHeartMutation] = useGiveHeartMutation();
+  const { t } = useTranslation();
 
   const me = useSelector(selectMe);
 
@@ -135,7 +137,7 @@ const PostDetail = (props: Props): JSX.Element => {
               <Link
                 href={`/posts/edit?slug=${encodeURIComponent(slug as string)}`}
               >
-                Edit
+                {t('Edit')}
               </Link>
             </li>
 
@@ -253,7 +255,7 @@ const PostDetail = (props: Props): JSX.Element => {
                 </button>
               }
             >
-              Comments ({countCommentData?.countPostComment})
+              {t('Comments')} ({countCommentData?.countPostComment})
             </ModalHeader>
 
             <ModalBody>

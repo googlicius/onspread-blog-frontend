@@ -10,6 +10,7 @@ import FileItem from './FileItem';
 import styles from './styles.module.scss';
 import Pagination from '@/components/Pagination';
 import { perPage } from './constants';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   data: FilesConnectionQuery;
@@ -39,6 +40,7 @@ const FileList = ({
   onSearch,
 }: Props) => {
   const modalBodyRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
   const { register, handleSubmit } = useForm<SearchForm>();
 
   useEffect(() => {
@@ -76,7 +78,7 @@ const FileList = ({
             <input
               {...register('q')}
               className="form-control shadow-none"
-              placeholder="Search images..."
+              placeholder={t('mediaLib:Search images...')}
             />
           </InputGroup>
         </form>
@@ -93,7 +95,7 @@ const FileList = ({
       >
         <div className="d-flex flex-column align-items-end mb-3">
           <button className="btn btn-primary" onClick={onAddMoreAssetsClick}>
-            Add more images
+            {t('mediaLib:Add more images')}
           </button>
         </div>
 
@@ -128,11 +130,11 @@ const FileList = ({
 
       <div className="modal-footer d-flex justify-content-between">
         <button className="btn btn-outline" onClick={toggle}>
-          Cancel
+          {t('Cancel')}
         </button>
 
         <button className="btn btn-success" onClick={onFinishClick}>
-          Finish
+          {t('Finish')}
         </button>
       </div>
     </>

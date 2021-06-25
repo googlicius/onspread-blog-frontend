@@ -14,6 +14,7 @@ import styles from './Navigation.module.scss';
 import debounce from 'lodash/debounce';
 import { useLogoutMutation } from '@/graphql/generated';
 import client from '@/apollo-client';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   isTransparentBg?: boolean;
@@ -29,6 +30,7 @@ export default function Navigation(props: Props): JSX.Element {
   const me = useSelector(selectMe);
   const dispatch = useDispatch();
   const [logoutMutation] = useLogoutMutation();
+  const { t } = useTranslation();
 
   const handleLogOut = async () => {
     await logoutMutation();
@@ -158,21 +160,23 @@ export default function Navigation(props: Props): JSX.Element {
 
                 <DropdownMenu right>
                   <Link href="/posts/create">
-                    <a className="dropdown-item">Create new Post</a>
+                    <a className="dropdown-item">{t('Create new Post')}</a>
                   </Link>
 
                   <Link href="/me">
-                    <a className="dropdown-item">Profile</a>
+                    <a className="dropdown-item">{t('Profile')}</a>
                   </Link>
 
-                  <DropdownItem onClick={handleLogOut}>Logout</DropdownItem>
+                  <DropdownItem onClick={handleLogOut}>
+                    {t('Logout')}
+                  </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
             </>
           ) : (
             <li className="nav-item">
               <Link href={`/login`}>
-                <a className="nav-link">Login</a>
+                <a className="nav-link">{t('Login')}</a>
               </Link>
             </li>
           )}

@@ -9,6 +9,7 @@ import store from '@/redux/store';
 import 'react-toastify/dist/ReactToastify.css';
 import 'nprogress/nprogress.css';
 import '@/styles/scss/styles.scss';
+import '@/i18n';
 import { meQueryAsync } from '@/redux/meProducer';
 
 let progressBarTimeout = null;
