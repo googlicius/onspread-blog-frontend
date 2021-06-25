@@ -1,15 +1,15 @@
 import { useEffect, useRef } from 'react';
+import { NextPage } from 'next';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
-import Head from 'next/head';
+import { useTranslation, Trans } from 'react-i18next';
 import cs from 'classnames';
 import { selectMe, setLoggedInUser } from '@/redux/meProducer';
 import { useLoginMutation } from '@/graphql/generated';
 import Navigation from '@/components/layout/Navigation/Navigation';
 import styles from './index.module.scss';
-import { NextPage } from 'next';
-import { useTranslation } from 'react-i18next';
 
 interface FormData {
   identifier: string;
@@ -84,7 +84,10 @@ const Login: NextPage = () => {
 
                   <input
                     {...register('identifier', {
-                      required: { value: true, message: 'Email is required.' },
+                      required: {
+                        value: true,
+                        message: t('Email is required.'),
+                      },
                     })}
                     ref={emailInputRef}
                     type="email"
@@ -119,9 +122,11 @@ const Login: NextPage = () => {
                 </div>
 
                 <div className="form-group">
-                  <p className="text-center">
-                    By signing up you accept our <a href="#">Terms Of Use</a>
-                  </p>
+                  <small className="text-center">
+                    <Trans i18nKey="termOfUseAcceptance">
+                      By signing up you accept our <a href="#">term of use</a>.
+                    </Trans>
+                  </small>
                 </div>
 
                 <div className="text-center">
@@ -150,17 +155,18 @@ const Login: NextPage = () => {
                 <div className="mb-3">
                   <p className="text-center">
                     <a href="#" className={` btn mybtn ${styles.google}`}>
-                      <i className="fa fa-google-plus"></i> Signup using Google
+                      <i className="fa fa-google-plus"></i>{' '}
+                      {t('Signup using Google')}
                     </a>
                   </p>
                 </div>
 
                 <div className="form-group">
                   <p className="text-center">
-                    Don&apos;t have account?{' '}
-                    <a href="#" id="signup">
-                      Sign up here
-                    </a>
+                    <Trans i18nKey="dontHaveAccount">
+                      Don&apos;t have account?
+                      <a href="#">Sign up here</a>
+                    </Trans>
                   </p>
                 </div>
               </form>

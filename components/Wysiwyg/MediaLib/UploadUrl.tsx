@@ -1,9 +1,10 @@
 import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { TFunction } from 'i18next';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import cs from 'classnames';
 import downloadFile from '@/utils/download-file';
-import { useTranslation } from 'react-i18next';
 
 interface Props {
   onFilesChange: (files: File[]) => void;
@@ -18,7 +19,7 @@ interface UrlUploadFormData {
   urls: string;
 }
 
-const urlValidation = (url: string) => {
+const urlValidation = (t: TFunction) => (url: string) => {
   const urls = url.split('\n');
   try {
     urls.forEach((url) => {
@@ -26,7 +27,7 @@ const urlValidation = (url: string) => {
     });
     return true;
   } catch (error) {
-    return 'Invalid URL.';
+    return t('mediaLib:Invalid URL.');
   }
 };
 
@@ -70,9 +71,9 @@ const UploadUrl = forwardRef<UploadUrlRef, Props>(({ onFilesChange }, ref) => {
         <label>URL</label>
         <textarea
           {...register('urls', {
-            required: { value: true, message: 'Url is required.' },
+            required: { value: true, message: t('mediaLib:Url is required.') },
             validate: {
-              url: urlValidation,
+              url: urlValidation(t),
             },
           })}
           ref={textareaRef}
