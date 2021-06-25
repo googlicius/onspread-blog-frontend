@@ -4,21 +4,32 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import { useCreatePostMutation } from '@/graphql/generated';
+import {
+  Enum_Post_Contenttype,
+  Enum_Post_Displaytype,
+  useCreatePostMutation,
+} from '@/graphql/generated';
 import { selectMe } from '@/redux/meProducer';
 import EditFormStep1 from '@/components/posts/edit/EditFormStep1';
 import EditFormStep2 from '@/components/posts/edit/EditFormStep2';
 import { FormData } from '@/components/posts/edit/interface';
-import Loading from '@/components/Loading/Loading';
 
 const PostCreate = (): JSX.Element => {
   const router = useRouter();
-  const [formDefaultValues, setFormDefaultValues] = useState<FormData>(null);
   const [step, setStep] = useState(1);
 
   const me = useSelector(selectMe);
   const [createPostMutation] = useCreatePostMutation();
-  const methods = useForm();
+  const methods = useForm<FormData>({
+    defaultValues: {
+      title: null,
+      content: null,
+      contentType: Enum_Post_Contenttype.Html,
+      displayType: Enum_Post_Displaytype.WithImage,
+      description: null,
+      category: null,
+    },
+  });
   const {
     handleSubmit,
     formState: { isDirty },
@@ -30,17 +41,6 @@ const PostCreate = (): JSX.Element => {
       throw 'Abort route change. Please ignore this error.';
     }
   }, [isDirty]);
-
-  useEffect(() => {
-    setFormDefaultValues({
-      title: null,
-      content: null,
-      contentType: null,
-      displayType: null,
-      description: null,
-      category: null,
-    });
-  }, []);
 
   useEffect(() => {
     router.events.on('routeChangeStart', checkUnSavedForm);
@@ -64,7 +64,7 @@ const PostCreate = (): JSX.Element => {
 
     router.events.off('routeChangeStart', checkUnSavedForm);
     router.push(`/posts/${createPostData.createPost.post.slug}`);
-    toast.dark('Post updated successfully');
+    toast.dark('Post created successfully');
   };
 
   return (
@@ -73,30 +73,16 @@ const PostCreate = (): JSX.Element => {
         <title>Post Create</title>
       </Head>
 
-      {formDefaultValues ? (
-        <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)}>
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {
             {
-              {
-                1: (
-                  <EditFormStep1
-                    defaultValues={formDefaultValues}
-                    onNextStep={() => setStep(2)}
-                  />
-                ),
-                2: (
-                  <EditFormStep2
-                    defaultValues={formDefaultValues}
-                    goBack={() => setStep(1)}
-                  />
-                ),
-              }[step]
-            }
-          </form>
-        </FormProvider>
-      ) : (
-        <Loading />
-      )}
+              1: <EditFormStep1 onNextStep={() => setStep(2)} />,
+              2: <EditFormStep2 goBack={() => setStep(1)} />,
+            }[step]
+          }
+        </form>
+      </FormProvider>
     </>
   );
 };

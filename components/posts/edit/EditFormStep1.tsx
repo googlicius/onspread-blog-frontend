@@ -1,4 +1,3 @@
-import { Enum_Post_Contenttype } from '@/graphql/generated';
 import { useFormContext } from 'react-hook-form';
 import cs from 'classnames';
 import Navigation from '../../layout/Navigation/Navigation';
@@ -63,7 +62,6 @@ const EditFormStep1 = ({ onNextStep }: Props) => {
             <input
               {...register('contentType', { required: true })}
               type="hidden"
-              defaultValue={Enum_Post_Contenttype.Html}
             />
 
             <div className="form-group">
