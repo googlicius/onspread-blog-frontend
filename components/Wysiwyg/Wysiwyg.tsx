@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './Wysiwyg.module.scss';
-import MediaLib from './MediaLib/MediaLib';
 import { UploadFile } from '@/graphql/generated';
+import MediaLib from './MediaLib/MediaLib';
 
 interface Props {
   onChange: (input) => void;
@@ -12,23 +12,25 @@ interface Props {
 }
 
 const Wysiwyg = React.forwardRef<any, Props>(
-  ({ onChange, name, value, placeholder }, ref) => {
+  ({ name, value, placeholder, onChange }, ref) => {
     const editorRef = useRef<any>();
     const [editorLoaded, setEditorLoaded] = useState(false);
     const { CKEditor, StrapiAdminEditor } = editorRef.current || {};
 
     const [ckEditor, setCkEditor] = useState(null);
-    const [isOpen, setIsOpen] = useState(false);
+    const [isMediaLibOpen, setIsMediaLibOpen] = useState(false);
 
     const handleEditorReady = (editor) => {
+      if (!editor) {
+        return;
+      }
+
       setCkEditor(editor);
 
       if (value) {
         editor.setData(value);
       }
     };
-
-    const handleToggle = () => setIsOpen((prev) => !prev);
 
     useEffect(() => {
       editorRef.current = {
@@ -38,7 +40,11 @@ const Wysiwyg = React.forwardRef<any, Props>(
       setEditorLoaded(true);
     }, []);
 
-    const handleChange = (data: UploadFile) => {
+    const handleMediaLibToggle = () => {
+      setIsMediaLibOpen((prev) => !prev);
+    };
+
+    const handleInsertImage = (data: UploadFile) => {
       if (data.mime.includes('image')) {
         ckEditor.model.change((writer) => {
           const imageElement = writer.createElement('image', {
@@ -83,7 +89,7 @@ const Wysiwyg = React.forwardRef<any, Props>(
                 'redo',
               ],
               insertImage: {
-                openStrapiMediaLib: handleToggle,
+                openStrapiMediaLib: handleMediaLibToggle,
               },
               placeholder,
             }}
@@ -100,9 +106,9 @@ const Wysiwyg = React.forwardRef<any, Props>(
         </div>
 
         <MediaLib
-          isOpen={isOpen}
-          toggle={handleToggle}
-          onChange={handleChange}
+          isOpen={isMediaLibOpen}
+          toggle={handleMediaLibToggle}
+          onChange={handleInsertImage}
         />
       </>
     );

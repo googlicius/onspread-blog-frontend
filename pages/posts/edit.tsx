@@ -16,7 +16,6 @@ import { selectMe } from '@/redux/meProducer';
 import EditFormStep1 from '@/components/posts/edit/EditFormStep1';
 import EditFormStep2 from '@/components/posts/edit/EditFormStep2';
 import { FormData } from '@/components/posts/edit/interface';
-import Loading from '@/components/Loading/Loading';
 
 interface Props {
   postData: PostBySlugQuery;
@@ -24,12 +23,22 @@ interface Props {
 
 const PostEdit = ({ postData }: Props): JSX.Element => {
   const router = useRouter();
-  const [formDefaultValues, setFormDefaultValues] = useState<FormData>(null);
   const [step, setStep] = useState(1);
+  const { postBySlug } = postData;
 
   const me = useSelector(selectMe);
   const [updatePostMutation] = useUpdatePostMutation();
-  const methods = useForm();
+  const methods = useForm<FormData>({
+    defaultValues: {
+      content: postBySlug.content,
+      image: postBySlug.image.id,
+      contentType: postBySlug.contentType,
+      displayType: postBySlug.displayType,
+      title: postBySlug.title,
+      description: postBySlug.description,
+      category: postBySlug.category.id,
+    },
+  });
   const {
     handleSubmit,
     formState: { isDirty },
@@ -47,26 +56,6 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
       router.back();
     }
   }, [me, postData]);
-
-  useEffect(() => {
-    const {
-      content,
-      contentType,
-      displayType,
-      title,
-      description,
-      category,
-    } = postData.postBySlug;
-
-    setFormDefaultValues({
-      content,
-      contentType,
-      displayType,
-      title,
-      description,
-      category: category.id,
-    });
-  }, [postData]);
 
   useEffect(() => {
     router.events.on('routeChangeStart', checkPageUnSaved);
@@ -99,31 +88,21 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
         <title>Post Edit</title>
       </Head>
 
-      {formDefaultValues ? (
-        <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)}>
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {
             {
-              {
-                1: (
-                  <EditFormStep1
-                    defaultValues={formDefaultValues}
-                    onNextStep={() => setStep(2)}
-                  />
-                ),
-                2: (
-                  <EditFormStep2
-                    post={postData?.postBySlug as Post}
-                    defaultValues={formDefaultValues}
-                    goBack={() => setStep(1)}
-                  />
-                ),
-              }[step]
-            }
-          </form>
-        </FormProvider>
-      ) : (
-        <Loading />
-      )}
+              1: <EditFormStep1 onNextStep={() => setStep(2)} />,
+              2: (
+                <EditFormStep2
+                  post={postData?.postBySlug as Post}
+                  goBack={() => setStep(1)}
+                />
+              ),
+            }[step]
+          }
+        </form>
+      </FormProvider>
     </>
   );
 };

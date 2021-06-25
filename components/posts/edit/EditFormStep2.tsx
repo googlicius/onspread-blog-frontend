@@ -1,16 +1,17 @@
+import { useState } from 'react';
 import Navigation from '@/components/layout/Navigation/Navigation';
 import { Controller, useFormContext } from 'react-hook-form';
 import ReactSelect from 'react-select';
-// import cs from 'classnames';
+import cs from 'classnames';
 import { FormData } from './interface';
-import EditedPostPreview from './EditedPostPreview';
-import { Enum_Post_Displaytype, Post } from '@/graphql/generated';
+import EdittingPostPreview from './EdittingPostPreview';
+import { Enum_Post_Displaytype, Post, UploadFile } from '@/graphql/generated';
 import Option from '@/types/Option';
 import CategorySelect from './CategorySelect';
+import MediaLib from '@/components/Wysiwyg/MediaLib/MediaLib';
 
 interface Props {
   post?: Post;
-  defaultValues: FormData;
   goBack: () => void;
 }
 
@@ -33,11 +34,21 @@ const DisplayTypeOptions: Option[] = [
   },
 ];
 
-const EditFormStep2 = ({ post, defaultValues, goBack }: Props) => {
+const EditFormStep2 = ({ post, goBack }: Props) => {
   const {
     control,
-    formState: { isSubmitting },
-  } = useFormContext();
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useFormContext<FormData>();
+  const [isMediaLibOpen, setIsMediaLibOpen] = useState(false);
+
+  const handleMediaChange = (data: UploadFile) => {
+    setValue('image', data.id);
+  };
+
+  const handleToggleMediaLib = () => {
+    setIsMediaLibOpen((prev) => !prev);
+  };
 
   return (
     <>
@@ -62,7 +73,10 @@ const EditFormStep2 = ({ post, defaultValues, goBack }: Props) => {
           <div className="col-lg-8 col-md-10 mx-auto">
             <h2>Preview</h2>
 
-            <EditedPostPreview post={post} defaultValues={defaultValues} />
+            <EdittingPostPreview
+              post={post}
+              openMediaLib={handleToggleMediaLib}
+            />
 
             <div className="row">
               <div className="col-md-6">
@@ -79,12 +93,22 @@ const EditFormStep2 = ({ post, defaultValues, goBack }: Props) => {
                         message: 'Category is required',
                       },
                     }}
-                    defaultValue={defaultValues.category}
                     render={({ field }) => {
                       const { onChange, ...rest } = field;
                       return (
                         <CategorySelect
                           {...rest}
+                          className={cs({
+                            'is-invalid': !!errors.category,
+                          })}
+                          styles={{
+                            control: (style) => ({
+                              ...style,
+                              borderColor: errors.category
+                                ? 'red'
+                                : style.borderColor,
+                            }),
+                          }}
                           onChange={(data: Option) => {
                             onChange(data.value);
                           }}
@@ -92,6 +116,9 @@ const EditFormStep2 = ({ post, defaultValues, goBack }: Props) => {
                       );
                     }}
                   />
+                  <div className="invalid-feedback">
+                    {errors.category?.message}
+                  </div>
                 </div>
               </div>
 
@@ -103,7 +130,6 @@ const EditFormStep2 = ({ post, defaultValues, goBack }: Props) => {
                   <Controller
                     name="displayType"
                     control={control}
-                    defaultValue={defaultValues.displayType}
                     render={({ field }) => {
                       const { onChange, value, ...rest } = field;
 
@@ -130,6 +156,12 @@ const EditFormStep2 = ({ post, defaultValues, goBack }: Props) => {
           </div>
         </div>
       </div>
+
+      <MediaLib
+        isOpen={isMediaLibOpen}
+        toggle={() => setIsMediaLibOpen(!isMediaLibOpen)}
+        onChange={handleMediaChange}
+      />
     </>
   );
 };

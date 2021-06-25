@@ -6,6 +6,7 @@ import {
 export interface FormData {
   title: string;
   content: string;
+  image?: string;
   contentType: Enum_Post_Contenttype;
   description?: string;
   category: string;

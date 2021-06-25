@@ -31,7 +31,7 @@ Router.events.on('routeChangeStart', startProgressBar);
 Router.events.on('routeChangeComplete', stopProgressBar);
 Router.events.on('routeChangeError', stopProgressBar);
 
-const InitApp: React.FC = ({ children }) => {
+function MyApp({ Component, pageProps }): JSX.Element {
   const [initialized, setInitialized] = useState(false);
 
   // Restore cache generated from server side.
@@ -46,33 +46,22 @@ const InitApp: React.FC = ({ children }) => {
     return null;
   }
 
-  return <>{children}</>;
-};
-
-interface Props {
-  Component: React.FC;
-  pageProps: any;
-}
-
-function MyApp({ Component, pageProps }: Props): JSX.Element {
   return (
     <ApolloProvider client={client}>
       <Provider store={store}>
-        <InitApp>
-          <Component {...pageProps} />
-          <ToastContainer
-            position="top-center"
-            autoClose={3000}
-            newestOnTop={false}
-            closeOnClick
-            hideProgressBar
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            toastStyle={{ fontSize: '14px' }}
-          />
-        </InitApp>
+        <Component {...pageProps} />
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          newestOnTop={false}
+          closeOnClick
+          hideProgressBar
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          toastStyle={{ fontSize: '14px' }}
+        />
       </Provider>
     </ApolloProvider>
   );

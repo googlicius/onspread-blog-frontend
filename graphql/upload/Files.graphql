@@ -1,0 +1,8 @@
+query Files($sort: String, $limit: Int, $start: Int, $where: JSON) {
+  files(sort: $sort, limit: $limit, start: $start, where: $where) {
+    id
+    url
+    formats
+    provider
+  }
+}

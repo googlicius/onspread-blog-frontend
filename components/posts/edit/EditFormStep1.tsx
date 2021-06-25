@@ -7,17 +7,16 @@ import { FormData } from './interface';
 import { useRouter } from 'next/router';
 
 interface Props {
-  defaultValues: FormData;
   onNextStep: () => void;
 }
 
-const EditFormStep1 = ({ defaultValues, onNextStep }: Props) => {
+const EditFormStep1 = ({ onNextStep }: Props) => {
   const {
     register,
     getValues,
     formState: { isSubmitting, errors, isDirty },
     trigger,
-  } = useFormContext();
+  } = useFormContext<FormData>();
   const router = useRouter();
 
   const handleCancel = () => {
@@ -58,7 +57,7 @@ const EditFormStep1 = ({ defaultValues, onNextStep }: Props) => {
         <div className="row">
           <div className="col-lg-8 col-md-10 mx-auto">
             <h2 className="mb-4">
-              {defaultValues.title ? 'Edit Post' : 'Create new Post'}
+              {getValues('title') ? 'Edit Post' : 'Create new Post'}
             </h2>
 
             <input
@@ -76,7 +75,6 @@ const EditFormStep1 = ({ defaultValues, onNextStep }: Props) => {
                 className={cs('form-control', 'shadow-none', {
                   'is-invalid': !!errors.title,
                 })}
-                defaultValue={defaultValues.title}
                 placeholder="Title"
               />
               <div className="invalid-feedback">{errors.title?.message}</div>
@@ -96,7 +94,7 @@ const EditFormStep1 = ({ defaultValues, onNextStep }: Props) => {
                       message: 'Content is required.',
                     },
                   })}
-                  value={getValues('content') || defaultValues.content}
+                  value={getValues('content')}
                   placeholder="Type the content here"
                 />
               </div>

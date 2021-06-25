@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import PropTypes from 'prop-types';
@@ -48,14 +48,24 @@ const FileList = ({
     });
   }, [data]);
 
-  const onSubmit = (formData: SearchForm) => {
-    onSearch(formData.q);
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    // Prevent submitting parent form.
+    if (e) {
+      e.preventDefault();
+      if (typeof e.stopPropagation === 'function') {
+        e.stopPropagation();
+      }
+    }
+
+    return handleSubmit((formData: SearchForm) => {
+      onSearch(formData.q);
+    })(e);
   };
 
   return (
     <>
       <div className="modal-header d-flex align-items-center py-0">
-        <form className="flex-grow-1" onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex-grow-1" onSubmit={onSubmit}>
           <InputGroup className={styles['media-lib__input-group-search']}>
             <InputGroupAddon addonType="prepend">
               <InputGroupText>

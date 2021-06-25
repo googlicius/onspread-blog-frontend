@@ -1,0 +1,15 @@
+.feature-image {
+  background-color: rgb(51, 55, 64);
+  height: 150px;
+  position: relative;
+}
+
+.buttons {
+  top: 10px;
+  right: 10px;
+  position: absolute;
+
+  button {
+    border-radius: 5px;
+  }
+}

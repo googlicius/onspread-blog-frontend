@@ -446,17 +446,6 @@ export type MutationUnPublishPostArgs = {
   id: Scalars['ID'];
 };
 
-export type PermissionInput = {
-  type: Scalars['String'];
-  controller: Scalars['String'];
-  action: Scalars['String'];
-  enabled: Scalars['Boolean'];
-  policy?: Maybe<Scalars['String']>;
-  role?: Maybe<Scalars['ID']>;
-  created_by?: Maybe<Scalars['ID']>;
-  updated_by?: Maybe<Scalars['ID']>;
-};
-
 export type Post = {
   __typename?: 'Post';
   id: Scalars['ID'];
@@ -1447,17 +1436,6 @@ export type EditLocaleInput = {
   updated_by?: Maybe<Scalars['ID']>;
 };
 
-export type EditPermissionInput = {
-  type?: Maybe<Scalars['String']>;
-  controller?: Maybe<Scalars['String']>;
-  action?: Maybe<Scalars['String']>;
-  enabled?: Maybe<Scalars['Boolean']>;
-  policy?: Maybe<Scalars['String']>;
-  role?: Maybe<Scalars['ID']>;
-  created_by?: Maybe<Scalars['ID']>;
-  updated_by?: Maybe<Scalars['ID']>;
-};
-
 export type EditPostInput = {
   title?: Maybe<Scalars['String']>;
   content?: Maybe<Scalars['String']>;
@@ -1710,7 +1688,7 @@ export type PostBySlugQuery = (
       & Pick<Category, 'id'>
     )>, image?: Maybe<(
       { __typename?: 'UploadFile' }
-      & Pick<UploadFile, 'url' | 'provider' | 'formats'>
+      & Pick<UploadFile, 'id' | 'url' | 'provider' | 'formats'>
     )>, user?: Maybe<(
       { __typename?: 'UsersPermissionsUser' }
       & Pick<UsersPermissionsUser, 'id' | 'username'>
@@ -1788,12 +1766,31 @@ export type UpdatePostMutation = (
     & { post?: Maybe<(
       { __typename?: 'Post' }
       & Pick<Post, 'id' | 'slug' | 'title' | 'description' | 'content' | 'contentType' | 'displayType'>
-      & { category?: Maybe<(
+      & { image?: Maybe<(
+        { __typename?: 'UploadFile' }
+        & Pick<UploadFile, 'id' | 'url' | 'provider' | 'formats'>
+      )>, category?: Maybe<(
         { __typename?: 'Category' }
         & Pick<Category, 'id' | 'name'>
       )> }
     )> }
   )> }
+);
+
+export type FilesQueryVariables = Exact<{
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+}>;
+
+
+export type FilesQuery = (
+  { __typename?: 'Query' }
+  & { files?: Maybe<Array<Maybe<(
+    { __typename?: 'UploadFile' }
+    & Pick<UploadFile, 'id' | 'url' | 'formats' | 'provider'>
+  )>>> }
 );
 
 export type FilesConnectionQueryVariables = Exact<{
@@ -2213,6 +2210,7 @@ export const PostBySlugDocument = gql`
       id
     }
     image {
+      id
       url
       provider
       formats
@@ -2389,6 +2387,12 @@ export const UpdatePostDocument = gql`
     post {
       id
       slug
+      image {
+        id
+        url
+        provider
+        formats
+      }
       title
       description
       content
@@ -2428,6 +2432,47 @@ export function useUpdatePostMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UpdatePostMutationHookResult = ReturnType<typeof useUpdatePostMutation>;
 export type UpdatePostMutationResult = Apollo.MutationResult<UpdatePostMutation>;
 export type UpdatePostMutationOptions = Apollo.BaseMutationOptions<UpdatePostMutation, UpdatePostMutationVariables>;
+export const FilesDocument = gql`
+    query Files($sort: String, $limit: Int, $start: Int, $where: JSON) {
+  files(sort: $sort, limit: $limit, start: $start, where: $where) {
+    id
+    url
+    formats
+    provider
+  }
+}
+    `;
+
+/**
+ * __useFilesQuery__
+ *
+ * To run a query within a React component, call `useFilesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFilesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFilesQuery({
+ *   variables: {
+ *      sort: // value for 'sort'
+ *      limit: // value for 'limit'
+ *      start: // value for 'start'
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useFilesQuery(baseOptions?: Apollo.QueryHookOptions<FilesQuery, FilesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FilesQuery, FilesQueryVariables>(FilesDocument, options);
+      }
+export function useFilesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FilesQuery, FilesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FilesQuery, FilesQueryVariables>(FilesDocument, options);
+        }
+export type FilesQueryHookResult = ReturnType<typeof useFilesQuery>;
+export type FilesLazyQueryHookResult = ReturnType<typeof useFilesLazyQuery>;
+export type FilesQueryResult = Apollo.QueryResult<FilesQuery, FilesQueryVariables>;
 export const FilesConnectionDocument = gql`
     query FilesConnection($sort: String, $limit: Int, $start: Int, $where: JSON) {
   filesConnection(sort: $sort, limit: $limit, start: $start, where: $where) {

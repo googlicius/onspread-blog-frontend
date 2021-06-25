@@ -3,6 +3,12 @@ mutation UpdatePost($input: updatePostInput) {
     post {
       id
       slug
+      image {
+        id
+        url
+        provider
+        formats
+      }
       title
       description
       content

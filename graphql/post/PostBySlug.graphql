@@ -13,6 +13,7 @@ query PostBySlug($slug: String!) {
       id
     }
     image {
+      id
       url
       provider
       formats
