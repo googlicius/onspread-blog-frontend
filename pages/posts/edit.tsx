@@ -31,7 +31,7 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
   const methods = useForm<FormData>({
     defaultValues: {
       content: postBySlug.content,
-      image: postBySlug.image.id,
+      image: postBySlug.image?.id,
       contentType: postBySlug.contentType,
       displayType: postBySlug.displayType,
       title: postBySlug.title,
