@@ -1,7 +1,11 @@
 .feature-image {
   background-color: rgb(51, 55, 64);
-  height: 150px;
+  height: 200px;
   position: relative;
+
+  @media (min-width: 576px) {
+    height: 150px;
+  }
 }
 
 .buttons {

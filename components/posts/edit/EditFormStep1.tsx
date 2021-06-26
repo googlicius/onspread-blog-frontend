@@ -1,10 +1,11 @@
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import cs from 'classnames';
 import Navigation from '../../layout/Navigation/Navigation';
 import Wysiwyg from '../../Wysiwyg/Wysiwyg';
 import { FormData } from './interface';
 import { useRouter } from 'next/router';
-import { useTranslation } from 'react-i18next';
+import postStyles from '@/styles/scss/modules/post.module.scss';
 
 interface Props {
   onNextStep: () => void;
@@ -83,7 +84,7 @@ const EditFormStep1 = ({ onNextStep }: Props) => {
             <div className="form-group">
               <label>{t('Content')}</label>
               <div
-                className={cs({
+                className={cs(postStyles['post-content'], {
                   'is-invalid': !!errors.content,
                 })}
               >

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { clearLoggedInUser, selectMe } from '@/redux/meProducer';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import cs from 'classnames';
 import get from 'lodash/get';
 import {
@@ -14,7 +15,7 @@ import styles from './Navigation.module.scss';
 import debounce from 'lodash/debounce';
 import { useLogoutMutation } from '@/graphql/generated';
 import client from '@/apollo-client';
-import { useTranslation } from 'react-i18next';
+import NotificationSvg from '@/components/svgs/NotificationSvg';
 
 interface Props {
   isTransparentBg?: boolean;
@@ -141,45 +142,78 @@ export default function Navigation(props: Props): JSX.Element {
 
         <ul className="navbar-nav d-flex align-tems-center flex-row">
           {children}
-          {me.value ? (
-            <>
-              <UncontrolledDropdown tag="li" className="nav-item">
-                <DropdownToggle
-                  tag="a"
-                  role="button"
-                  className="pointer nav-link pr-0"
-                >
-                  {/* {me.value.username} */}
-                  <div className={cs(styles.navigation__avatar)}>
-                    <img
-                      src={get(me.value, 'avatar.formats.thumbnail.url')}
-                      alt={get(me.value, 'user.avatar.alternativeText')}
-                    />
+          {/* Notification */}
+          <UncontrolledDropdown tag="li" className="nav-item mr-2">
+            <DropdownToggle tag="a" role="button" className="pointer nav-link">
+              <NotificationSvg />
+            </DropdownToggle>
+
+            <DropdownMenu right>
+              <span className="dropdown-item text-secondary">
+                No notification
+              </span>
+            </DropdownMenu>
+          </UncontrolledDropdown>
+
+          {/* User menu */}
+          {/* Use IIFE to performs a switch case in JSX */}
+          {(() => {
+            switch (me.status) {
+              case 'init':
+              case 'loading':
+                return (
+                  <div className="d-flex align-items-center">
+                    <div className={cs(styles.navigation__avatar)} />
                   </div>
-                </DropdownToggle>
+                );
 
-                <DropdownMenu right>
-                  <Link href="/posts/create">
-                    <a className="dropdown-item">{t('Create new Post')}</a>
-                  </Link>
+              case 'idle':
+              default:
+                if (!me.value) {
+                  return (
+                    <li className="nav-item">
+                      <Link href={`/login`}>
+                        <a className="nav-link">{t('Login')}</a>
+                      </Link>
+                    </li>
+                  );
+                }
 
-                  <Link href="/me">
-                    <a className="dropdown-item">{t('Profile')}</a>
-                  </Link>
+                return (
+                  <UncontrolledDropdown tag="li" className="nav-item">
+                    <DropdownToggle
+                      tag="a"
+                      role="button"
+                      className="nav-link px-0"
+                    >
+                      {/* {me.value.username} */}
+                      <div className={cs(styles.navigation__avatar)}>
+                        <img
+                          src={get(me.value, 'avatar.formats.thumbnail.url')}
+                          alt={get(me.value, 'user.avatar.alternativeText')}
+                        />
+                      </div>
+                    </DropdownToggle>
 
-                  <DropdownItem onClick={handleLogOut}>
-                    {t('Logout')}
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-            </>
-          ) : (
-            <li className="nav-item">
-              <Link href={`/login`}>
-                <a className="nav-link">{t('Login')}</a>
-              </Link>
-            </li>
-          )}
+                    <DropdownMenu right>
+                      <Link href="/posts/create">
+                        <a className="dropdown-item">{t('Create new Post')}</a>
+                      </Link>
+
+                      <Link href="/me">
+                        <a className="dropdown-item">{t('Profile')}</a>
+                      </Link>
+
+                      <DropdownItem divider />
+
+                      <DropdownItem onClick={handleLogOut}>
+                        {t('Logout')}
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+                );
+            }
+          })()}
         </ul>
       </div>
     </nav>

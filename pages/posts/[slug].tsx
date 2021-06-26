@@ -28,6 +28,7 @@ import { ReactSVG } from 'react-svg';
 import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 import Loading from '@/components/Loading/Loading';
 import styles from './PostDetail.module.scss';
+import postStyles from '@/styles/scss/modules/post.module.scss';
 import format from 'date-fns/format';
 import get from 'lodash/get';
 import TogglePublish from './TogglePublish';
@@ -210,13 +211,13 @@ const PostDetail = (props: Props): JSX.Element => {
                   {postData.postBySlug.contentType ===
                   Enum_Post_Contenttype.Html ? (
                     <div
-                      className={styles.post__content}
+                      className={postStyles['post-content']}
                       dangerouslySetInnerHTML={{
                         __html: postData.postBySlug.content,
                       }}
                     />
                   ) : (
-                    <ReactMarkdown className={styles.post__content}>
+                    <ReactMarkdown className={postStyles['post-content']}>
                       {postData.postBySlug.content}
                     </ReactMarkdown>
                   )}
