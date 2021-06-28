@@ -8,10 +8,11 @@ import { useRouter } from 'next/router';
 import postStyles from '@/styles/scss/modules/post.module.scss';
 
 interface Props {
+  title: string;
   onNextStep: () => void;
 }
 
-const EditFormStep1 = ({ onNextStep }: Props) => {
+const EditFormStep1 = ({ title, onNextStep }: Props) => {
   const {
     register,
     getValues,
@@ -20,10 +21,6 @@ const EditFormStep1 = ({ onNextStep }: Props) => {
   } = useFormContext<FormData>();
   const router = useRouter();
   const { t } = useTranslation();
-
-  const handleCancel = () => {
-    router.back();
-  };
 
   const handleNextStep = async () => {
     const result = await trigger(['title', 'content']);
@@ -39,7 +36,7 @@ const EditFormStep1 = ({ onNextStep }: Props) => {
           <button
             type="button"
             className="btn btn-secondary btn-sm"
-            onClick={handleCancel}
+            onClick={router.back}
           >
             {t('Cancel')}
           </button>
@@ -58,9 +55,7 @@ const EditFormStep1 = ({ onNextStep }: Props) => {
       <div className="container mt-7">
         <div className="row">
           <div className="col-lg-8 col-md-10 mx-auto">
-            <h2 className="mb-4">
-              {getValues('title') ? t('Edit Post') : t('Create new Post')}
-            </h2>
+            <h2 className="mb-4">{title}</h2>
 
             <input
               {...register('contentType', { required: true })}

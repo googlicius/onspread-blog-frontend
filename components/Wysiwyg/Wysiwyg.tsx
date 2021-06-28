@@ -15,7 +15,7 @@ const Wysiwyg = React.forwardRef<any, Props>(
   ({ name, value, placeholder, onChange }, ref) => {
     const editorRef = useRef<any>();
     const [editorLoaded, setEditorLoaded] = useState(false);
-    const { CKEditor, StrapiAdminEditor } = editorRef.current || {};
+    const { CKEditor, OnspreadEditor } = editorRef.current || {};
 
     const [ckEditor, setCkEditor] = useState(null);
     const [isMediaLibOpen, setIsMediaLibOpen] = useState(false);
@@ -33,11 +33,14 @@ const Wysiwyg = React.forwardRef<any, Props>(
     };
 
     useEffect(() => {
-      editorRef.current = {
-        CKEditor: require('@ckeditor/ckeditor5-react').CKEditor,
-        StrapiAdminEditor: require('./ckeditor5-build-strapi-admin'),
-      };
-      setEditorLoaded(true);
+      async function loadEditor() {
+        editorRef.current = {
+          CKEditor: require('@ckeditor/ckeditor5-react').CKEditor,
+          OnspreadEditor: require('./ckeditor5-build-onspread'),
+        };
+        setEditorLoaded(true);
+      }
+      loadEditor();
     }, []);
 
     const handleMediaLibToggle = () => {
@@ -71,7 +74,7 @@ const Wysiwyg = React.forwardRef<any, Props>(
         <div className={styles['my-editor']}>
           <CKEditor
             ref={ref}
-            editor={StrapiAdminEditor}
+            editor={OnspreadEditor}
             config={{
               blockToolbar: [
                 'heading',
@@ -83,6 +86,7 @@ const Wysiwyg = React.forwardRef<any, Props>(
                 'indent',
                 '|',
                 'blockQuote',
+                'codeBlock',
                 'insertImage',
                 '|',
                 'undo',

@@ -10,28 +10,29 @@ import Option from '@/types/Option';
 import CategorySelect from './CategorySelect';
 import MediaLib from '@/components/Wysiwyg/MediaLib/MediaLib';
 import { useTranslation } from 'react-i18next';
+import { TFunction } from 'i18next';
 
 interface Props {
   post?: Post;
   goBack: () => void;
 }
 
-const DisplayTypeOptions: Option[] = [
+const displayTypeOptions = (t: TFunction): Option[] => [
   {
-    label: 'Select a type...',
+    label: t('Select a type...'),
     value: null,
   },
   {
+    label: t('With Image'),
     value: Enum_Post_Displaytype.WithImage,
-    label: 'With Image',
   },
   {
+    label: t('Fullscreen Image'),
     value: Enum_Post_Displaytype.FullscreenImage,
-    label: 'Fullscreen Image',
   },
   {
+    label: t('No Image'),
     value: Enum_Post_Displaytype.NoImage,
-    label: 'No Image',
   },
 ];
 
@@ -51,6 +52,8 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
   const handleToggleMediaLib = () => {
     setIsMediaLibOpen((prev) => !prev);
   };
+
+  const DisplayTypeOptions = displayTypeOptions(t);
 
   return (
     <>

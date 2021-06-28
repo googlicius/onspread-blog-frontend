@@ -94,7 +94,12 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
         <form onSubmit={handleSubmit(onSubmit)}>
           {
             {
-              1: <EditFormStep1 onNextStep={() => setStep(2)} />,
+              1: (
+                <EditFormStep1
+                  title={t('Edit Post')}
+                  onNextStep={() => setStep(2)}
+                />
+              ),
               2: (
                 <EditFormStep2
                   post={postData?.postBySlug as Post}

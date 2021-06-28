@@ -79,7 +79,12 @@ const PostCreate = (): JSX.Element => {
         <form onSubmit={handleSubmit(onSubmit)}>
           {
             {
-              1: <EditFormStep1 onNextStep={() => setStep(2)} />,
+              1: (
+                <EditFormStep1
+                  title={t('Create new Post')}
+                  onNextStep={() => setStep(2)}
+                />
+              ),
               2: <EditFormStep2 goBack={() => setStep(1)} />,
             }[step]
           }
