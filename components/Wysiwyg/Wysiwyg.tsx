@@ -33,6 +33,7 @@ const Wysiwyg = React.forwardRef<any, Props>(
     };
 
     useEffect(() => {
+      // Only load the editor on client side.
       async function loadEditor() {
         editorRef.current = {
           CKEditor: require('@ckeditor/ckeditor5-react').CKEditor,
@@ -93,7 +94,7 @@ const Wysiwyg = React.forwardRef<any, Props>(
                 'redo',
               ],
               insertImage: {
-                openStrapiMediaLib: handleMediaLibToggle,
+                openMediaLib: handleMediaLibToggle,
               },
               placeholder,
             }}

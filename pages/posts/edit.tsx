@@ -39,6 +39,8 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
       title: postBySlug.title,
       description: postBySlug.description,
       category: postBySlug.category.id,
+      story: postBySlug.story?.id,
+      storySeq: postBySlug.storySeq,
     },
   });
   const {
@@ -54,6 +56,17 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
   }, [isDirty]);
 
   useEffect(() => {
+    // Return because user is loading...
+    if (me.status !== 'idle') {
+      return;
+    }
+
+    if (!me.value) {
+      router.events.off('routeChangeStart', checkPageUnSaved);
+      router.push('/');
+      return;
+    }
+
     if (me.value?.id !== postData.postBySlug?.user?.id) {
       router.back();
     }

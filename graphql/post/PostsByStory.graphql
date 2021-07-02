@@ -1,0 +1,7 @@
+query PostsByStory($limit: Int = 100, $story: ID!) {
+  posts(limit: $limit, sort: "storySeq:asc", where: { story: $story }) {
+    id
+    title
+    storySeq
+  }
+}

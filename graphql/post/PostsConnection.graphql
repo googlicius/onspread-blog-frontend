@@ -1,20 +1,11 @@
-query PostsConnection($sort: String = "published_at:desc", $start: Int, $where: JSON) {
+query PostsConnection(
+  $sort: String = "published_at:desc"
+  $start: Int
+  $where: JSON
+) {
   postsConnection(sort: $sort, limit: 10, start: $start, where: $where) {
     values {
-      id
-      title
-      slug
-      description
-      createdAt
-      published_at
-      user {
-        username
-      }
-      image {
-        url
-        provider
-        formats
-      }
+      ...PostsConnectionFragment
     }
     aggregate {
       count

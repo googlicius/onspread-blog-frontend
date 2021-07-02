@@ -1,3 +1,5 @@
+import React, { useEffect, useMemo, useState } from 'react';
+import { Modal, ModalBody, ModalHeader, Row, Col, Container } from 'reactstrap';
 import {
   PostBySlugDocument,
   PostBySlugQuery,
@@ -8,7 +10,6 @@ import {
   Enum_Post_Displaytype,
   Post,
 } from '@/graphql/generated';
-import React, { useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import cs from 'classnames';
 import HeartBtn from '@/components/posts/HeartBtn';
@@ -25,7 +26,6 @@ import { selectMe } from '@/redux/meProducer';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { ReactSVG } from 'react-svg';
-import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 import Loading from '@/components/Loading/Loading';
 import styles from './PostDetail.module.scss';
 import postStyles from '@/styles/scss/modules/post.module.scss';
@@ -33,6 +33,7 @@ import format from 'date-fns/format';
 import get from 'lodash/get';
 import TogglePublish from './TogglePublish';
 import { useTranslation } from 'react-i18next';
+import PostPreview from '@/components/posts/PostPreview';
 
 interface Props {
   postData: PostBySlugQuery;
@@ -162,9 +163,9 @@ const PostDetail = (props: Props): JSX.Element => {
               />
             )}
 
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-8 col-md-10 mx-auto">
+          <div className="container mb-5">
+            <Row>
+              <Col lg={8} md={10} className="mx-auto">
                 <div className={styles.post}>
                   {postData.postBySlug.displayType !==
                     Enum_Post_Displaytype.FullscreenImage && (
@@ -235,9 +236,32 @@ const PostDetail = (props: Props): JSX.Element => {
                     onClick={toggleCommentModal}
                   />
                 </div>
-              </div>
-            </div>
+              </Col>
+            </Row>
           </div>
+
+          {postData.postBySlug.nextPost &&
+            (() => {
+              const { name, id } = postData.postBySlug.story;
+              return (
+                <div className={cs(styles['next-post-wrapper'], 'py-5')}>
+                  <Container>
+                    <Row>
+                      <Col lg={8} md={10} className="mx-auto">
+                        <h5>
+                          <Link href={`/series/${id}`}>{name}</Link> -{' '}
+                          {t('Next')}
+                        </h5>
+
+                        <PostPreview
+                          post={postData.postBySlug.nextPost as Post}
+                        />
+                      </Col>
+                    </Row>
+                  </Container>
+                </div>
+              );
+            })()}
 
           <Modal
             isOpen={isCommentModalOpen}

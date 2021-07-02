@@ -22,14 +22,15 @@ const Pagination = ({
   onNavigate,
 }: Props) => {
   const { t } = useTranslation();
+  const totalPages = Math.ceil(totalCount / perPage);
+
   const pages = useMemo(() => {
-    const totalPages = Math.ceil(totalCount / perPage);
     const pages: number[] = [];
     for (let i = 1; i <= totalPages; i++) {
       pages.push(i);
     }
     return pages;
-  }, [totalCount, perPage]);
+  }, [totalPages]);
 
   const router = useRouter();
 
@@ -44,6 +45,10 @@ const Pagination = ({
       router.push(href);
     }
   };
+
+  if (totalPages === 1) {
+    return null;
+  }
 
   return (
     <nav className={className} aria-label="Page navigation">

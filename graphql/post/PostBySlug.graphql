@@ -12,6 +12,11 @@ query PostBySlug($slug: String!) {
     category {
       id
     }
+    story {
+      id
+      name
+    }
+    storySeq
     image {
       id
       url
@@ -26,6 +31,9 @@ query PostBySlug($slug: String!) {
         formats
         alternativeText
       }
+    }
+    nextPost {
+      ...PostsConnectionFragment
     }
   }
 }

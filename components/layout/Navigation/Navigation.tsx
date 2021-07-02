@@ -76,10 +76,11 @@ export default function Navigation(props: Props): JSX.Element {
         if (currentTop - previousTop > SCROLL_GAP) {
           // Fix blinking navbar.
           setTimeout(() => {
-            navElementRef.current.classList.remove(
-              'is-visible',
-              'transparent-bg',
-            );
+            navElementRef.current &&
+              navElementRef.current.classList.remove(
+                'is-visible',
+                'transparent-bg',
+              );
             previousTop = currentTop;
           }, SCROLL_GAP + 20);
         }

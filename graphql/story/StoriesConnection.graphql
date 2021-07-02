@@ -1,0 +1,14 @@
+query StoriesConnection($start: Int = 0, $search: String = "", $user: String!) {
+  storiesConnection(
+    start: $start
+    where: { name_contains: $search, user: $user }
+  ) {
+    values {
+      id
+      name
+    }
+    aggregate {
+      totalCount
+    }
+  }
+}

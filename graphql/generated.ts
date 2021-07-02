@@ -47,6 +47,8 @@ export type Category = {
   updatedAt: Scalars['DateTime'];
   /** Name of the category */
   name: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  image?: Maybe<UploadFile>;
 };
 
 export type CategoryAggregator = {
@@ -68,8 +70,20 @@ export type CategoryConnectionCreatedAt = {
   connection?: Maybe<CategoryConnection>;
 };
 
+export type CategoryConnectionDescription = {
+  __typename?: 'CategoryConnectionDescription';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<CategoryConnection>;
+};
+
 export type CategoryConnectionId = {
   __typename?: 'CategoryConnectionId';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<CategoryConnection>;
+};
+
+export type CategoryConnectionImage = {
+  __typename?: 'CategoryConnectionImage';
   key?: Maybe<Scalars['ID']>;
   connection?: Maybe<CategoryConnection>;
 };
@@ -99,10 +113,14 @@ export type CategoryGroupBy = {
   createdAt?: Maybe<Array<Maybe<CategoryConnectionCreatedAt>>>;
   updatedAt?: Maybe<Array<Maybe<CategoryConnectionUpdatedAt>>>;
   name?: Maybe<Array<Maybe<CategoryConnectionName>>>;
+  description?: Maybe<Array<Maybe<CategoryConnectionDescription>>>;
+  image?: Maybe<Array<Maybe<CategoryConnectionImage>>>;
 };
 
 export type CategoryInput = {
   name: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['ID']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -254,7 +272,7 @@ export type LocaleInput = {
 };
 
 
-export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnection_Id | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | CreateCategoryPayload | UpdateCategoryPayload | DeleteCategoryPayload | Comment | CommentConnection | CommentAggregator | CommentGroupBy | CommentConnectionId | CommentConnection_Id | CommentConnectionCreatedAt | CommentConnectionUpdatedAt | CommentConnectionContent | CommentConnectionUser | CommentConnectionPost | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Post | PostConnection | PostAggregator | PostAggregatorSum | PostAggregatorAvg | PostAggregatorMin | PostAggregatorMax | PostGroupBy | PostConnectionId | PostConnection_Id | PostConnectionCreatedAt | PostConnectionUpdatedAt | PostConnectionTitle | PostConnectionContent | PostConnectionImage | PostConnectionCategory | PostConnectionUser | PostConnectionSlug | PostConnectionDescription | PostConnectionHeart | PostConnectionHomeFeatured | PostConnectionContentType | PostConnectionDisplayType | PostConnectionPublished_At | CreatePostPayload | UpdatePostPayload | DeletePostPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnection_Id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnection_Id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnection_Id | UsersPermissionsUserConnectionCreatedAt | UsersPermissionsUserConnectionUpdatedAt | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionAvatar | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
+export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnection_Id | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | CategoryConnectionDescription | CategoryConnectionImage | CreateCategoryPayload | UpdateCategoryPayload | DeleteCategoryPayload | Comment | CommentConnection | CommentAggregator | CommentGroupBy | CommentConnectionId | CommentConnection_Id | CommentConnectionCreatedAt | CommentConnectionUpdatedAt | CommentConnectionContent | CommentConnectionUser | CommentConnectionPost | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Post | PostConnection | PostAggregator | PostAggregatorSum | PostAggregatorAvg | PostAggregatorMin | PostAggregatorMax | PostGroupBy | PostConnectionId | PostConnection_Id | PostConnectionCreatedAt | PostConnectionUpdatedAt | PostConnectionTitle | PostConnectionContent | PostConnectionImage | PostConnectionCategory | PostConnectionUser | PostConnectionSlug | PostConnectionDescription | PostConnectionHeart | PostConnectionHomeFeatured | PostConnectionContentType | PostConnectionDisplayType | PostConnectionStory | PostConnectionStorySeq | PostConnectionPublished_At | CreatePostPayload | UpdatePostPayload | DeletePostPayload | Story | StoryConnection | StoryAggregator | StoryGroupBy | StoryConnectionId | StoryConnection_Id | StoryConnectionCreatedAt | StoryConnectionUpdatedAt | StoryConnectionName | StoryConnectionDescription | StoryConnectionImage | StoryConnectionUser | CreateStoryPayload | UpdateStoryPayload | DeleteStoryPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnection_Id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnection_Id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnection_Id | UsersPermissionsUserConnectionCreatedAt | UsersPermissionsUserConnectionUpdatedAt | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionAvatar | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -267,6 +285,9 @@ export type Mutation = {
   createPost?: Maybe<CreatePostPayload>;
   updatePost?: Maybe<UpdatePostPayload>;
   deletePost?: Maybe<DeletePostPayload>;
+  createStory?: Maybe<CreateStoryPayload>;
+  updateStory?: Maybe<UpdateStoryPayload>;
+  deleteStory?: Maybe<DeleteStoryPayload>;
   /** Delete one file */
   deleteFile?: Maybe<DeleteFilePayload>;
   /** Create a new role */
@@ -341,6 +362,21 @@ export type MutationUpdatePostArgs = {
 
 export type MutationDeletePostArgs = {
   input?: Maybe<DeletePostInput>;
+};
+
+
+export type MutationCreateStoryArgs = {
+  input?: Maybe<CreateStoryInput>;
+};
+
+
+export type MutationUpdateStoryArgs = {
+  input?: Maybe<UpdateStoryInput>;
+};
+
+
+export type MutationDeleteStoryArgs = {
+  input?: Maybe<DeleteStoryInput>;
 };
 
 
@@ -463,7 +499,11 @@ export type Post = {
   homeFeatured?: Maybe<Scalars['Boolean']>;
   contentType?: Maybe<Enum_Post_Contenttype>;
   displayType?: Maybe<Enum_Post_Displaytype>;
+  story?: Maybe<Story>;
+  storySeq?: Maybe<Scalars['Float']>;
   published_at?: Maybe<Scalars['DateTime']>;
+  /** Next post of series. */
+  nextPost?: Maybe<Post>;
 };
 
 export type PostAggregator = {
@@ -479,21 +519,25 @@ export type PostAggregator = {
 export type PostAggregatorAvg = {
   __typename?: 'PostAggregatorAvg';
   heart?: Maybe<Scalars['Float']>;
+  storySeq?: Maybe<Scalars['Float']>;
 };
 
 export type PostAggregatorMax = {
   __typename?: 'PostAggregatorMax';
   heart?: Maybe<Scalars['Float']>;
+  storySeq?: Maybe<Scalars['Float']>;
 };
 
 export type PostAggregatorMin = {
   __typename?: 'PostAggregatorMin';
   heart?: Maybe<Scalars['Float']>;
+  storySeq?: Maybe<Scalars['Float']>;
 };
 
 export type PostAggregatorSum = {
   __typename?: 'PostAggregatorSum';
   heart?: Maybe<Scalars['Float']>;
+  storySeq?: Maybe<Scalars['Float']>;
 };
 
 export type PostConnection = {
@@ -575,6 +619,18 @@ export type PostConnectionSlug = {
   connection?: Maybe<PostConnection>;
 };
 
+export type PostConnectionStory = {
+  __typename?: 'PostConnectionStory';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<PostConnection>;
+};
+
+export type PostConnectionStorySeq = {
+  __typename?: 'PostConnectionStorySeq';
+  key?: Maybe<Scalars['Float']>;
+  connection?: Maybe<PostConnection>;
+};
+
 export type PostConnectionTitle = {
   __typename?: 'PostConnectionTitle';
   key?: Maybe<Scalars['String']>;
@@ -616,6 +672,8 @@ export type PostGroupBy = {
   homeFeatured?: Maybe<Array<Maybe<PostConnectionHomeFeatured>>>;
   contentType?: Maybe<Array<Maybe<PostConnectionContentType>>>;
   displayType?: Maybe<Array<Maybe<PostConnectionDisplayType>>>;
+  story?: Maybe<Array<Maybe<PostConnectionStory>>>;
+  storySeq?: Maybe<Array<Maybe<PostConnectionStorySeq>>>;
   published_at?: Maybe<Array<Maybe<PostConnectionPublished_At>>>;
 };
 
@@ -631,6 +689,8 @@ export type PostInput = {
   homeFeatured?: Maybe<Scalars['Boolean']>;
   contentType?: Maybe<Enum_Post_Contenttype>;
   displayType?: Maybe<Enum_Post_Displaytype>;
+  story?: Maybe<Scalars['ID']>;
+  storySeq?: Maybe<Scalars['Float']>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -652,6 +712,9 @@ export type Query = {
   post?: Maybe<Post>;
   posts?: Maybe<Array<Maybe<Post>>>;
   postsConnection?: Maybe<PostConnection>;
+  story?: Maybe<Story>;
+  stories?: Maybe<Array<Maybe<Story>>>;
+  storiesConnection?: Maybe<StoryConnection>;
   files?: Maybe<Array<Maybe<UploadFile>>>;
   filesConnection?: Maybe<UploadFileConnection>;
   role?: Maybe<UsersPermissionsRole>;
@@ -740,6 +803,29 @@ export type QueryPostsConnectionArgs = {
 };
 
 
+export type QueryStoryArgs = {
+  id: Scalars['ID'];
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QueryStoriesArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QueryStoriesConnectionArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+};
+
+
 export type QueryFilesArgs = {
   sort?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
@@ -818,6 +904,100 @@ export type RoleInput = {
   type?: Maybe<Scalars['String']>;
   permissions?: Maybe<Array<Maybe<Scalars['ID']>>>;
   users?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
+export type Story = {
+  __typename?: 'Story';
+  id: Scalars['ID'];
+  _id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+  name: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  image?: Maybe<UploadFile>;
+  user?: Maybe<UsersPermissionsUser>;
+};
+
+export type StoryAggregator = {
+  __typename?: 'StoryAggregator';
+  count?: Maybe<Scalars['Int']>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type StoryConnection = {
+  __typename?: 'StoryConnection';
+  values?: Maybe<Array<Maybe<Story>>>;
+  groupBy?: Maybe<StoryGroupBy>;
+  aggregate?: Maybe<StoryAggregator>;
+};
+
+export type StoryConnectionCreatedAt = {
+  __typename?: 'StoryConnectionCreatedAt';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<StoryConnection>;
+};
+
+export type StoryConnectionDescription = {
+  __typename?: 'StoryConnectionDescription';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<StoryConnection>;
+};
+
+export type StoryConnectionId = {
+  __typename?: 'StoryConnectionId';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<StoryConnection>;
+};
+
+export type StoryConnectionImage = {
+  __typename?: 'StoryConnectionImage';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<StoryConnection>;
+};
+
+export type StoryConnectionName = {
+  __typename?: 'StoryConnectionName';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<StoryConnection>;
+};
+
+export type StoryConnectionUpdatedAt = {
+  __typename?: 'StoryConnectionUpdatedAt';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<StoryConnection>;
+};
+
+export type StoryConnectionUser = {
+  __typename?: 'StoryConnectionUser';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<StoryConnection>;
+};
+
+export type StoryConnection_Id = {
+  __typename?: 'StoryConnection_id';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<StoryConnection>;
+};
+
+export type StoryGroupBy = {
+  __typename?: 'StoryGroupBy';
+  id?: Maybe<Array<Maybe<StoryConnectionId>>>;
+  _id?: Maybe<Array<Maybe<StoryConnection_Id>>>;
+  createdAt?: Maybe<Array<Maybe<StoryConnectionCreatedAt>>>;
+  updatedAt?: Maybe<Array<Maybe<StoryConnectionUpdatedAt>>>;
+  name?: Maybe<Array<Maybe<StoryConnectionName>>>;
+  description?: Maybe<Array<Maybe<StoryConnectionDescription>>>;
+  image?: Maybe<Array<Maybe<StoryConnectionImage>>>;
+  user?: Maybe<Array<Maybe<StoryConnectionUser>>>;
+};
+
+export type StoryInput = {
+  name: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['ID']>;
+  user?: Maybe<Scalars['ID']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1332,6 +1512,15 @@ export type CreateRolePayload = {
   role?: Maybe<UsersPermissionsRole>;
 };
 
+export type CreateStoryInput = {
+  data?: Maybe<StoryInput>;
+};
+
+export type CreateStoryPayload = {
+  __typename?: 'createStoryPayload';
+  story?: Maybe<Story>;
+};
+
 export type CreateUserInput = {
   data?: Maybe<UserInput>;
 };
@@ -1386,6 +1575,15 @@ export type DeleteRolePayload = {
   role?: Maybe<UsersPermissionsRole>;
 };
 
+export type DeleteStoryInput = {
+  where?: Maybe<InputId>;
+};
+
+export type DeleteStoryPayload = {
+  __typename?: 'deleteStoryPayload';
+  story?: Maybe<Story>;
+};
+
 export type DeleteUserInput = {
   where?: Maybe<InputId>;
 };
@@ -1397,6 +1595,8 @@ export type DeleteUserPayload = {
 
 export type EditCategoryInput = {
   name?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['ID']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1448,6 +1648,8 @@ export type EditPostInput = {
   homeFeatured?: Maybe<Scalars['Boolean']>;
   contentType?: Maybe<Enum_Post_Contenttype>;
   displayType?: Maybe<Enum_Post_Displaytype>;
+  story?: Maybe<Scalars['ID']>;
+  storySeq?: Maybe<Scalars['Float']>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -1459,6 +1661,15 @@ export type EditRoleInput = {
   type?: Maybe<Scalars['String']>;
   permissions?: Maybe<Array<Maybe<Scalars['ID']>>>;
   users?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
+export type EditStoryInput = {
+  name?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['ID']>;
+  user?: Maybe<Scalars['ID']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1518,6 +1729,16 @@ export type UpdateRolePayload = {
   role?: Maybe<UsersPermissionsRole>;
 };
 
+export type UpdateStoryInput = {
+  where?: Maybe<InputId>;
+  data?: Maybe<EditStoryInput>;
+};
+
+export type UpdateStoryPayload = {
+  __typename?: 'updateStoryPayload';
+  story?: Maybe<Story>;
+};
+
 export type UpdateUserInput = {
   where?: Maybe<InputId>;
   data?: Maybe<EditUserInput>;
@@ -1572,6 +1793,22 @@ export type CategoriesConnectionQuery = (
     )>>>, aggregate?: Maybe<(
       { __typename?: 'CategoryAggregator' }
       & Pick<CategoryAggregator, 'totalCount'>
+    )> }
+  )> }
+);
+
+export type CreateCategoryMutationVariables = Exact<{
+  input?: Maybe<CreateCategoryInput>;
+}>;
+
+
+export type CreateCategoryMutation = (
+  { __typename?: 'Mutation' }
+  & { createCategory?: Maybe<(
+    { __typename?: 'createCategoryPayload' }
+    & { category?: Maybe<(
+      { __typename?: 'Category' }
+      & Pick<Category, 'id' | 'name'>
     )> }
   )> }
 );
@@ -1682,10 +1919,13 @@ export type PostBySlugQuery = (
   { __typename?: 'Query' }
   & { postBySlug?: Maybe<(
     { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'slug' | 'title' | 'description' | 'content' | 'contentType' | 'displayType' | 'heart' | 'published_at'>
+    & Pick<Post, 'id' | 'slug' | 'title' | 'description' | 'content' | 'contentType' | 'displayType' | 'heart' | 'published_at' | 'storySeq'>
     & { category?: Maybe<(
       { __typename?: 'Category' }
       & Pick<Category, 'id'>
+    )>, story?: Maybe<(
+      { __typename?: 'Story' }
+      & Pick<Story, 'id' | 'name'>
     )>, image?: Maybe<(
       { __typename?: 'UploadFile' }
       & Pick<UploadFile, 'id' | 'url' | 'provider' | 'formats'>
@@ -1696,8 +1936,37 @@ export type PostBySlugQuery = (
         { __typename?: 'UploadFile' }
         & Pick<UploadFile, 'url' | 'formats' | 'alternativeText'>
       )> }
+    )>, nextPost?: Maybe<(
+      { __typename?: 'Post' }
+      & PostsConnectionFragmentFragment
     )> }
   )> }
+);
+
+export type PostsConnectionFragmentFragment = (
+  { __typename?: 'Post' }
+  & Pick<Post, 'id' | 'title' | 'slug' | 'description' | 'createdAt' | 'published_at'>
+  & { user?: Maybe<(
+    { __typename?: 'UsersPermissionsUser' }
+    & Pick<UsersPermissionsUser, 'username'>
+  )>, image?: Maybe<(
+    { __typename?: 'UploadFile' }
+    & Pick<UploadFile, 'url' | 'provider' | 'formats'>
+  )> }
+);
+
+export type PostsByStoryQueryVariables = Exact<{
+  limit?: Maybe<Scalars['Int']>;
+  story: Scalars['ID'];
+}>;
+
+
+export type PostsByStoryQuery = (
+  { __typename?: 'Query' }
+  & { posts?: Maybe<Array<Maybe<(
+    { __typename?: 'Post' }
+    & Pick<Post, 'id' | 'title' | 'storySeq'>
+  )>>> }
 );
 
 export type PostsConnectionQueryVariables = Exact<{
@@ -1713,14 +1982,7 @@ export type PostsConnectionQuery = (
     { __typename?: 'PostConnection' }
     & { values?: Maybe<Array<Maybe<(
       { __typename?: 'Post' }
-      & Pick<Post, 'id' | 'title' | 'slug' | 'description' | 'createdAt' | 'published_at'>
-      & { user?: Maybe<(
-        { __typename?: 'UsersPermissionsUser' }
-        & Pick<UsersPermissionsUser, 'username'>
-      )>, image?: Maybe<(
-        { __typename?: 'UploadFile' }
-        & Pick<UploadFile, 'url' | 'provider' | 'formats'>
-      )> }
+      & PostsConnectionFragmentFragment
     )>>>, aggregate?: Maybe<(
       { __typename?: 'PostAggregator' }
       & Pick<PostAggregator, 'count' | 'totalCount'>
@@ -1774,6 +2036,56 @@ export type UpdatePostMutation = (
         & Pick<Category, 'id' | 'name'>
       )> }
     )> }
+  )> }
+);
+
+export type CreateStoryMutationVariables = Exact<{
+  input: CreateStoryInput;
+}>;
+
+
+export type CreateStoryMutation = (
+  { __typename?: 'Mutation' }
+  & { createStory?: Maybe<(
+    { __typename?: 'createStoryPayload' }
+    & { story?: Maybe<(
+      { __typename?: 'Story' }
+      & Pick<Story, 'id' | 'name' | 'description'>
+    )> }
+  )> }
+);
+
+export type StoriesConnectionQueryVariables = Exact<{
+  start?: Maybe<Scalars['Int']>;
+  search?: Maybe<Scalars['String']>;
+  user: Scalars['String'];
+}>;
+
+
+export type StoriesConnectionQuery = (
+  { __typename?: 'Query' }
+  & { storiesConnection?: Maybe<(
+    { __typename?: 'StoryConnection' }
+    & { values?: Maybe<Array<Maybe<(
+      { __typename?: 'Story' }
+      & Pick<Story, 'id' | 'name'>
+    )>>>, aggregate?: Maybe<(
+      { __typename?: 'StoryAggregator' }
+      & Pick<StoryAggregator, 'totalCount'>
+    )> }
+  )> }
+);
+
+export type StoryQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type StoryQuery = (
+  { __typename?: 'Query' }
+  & { story?: Maybe<(
+    { __typename?: 'Story' }
+    & Pick<Story, 'id' | 'name' | 'description'>
   )> }
 );
 
@@ -1843,7 +2155,24 @@ export type MeQuery = (
   )> }
 );
 
-
+export const PostsConnectionFragmentFragmentDoc = gql`
+    fragment PostsConnectionFragment on Post {
+  id
+  title
+  slug
+  description
+  createdAt
+  published_at
+  user {
+    username
+  }
+  image {
+    url
+    provider
+    formats
+  }
+}
+    `;
 export const LoginDocument = gql`
     mutation Login($input: UsersPermissionsLoginInput!) {
   login(input: $input) {
@@ -1958,6 +2287,42 @@ export function useCategoriesConnectionLazyQuery(baseOptions?: Apollo.LazyQueryH
 export type CategoriesConnectionQueryHookResult = ReturnType<typeof useCategoriesConnectionQuery>;
 export type CategoriesConnectionLazyQueryHookResult = ReturnType<typeof useCategoriesConnectionLazyQuery>;
 export type CategoriesConnectionQueryResult = Apollo.QueryResult<CategoriesConnectionQuery, CategoriesConnectionQueryVariables>;
+export const CreateCategoryDocument = gql`
+    mutation CreateCategory($input: createCategoryInput) {
+  createCategory(input: $input) {
+    category {
+      id
+      name
+    }
+  }
+}
+    `;
+export type CreateCategoryMutationFn = Apollo.MutationFunction<CreateCategoryMutation, CreateCategoryMutationVariables>;
+
+/**
+ * __useCreateCategoryMutation__
+ *
+ * To run a mutation, you first call `useCreateCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCategoryMutation, { data, loading, error }] = useCreateCategoryMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateCategoryMutation(baseOptions?: Apollo.MutationHookOptions<CreateCategoryMutation, CreateCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCategoryMutation, CreateCategoryMutationVariables>(CreateCategoryDocument, options);
+      }
+export type CreateCategoryMutationHookResult = ReturnType<typeof useCreateCategoryMutation>;
+export type CreateCategoryMutationResult = Apollo.MutationResult<CreateCategoryMutation>;
+export type CreateCategoryMutationOptions = Apollo.BaseMutationOptions<CreateCategoryMutation, CreateCategoryMutationVariables>;
 export const CommentsDocument = gql`
     query Comments($postId: ID!) {
   comments(where: {post: $postId}) {
@@ -2209,6 +2574,11 @@ export const PostBySlugDocument = gql`
     category {
       id
     }
+    story {
+      id
+      name
+    }
+    storySeq
     image {
       id
       url
@@ -2224,9 +2594,12 @@ export const PostBySlugDocument = gql`
         alternativeText
       }
     }
+    nextPost {
+      ...PostsConnectionFragment
+    }
   }
 }
-    `;
+    ${PostsConnectionFragmentFragmentDoc}`;
 
 /**
  * __usePostBySlugQuery__
@@ -2255,24 +2628,49 @@ export function usePostBySlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type PostBySlugQueryHookResult = ReturnType<typeof usePostBySlugQuery>;
 export type PostBySlugLazyQueryHookResult = ReturnType<typeof usePostBySlugLazyQuery>;
 export type PostBySlugQueryResult = Apollo.QueryResult<PostBySlugQuery, PostBySlugQueryVariables>;
+export const PostsByStoryDocument = gql`
+    query PostsByStory($limit: Int = 100, $story: ID!) {
+  posts(limit: $limit, sort: "storySeq:asc", where: {story: $story}) {
+    id
+    title
+    storySeq
+  }
+}
+    `;
+
+/**
+ * __usePostsByStoryQuery__
+ *
+ * To run a query within a React component, call `usePostsByStoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePostsByStoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostsByStoryQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      story: // value for 'story'
+ *   },
+ * });
+ */
+export function usePostsByStoryQuery(baseOptions: Apollo.QueryHookOptions<PostsByStoryQuery, PostsByStoryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PostsByStoryQuery, PostsByStoryQueryVariables>(PostsByStoryDocument, options);
+      }
+export function usePostsByStoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PostsByStoryQuery, PostsByStoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PostsByStoryQuery, PostsByStoryQueryVariables>(PostsByStoryDocument, options);
+        }
+export type PostsByStoryQueryHookResult = ReturnType<typeof usePostsByStoryQuery>;
+export type PostsByStoryLazyQueryHookResult = ReturnType<typeof usePostsByStoryLazyQuery>;
+export type PostsByStoryQueryResult = Apollo.QueryResult<PostsByStoryQuery, PostsByStoryQueryVariables>;
 export const PostsConnectionDocument = gql`
     query PostsConnection($sort: String = "published_at:desc", $start: Int, $where: JSON) {
   postsConnection(sort: $sort, limit: 10, start: $start, where: $where) {
     values {
-      id
-      title
-      slug
-      description
-      createdAt
-      published_at
-      user {
-        username
-      }
-      image {
-        url
-        provider
-        formats
-      }
+      ...PostsConnectionFragment
     }
     aggregate {
       count
@@ -2280,7 +2678,7 @@ export const PostsConnectionDocument = gql`
     }
   }
 }
-    `;
+    ${PostsConnectionFragmentFragmentDoc}`;
 
 /**
  * __usePostsConnectionQuery__
@@ -2432,6 +2830,123 @@ export function useUpdatePostMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UpdatePostMutationHookResult = ReturnType<typeof useUpdatePostMutation>;
 export type UpdatePostMutationResult = Apollo.MutationResult<UpdatePostMutation>;
 export type UpdatePostMutationOptions = Apollo.BaseMutationOptions<UpdatePostMutation, UpdatePostMutationVariables>;
+export const CreateStoryDocument = gql`
+    mutation CreateStory($input: createStoryInput!) {
+  createStory(input: $input) {
+    story {
+      id
+      name
+      description
+    }
+  }
+}
+    `;
+export type CreateStoryMutationFn = Apollo.MutationFunction<CreateStoryMutation, CreateStoryMutationVariables>;
+
+/**
+ * __useCreateStoryMutation__
+ *
+ * To run a mutation, you first call `useCreateStoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateStoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createStoryMutation, { data, loading, error }] = useCreateStoryMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateStoryMutation(baseOptions?: Apollo.MutationHookOptions<CreateStoryMutation, CreateStoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateStoryMutation, CreateStoryMutationVariables>(CreateStoryDocument, options);
+      }
+export type CreateStoryMutationHookResult = ReturnType<typeof useCreateStoryMutation>;
+export type CreateStoryMutationResult = Apollo.MutationResult<CreateStoryMutation>;
+export type CreateStoryMutationOptions = Apollo.BaseMutationOptions<CreateStoryMutation, CreateStoryMutationVariables>;
+export const StoriesConnectionDocument = gql`
+    query StoriesConnection($start: Int = 0, $search: String = "", $user: String!) {
+  storiesConnection(start: $start, where: {name_contains: $search, user: $user}) {
+    values {
+      id
+      name
+    }
+    aggregate {
+      totalCount
+    }
+  }
+}
+    `;
+
+/**
+ * __useStoriesConnectionQuery__
+ *
+ * To run a query within a React component, call `useStoriesConnectionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useStoriesConnectionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useStoriesConnectionQuery({
+ *   variables: {
+ *      start: // value for 'start'
+ *      search: // value for 'search'
+ *      user: // value for 'user'
+ *   },
+ * });
+ */
+export function useStoriesConnectionQuery(baseOptions: Apollo.QueryHookOptions<StoriesConnectionQuery, StoriesConnectionQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<StoriesConnectionQuery, StoriesConnectionQueryVariables>(StoriesConnectionDocument, options);
+      }
+export function useStoriesConnectionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<StoriesConnectionQuery, StoriesConnectionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<StoriesConnectionQuery, StoriesConnectionQueryVariables>(StoriesConnectionDocument, options);
+        }
+export type StoriesConnectionQueryHookResult = ReturnType<typeof useStoriesConnectionQuery>;
+export type StoriesConnectionLazyQueryHookResult = ReturnType<typeof useStoriesConnectionLazyQuery>;
+export type StoriesConnectionQueryResult = Apollo.QueryResult<StoriesConnectionQuery, StoriesConnectionQueryVariables>;
+export const StoryDocument = gql`
+    query Story($id: ID!) {
+  story(id: $id) {
+    id
+    name
+    description
+  }
+}
+    `;
+
+/**
+ * __useStoryQuery__
+ *
+ * To run a query within a React component, call `useStoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useStoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useStoryQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useStoryQuery(baseOptions: Apollo.QueryHookOptions<StoryQuery, StoryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<StoryQuery, StoryQueryVariables>(StoryDocument, options);
+      }
+export function useStoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<StoryQuery, StoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<StoryQuery, StoryQueryVariables>(StoryDocument, options);
+        }
+export type StoryQueryHookResult = ReturnType<typeof useStoryQuery>;
+export type StoryLazyQueryHookResult = ReturnType<typeof useStoryLazyQuery>;
+export type StoryQueryResult = Apollo.QueryResult<StoryQuery, StoryQueryVariables>;
 export const FilesDocument = gql`
     query Files($sort: String, $limit: Int, $start: Int, $where: JSON) {
   files(sort: $sort, limit: $limit, start: $start, where: $where) {

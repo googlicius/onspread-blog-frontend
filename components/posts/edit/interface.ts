@@ -10,5 +10,7 @@ export interface FormData {
   contentType: Enum_Post_Contenttype;
   description?: string;
   category: string;
+  story?: string;
+  storySeq?: number;
   displayType?: Enum_Post_Displaytype;
 }

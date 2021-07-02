@@ -1,0 +1,16 @@
+fragment PostsConnectionFragment on Post {
+  id
+  title
+  slug
+  description
+  createdAt
+  published_at
+  user {
+    username
+  }
+  image {
+    url
+    provider
+    formats
+  }
+}

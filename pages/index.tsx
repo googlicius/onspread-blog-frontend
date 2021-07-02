@@ -15,6 +15,7 @@ import PostPreview from '@/components/posts/PostPreview';
 import HomeFeaturePosPreview from '@/components/posts/HomeFeaturePosPreview';
 import Loading from '@/components/Loading/Loading';
 import client from '@/apollo-client';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   postsConnectionData: PostsConnectionQuery;
@@ -23,13 +24,14 @@ interface Props {
 
 const Home = ({ postsConnectionData, featuredPostData }: Props) => {
   const router = useRouter();
+  const { t } = useTranslation();
   const { page = 1 } = router.query;
   const featuredPost = featuredPostData?.featuredPost;
 
   return (
     <>
       <Head>
-        <title>Posts</title>
+        <title>{t('Home')} - Onspread</title>
       </Head>
 
       <Navigation isTransparentBg={!!featuredPost} />
@@ -37,7 +39,7 @@ const Home = ({ postsConnectionData, featuredPostData }: Props) => {
       {featuredPost && <HomeFeaturePosPreview post={featuredPost as Post} />}
 
       <div
-        className={cs('container', {
+        className={cs('container mb-5', {
           'mt-7': page > 1,
         })}
       >
@@ -47,7 +49,11 @@ const Home = ({ postsConnectionData, featuredPostData }: Props) => {
             {postsConnectionData?.postsConnection?.values && (
               <>
                 {postsConnectionData.postsConnection.values.map((post) => (
-                  <PostPreview key={post.id} post={post as Post} />
+                  <PostPreview
+                    key={post.id}
+                    post={post as Post}
+                    displayBorder
+                  />
                 ))}
 
                 <div className="clearfix" />

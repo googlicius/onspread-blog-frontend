@@ -1,16 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Navigation from '@/components/layout/Navigation/Navigation';
 import { Controller, useFormContext } from 'react-hook-form';
+import { Col, Row, FormGroup } from 'reactstrap';
 import ReactSelect from 'react-select';
 import cs from 'classnames';
 import { FormData } from './interface';
 import EdittingPostPreview from './EdittingPostPreview';
-import { Enum_Post_Displaytype, Post, UploadFile } from '@/graphql/generated';
+import {
+  Enum_Post_Displaytype,
+  Post,
+  UploadFile,
+  usePostsByStoryQuery,
+} from '@/graphql/generated';
 import Option from '@/types/Option';
-import CategorySelect from './CategorySelect';
+import CategorySelect from './CategorySelect/CategorySelect';
 import MediaLib from '@/components/Wysiwyg/MediaLib/MediaLib';
 import { useTranslation } from 'react-i18next';
 import { TFunction } from 'i18next';
+import StorySelect from './StorySelect/StorySelect';
+import getTime from 'date-fns/getTime';
+import PostSequence from './PostSequence/PostSequence';
 
 interface Props {
   post?: Post;
@@ -40,10 +49,40 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
   const {
     control,
     setValue,
+    watch,
     formState: { errors, isSubmitting },
   } = useFormContext<FormData>();
   const { t } = useTranslation();
   const [isMediaLibOpen, setIsMediaLibOpen] = useState(false);
+  const storyId = watch('story');
+
+  const { data: postsByStoryData } = usePostsByStoryQuery({
+    variables: {
+      story: storyId,
+    },
+    skip: !storyId,
+    fetchPolicy: 'network-only',
+  });
+
+  const postsByStory: Post[] = useMemo(() => {
+    const posts: Post[] = [];
+
+    if (postsByStoryData) {
+      posts.push(...(postsByStoryData.posts as Post[]));
+    }
+
+    if (storyId !== post.story?.id) {
+      posts.push(post);
+    }
+
+    return posts;
+  }, [postsByStoryData, storyId]);
+
+  useEffect(() => {
+    if (storyId) {
+      setValue('storySeq', getTime(new Date()));
+    }
+  }, [storyId]);
 
   const handleMediaChange = (data: UploadFile) => {
     setValue('image', data.id);
@@ -51,6 +90,10 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
 
   const handleToggleMediaLib = () => {
     setIsMediaLibOpen((prev) => !prev);
+  };
+
+  const handleSequenceChanged = (seq: number) => {
+    setValue('storySeq', seq);
   };
 
   const DisplayTypeOptions = displayTypeOptions(t);
@@ -74,7 +117,7 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
       </Navigation>
 
       <div className="container mt-7">
-        <div className="row">
+        <Row>
           <div className="col-lg-8 col-md-10 mx-auto">
             <h2>{t('Preview')}</h2>
 
@@ -83,9 +126,15 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
               openMediaLib={handleToggleMediaLib}
             />
 
-            <div className="row">
-              <div className="col-md-6">
-                <div className="form-group">
+            <Row className="mb-3">
+              <Col md={12}>
+                <h4>{t('Post information')}</h4>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col md={6}>
+                <FormGroup>
                   <label>
                     <strong>{t('Category')}</strong>
                   </label>
@@ -103,9 +152,8 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
                       return (
                         <CategorySelect
                           {...rest}
-                          className={cs({
-                            'is-invalid': !!errors.category,
-                          })}
+                          className={cs({ 'is-invalid': !!errors.category })}
+                          // Red border when the field is invalid.
                           styles={{
                             control: (style) => ({
                               ...style,
@@ -114,8 +162,8 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
                                 : style.borderColor,
                             }),
                           }}
-                          onChange={(data: Option) => {
-                            onChange(data.value);
+                          onChange={(option: Option) => {
+                            onChange(option.value);
                           }}
                         />
                       );
@@ -124,11 +172,11 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
                   <div className="invalid-feedback">
                     {errors.category?.message}
                   </div>
-                </div>
-              </div>
+                </FormGroup>
+              </Col>
 
-              <div className="col-md-6">
-                <div className="form-group">
+              <Col md={6}>
+                <FormGroup>
                   <label>
                     <strong>{t('Display Type')}</strong>
                   </label>
@@ -137,16 +185,16 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
                     control={control}
                     render={({ field }) => {
                       const { onChange, value, ...rest } = field;
+                      const selectedOption =
+                        value &&
+                        DisplayTypeOptions.find(
+                          (option) => option.value === value,
+                        );
 
                       return (
                         <ReactSelect
                           {...rest}
-                          value={
-                            value &&
-                            DisplayTypeOptions.find(
-                              (option) => option.value === value,
-                            )
-                          }
+                          value={selectedOption}
                           onChange={(option) => {
                             onChange(option.value);
                           }}
@@ -155,11 +203,51 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
                       );
                     }}
                   />
-                </div>
-              </div>
-            </div>
+                </FormGroup>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col md={6}>
+                <FormGroup>
+                  <label>
+                    <strong>{t('Series')}</strong>
+                  </label>
+
+                  <Controller
+                    name="story"
+                    control={control}
+                    render={({ field }) => {
+                      const { onChange, ...rest } = field;
+                      return (
+                        <StorySelect
+                          {...rest}
+                          onChange={(data: Option) => {
+                            onChange(data.value);
+                          }}
+                        />
+                      );
+                    }}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+
+            {storyId && (
+              <Row className="mt-3">
+                <Col md={12}>
+                  <h4>{t('Posts of series')}</h4>
+
+                  <PostSequence
+                    posts={postsByStory}
+                    editingPost={post}
+                    onSequenceChanged={handleSequenceChanged}
+                  />
+                </Col>
+              </Row>
+            )}
           </div>
-        </div>
+        </Row>
       </div>
 
       <MediaLib

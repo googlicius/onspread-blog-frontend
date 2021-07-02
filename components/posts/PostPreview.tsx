@@ -6,9 +6,10 @@ import classNames from 'classnames';
 
 interface Props {
   post: Post;
+  displayBorder?: boolean;
 }
 
-const PostPreview = ({ post }: Props) => {
+const PostPreview = ({ post, displayBorder = false }: Props) => {
   const thumbnailImage = useMemo(() => {
     const path = post.image?.formats?.small?.url || post.image?.url;
     return post.image?.provider === 'local'
@@ -56,7 +57,7 @@ const PostPreview = ({ post }: Props) => {
           </p>
         </div>
       </div>
-      <hr />
+      {displayBorder && <hr />}
     </>
   );
 };

@@ -30,6 +30,8 @@ const PostCreate = (): JSX.Element => {
       displayType: Enum_Post_Displaytype.WithImage,
       description: null,
       category: null,
+      story: null,
+      storySeq: null,
     },
   });
   const {
@@ -43,6 +45,18 @@ const PostCreate = (): JSX.Element => {
       throw 'Abort route change. Please ignore this error.';
     }
   }, [isDirty]);
+
+  useEffect(() => {
+    // Return because user is loading...
+    if (me.status !== 'idle') {
+      return;
+    }
+
+    if (!me.value) {
+      router.events.off('routeChangeStart', checkUnSavedForm);
+      router.push('/');
+    }
+  }, [me]);
 
   useEffect(() => {
     router.events.on('routeChangeStart', checkUnSavedForm);

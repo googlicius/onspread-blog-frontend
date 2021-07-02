@@ -15,6 +15,8 @@
     "Logout": "Đăng xuất",
     "Preview": "Xem trước",
     "Category": "Thể loại",
+    "Series": "Loạt bài",
+    "nextPostOfSeries": "Bài viết tiếp theo trong loạt bài <1>{{ name }}</1>",
     "Finish": "Hoàn thành",
     "Display Type": "Kiểu hiển thị",
     "Select a type...": "Chọn kiểu hiển thị...",
