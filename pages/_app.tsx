@@ -50,7 +50,9 @@ function MyApp({ Component, pageProps }): JSX.Element {
   return (
     <ApolloProvider client={client}>
       <Provider store={store}>
-        <Component {...pageProps} />
+        <div className="wrapper">
+          <Component {...pageProps} />
+        </div>
         <ToastContainer
           position="top-center"
           autoClose={3000}

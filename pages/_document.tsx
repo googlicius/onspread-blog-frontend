@@ -25,8 +25,8 @@ class MyDocument extends Document<Props> {
         <Head />
         <body>
           <Main />
-          <NextScript />
           <Footer />
+          <NextScript />
           <script
             id="__APOLLO_STATE__"
             type="application/json"

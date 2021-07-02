@@ -21,7 +21,12 @@ const StorySelect = React.forwardRef<ReactSelect, Props>(
       { data, loading, fetchMore, refetch },
     ] = useStoriesConnectionLazyQuery({
       onCompleted: () => {
-        setOptions([]);
+        setOptions([
+          {
+            label: t('Select...'),
+            value: null,
+          },
+        ]);
       },
     });
     const me = useSelector(selectMe);

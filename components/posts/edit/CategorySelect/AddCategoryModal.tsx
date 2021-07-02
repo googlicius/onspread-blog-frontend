@@ -5,6 +5,7 @@ import { Modal, ModalBody, Row, Col, FormGroup, ModalFooter } from 'reactstrap';
 import cs from 'classnames';
 import CloseSvg from '@/components/svgs/CloseSvg';
 import { Category, useCreateCategoryMutation } from '@/graphql/generated';
+import { toast } from 'react-toastify';
 
 interface Props {
   newCategoryAdded: (cate: Category) => void;
@@ -46,28 +47,34 @@ const AddCategoryModal = React.forwardRef<AddCategoryModalRef, Props>(
       }
 
       return handleSubmit(async (data: FormData) => {
-        const { data: createCategoryData } = await createCategoryMutation({
-          variables: {
-            input: {
-              data,
+        try {
+          const { data: createCategoryData } = await createCategoryMutation({
+            variables: {
+              input: {
+                data,
+              },
             },
-          },
-        });
+          });
 
-        newCategoryAdded(
-          createCategoryData.createCategory.category as Category,
-        );
+          newCategoryAdded(
+            createCategoryData.createCategory.category as Category,
+          );
+        } catch (error) {
+          toast.error(error.message);
+        }
       })(e);
     };
 
+    const toggleOpen = () => {
+      setIsOpen((prev) => !prev);
+    };
+
     useImperativeHandle(ref, () => ({
-      toggleOpen: () => {
-        setIsOpen((prev) => !prev);
-      },
+      toggleOpen,
     }));
 
     return (
-      <Modal isOpen={isOpen} size="lg">
+      <Modal isOpen={isOpen} size="lg" toggle={toggleOpen}>
         <form onSubmit={onSubmit}>
           <div className="modal-header">
             <h5>{t('Create new Category')}</h5>

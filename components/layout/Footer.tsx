@@ -2,7 +2,7 @@ import { Container, Row, Col } from 'reactstrap';
 
 export const Footer = () => {
   return (
-    <footer className="bg-dark">
+    <footer className="footer bg-dark">
       <Container>
         <Row>
           <Col lg={8} md={10} className="mx-auto">

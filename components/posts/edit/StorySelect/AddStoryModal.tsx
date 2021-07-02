@@ -7,6 +7,7 @@ import CloseSvg from '@/components/svgs/CloseSvg';
 import { Story, useCreateStoryMutation } from '@/graphql/generated';
 import { useSelector } from 'react-redux';
 import { selectMe } from '@/redux/meProducer';
+import { toast } from 'react-toastify';
 
 interface Props {
   newStoryAdded: (story: Story) => void;
@@ -51,26 +52,32 @@ const AddStoryModal = React.forwardRef<AddStoryModalRef, Props>(
       }
 
       return handleSubmit(async (data: FormData) => {
-        const { data: createStoryData } = await createStoryMutation({
-          variables: {
-            input: {
-              data,
+        try {
+          const { data: createStoryData } = await createStoryMutation({
+            variables: {
+              input: {
+                data,
+              },
             },
-          },
-        });
+          });
 
-        newStoryAdded(createStoryData.createStory.story as Story);
+          newStoryAdded(createStoryData.createStory.story as Story);
+        } catch (error) {
+          toast.error(error.message);
+        }
       })(e);
     };
 
+    const toggleOpen = () => {
+      setIsOpen((prev) => !prev);
+    };
+
     useImperativeHandle(ref, () => ({
-      toggleOpen: () => {
-        setIsOpen((prev) => !prev);
-      },
+      toggleOpen,
     }));
 
     return (
-      <Modal isOpen={isOpen} size="lg">
+      <Modal isOpen={isOpen} size="lg" toggle={toggleOpen}>
         <form onSubmit={onSubmit}>
           <div className="modal-header">
             <h5>Create new Story</h5>

@@ -31,6 +31,22 @@
   background: wheat !important;
 }
 
+html,
+body {
+  height: 100%;
+}
+
+#__next {
+  min-height: 100%;
+
+  .wrapper {
+    overflow: auto;
+    padding-bottom: 140px; /* this needs to be bigger than footer height*/
+  }
+}
+
 .footer {
-  background-color: rgba(251, 227, 196, 0.5);
+  position: relative;
+  margin-top: -140px;
+  height: 140px;
 }
