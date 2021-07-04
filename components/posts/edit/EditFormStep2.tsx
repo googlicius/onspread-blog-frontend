@@ -20,6 +20,7 @@ import { TFunction } from 'i18next';
 import StorySelect from './StorySelect/StorySelect';
 import getTime from 'date-fns/getTime';
 import PostSequence from './PostSequence/PostSequence';
+import { Card } from './PostSequence/CardItem';
 
 interface Props {
   post?: Post;
@@ -49,6 +50,7 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
   const {
     control,
     setValue,
+    getValues,
     watch,
     formState: { errors, isSubmitting },
   } = useFormContext<FormData>();
@@ -64,19 +66,37 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
     fetchPolicy: 'network-only',
   });
 
-  const postsByStory: Post[] = useMemo(() => {
-    const posts: Post[] = [];
+  const postSeqcards: Card[] = useMemo(() => {
+    const cards: Card[] = [];
 
     if (postsByStoryData) {
-      posts.push(...(postsByStoryData.posts as Post[]));
+      cards.push(
+        ...postsByStoryData.posts.map((post) => ({
+          id: post.id,
+          text: post.title,
+          seq: post.storySeq,
+        })),
+      );
     }
 
-    if (storyId !== post.story?.id) {
-      posts.push(post);
+    if (!post || storyId !== post.story?.id) {
+      cards.push({
+        id: null,
+        text: getValues('title'),
+        seq: getValues('storySeq'),
+      });
     }
 
-    return posts;
+    return cards;
   }, [postsByStoryData, storyId]);
+
+  const editingCard: Card = useMemo(() => {
+    if (post) {
+      return { id: post.id, text: post.title, seq: post.storySeq };
+    }
+
+    return { id: null, text: getValues('title'), seq: getValues('storySeq') };
+  }, [post]);
 
   useEffect(() => {
     if (storyId) {
@@ -239,8 +259,8 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
                   <h4>{t('Posts of series')}</h4>
 
                   <PostSequence
-                    posts={postsByStory}
-                    editingPost={post}
+                    postCards={postSeqcards}
+                    editingCard={editingCard}
                     onSequenceChanged={handleSequenceChanged}
                   />
                 </Col>

@@ -5,35 +5,25 @@ import { useTranslation } from 'react-i18next';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
 import sortBy from 'lodash/sortBy';
-import { Post } from '@/graphql/generated';
 import CardItem, { Card } from './CardItem';
 
 interface Props {
-  posts: Post[];
-  editingPost: Post;
+  postCards: Card[];
+  editingCard: Card;
   onSequenceChanged: (seq: number) => void;
 }
 
 const PostSequence = ({
-  posts = [],
-  editingPost,
+  postCards = [],
+  editingCard,
   onSequenceChanged,
 }: Props) => {
   const { t } = useTranslation();
   const [cards, setCards] = useState<Card[]>([]);
 
   useEffect(() => {
-    setCards(
-      sortBy(
-        posts.map((post) => ({
-          id: post.id,
-          text: post.title,
-          seq: post.storySeq,
-        })),
-        ['seq'],
-      ),
-    );
-  }, [posts]);
+    setCards(sortBy(postCards, ['seq']));
+  }, [postCards]);
 
   const handleMoveCard = useCallback(
     (dragIndex, hoverIndex) => {
@@ -83,7 +73,7 @@ const PostSequence = ({
               key={index}
               index={index}
               card={card}
-              canDrag={card.id === editingPost.id}
+              canDrag={!editingCard || card.id === editingCard.id}
               onMoveCard={handleMoveCard}
               onEndDrag={handleEndDrag}
             />
