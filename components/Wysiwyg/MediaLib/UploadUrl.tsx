@@ -71,7 +71,10 @@ const UploadUrl = forwardRef<UploadUrlRef, Props>(({ onFilesChange }, ref) => {
         <label>URL</label>
         <textarea
           {...register('urls', {
-            required: { value: true, message: t('mediaLib:Url is required.') },
+            required: {
+              value: true,
+              message: t('requiredMessage', { name: 'Url' }),
+            },
             validate: {
               url: urlValidation(t),
             },

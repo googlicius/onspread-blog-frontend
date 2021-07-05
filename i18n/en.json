@@ -1,4 +1,5 @@
 {
   "termOfUseAcceptance": "By signing up you accept our <1>{{ termOfUse }}</1>",
-  "nextPostOfSeries": "Next post of {{ name }} series"
+  "nextPostOfSeries": "Next post of {{ name }} series",
+  "requiredMessage": "{{ name }} is required."
 }

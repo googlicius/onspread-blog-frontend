@@ -248,10 +248,10 @@ const PostDetail = (props: Props): JSX.Element => {
                   <Container>
                     <Row>
                       <Col lg={8} md={10} className="mx-auto">
-                        <h5>
+                        <strong>
                           <Link href={`/series/${id}`}>{name}</Link> -{' '}
-                          {t('Next')}
-                        </h5>
+                          {t('Next post')}
+                        </strong>
 
                         <PostPreview
                           post={postData.postBySlug.nextPost as Post}

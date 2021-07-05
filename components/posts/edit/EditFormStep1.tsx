@@ -66,7 +66,10 @@ const EditFormStep1 = ({ title, onNextStep }: Props) => {
               <label>{t('Title')}</label>
               <input
                 {...register('title', {
-                  required: { value: true, message: t('Title is required.') },
+                  required: {
+                    value: true,
+                    message: t('requiredMessage', { name: t('Title') }),
+                  },
                 })}
                 className={cs('form-control', 'shadow-none', {
                   'is-invalid': !!errors.title,
@@ -87,7 +90,7 @@ const EditFormStep1 = ({ title, onNextStep }: Props) => {
                   {...register('content', {
                     required: {
                       value: true,
-                      message: t('Content is required.'),
+                      message: t('requiredMessage', { name: t('Content') }),
                     },
                   })}
                   value={getValues('content')}

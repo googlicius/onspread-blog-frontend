@@ -63,7 +63,10 @@ const Comments = ({ postId }: Props): JSX.Element => {
           <div className="form-group">
             <input
               {...register('content', {
-                required: { value: true, message: t('Content is required') },
+                required: {
+                  value: true,
+                  message: t('requiredMessage', { name: t('Content') }),
+                },
               })}
               disabled={isSubmitting}
               placeholder={t('Share your thought')}

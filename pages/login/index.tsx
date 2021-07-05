@@ -86,7 +86,7 @@ const Login: NextPage = () => {
                     {...register('identifier', {
                       required: {
                         value: true,
-                        message: t('Email is required.'),
+                        message: t('requiredMessage', { name: t('Email') }),
                       },
                     })}
                     ref={emailInputRef}
@@ -108,7 +108,7 @@ const Login: NextPage = () => {
                     {...register('password', {
                       required: {
                         value: true,
-                        message: t('Password is required.'),
+                        message: t('requiredMessage', { name: t('Password') }),
                       },
                     })}
                     className={cs('form-control', {

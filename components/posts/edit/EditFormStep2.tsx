@@ -81,7 +81,7 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
 
     if (!post || storyId !== post.story?.id) {
       cards.push({
-        id: null,
+        id: post?.id,
         text: getValues('title'),
         seq: getValues('storySeq'),
       });
@@ -92,10 +92,18 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
 
   const editingCard: Card = useMemo(() => {
     if (post) {
-      return { id: post.id, text: post.title, seq: post.storySeq };
+      return {
+        id: post.id,
+        text: post.title,
+        seq: post.storySeq,
+      };
     }
 
-    return { id: null, text: getValues('title'), seq: getValues('storySeq') };
+    return {
+      id: null,
+      text: getValues('title'),
+      seq: getValues('storySeq'),
+    };
   }, [post]);
 
   useEffect(() => {
@@ -164,7 +172,7 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
                     rules={{
                       required: {
                         value: true,
-                        message: t('Category is required.'),
+                        message: t('requiredMessage', { name: t('Category') }),
                       },
                     }}
                     render={({ field }) => {

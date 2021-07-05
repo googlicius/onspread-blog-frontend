@@ -40,6 +40,7 @@ const Series = ({ postsConnectionData, storyData }: Props) => {
         <Container>
           <Row>
             <Col lg={8} md={10} className="mx-auto">
+              <strong>{t('Series')}</strong>
               <h1>{storyData.story.name}</h1>
             </Col>
           </Row>

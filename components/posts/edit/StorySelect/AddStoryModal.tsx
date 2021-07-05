@@ -42,6 +42,10 @@ const AddStoryModal = React.forwardRef<AddStoryModalRef, Props>(
     const [isOpen, setIsOpen] = useState(false);
     const [createStoryMutation, { loading }] = useCreateStoryMutation();
 
+    useImperativeHandle(ref, () => ({
+      toggleOpen,
+    }));
+
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       // Prevent submitting parent form.
       if (e) {
@@ -72,15 +76,11 @@ const AddStoryModal = React.forwardRef<AddStoryModalRef, Props>(
       setIsOpen((prev) => !prev);
     };
 
-    useImperativeHandle(ref, () => ({
-      toggleOpen,
-    }));
-
     return (
       <Modal isOpen={isOpen} size="lg" toggle={toggleOpen}>
         <form onSubmit={onSubmit}>
           <div className="modal-header">
-            <h5>Create new Story</h5>
+            <h5>{t('Create new Story')}</h5>
 
             <button
               type="button"
@@ -105,7 +105,7 @@ const AddStoryModal = React.forwardRef<AddStoryModalRef, Props>(
                     {...register('name', {
                       required: {
                         value: true,
-                        message: t('Name is required.'),
+                        message: t('requiredMessage', { name: t('Name') }),
                       },
                     })}
                     className={cs('form-control', {

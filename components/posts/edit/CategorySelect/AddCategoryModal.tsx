@@ -37,6 +37,10 @@ const AddCategoryModal = React.forwardRef<AddCategoryModalRef, Props>(
     const [isOpen, setIsOpen] = useState(false);
     const [createCategoryMutation, { loading }] = useCreateCategoryMutation();
 
+    useImperativeHandle(ref, () => ({
+      toggleOpen,
+    }));
+
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       // Prevent submitting parent form.
       if (e) {
@@ -69,10 +73,6 @@ const AddCategoryModal = React.forwardRef<AddCategoryModalRef, Props>(
       setIsOpen((prev) => !prev);
     };
 
-    useImperativeHandle(ref, () => ({
-      toggleOpen,
-    }));
-
     return (
       <Modal isOpen={isOpen} size="lg" toggle={toggleOpen}>
         <form onSubmit={onSubmit}>
@@ -102,7 +102,7 @@ const AddCategoryModal = React.forwardRef<AddCategoryModalRef, Props>(
                     {...register('name', {
                       required: {
                         value: true,
-                        message: t('Name is required.'),
+                        message: t('requiredMessage', { name: t('Name') }),
                       },
                     })}
                     className={cs('form-control', {
