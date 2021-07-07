@@ -25,7 +25,7 @@ interface Props {
 const SCROLL_GAP = 50;
 
 export default function Navigation(props: Props): JSX.Element {
-  const { isTransparentBg = true, noHide = false, children } = props;
+  const { isTransparentBg = false, noHide = false, children } = props;
   const navElementRef = useRef<HTMLElement>(null);
   const me = useSelector(selectMe);
   const dispatch = useDispatch();

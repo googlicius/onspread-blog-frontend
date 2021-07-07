@@ -4,6 +4,11 @@ mutation CreateStory($input: createStoryInput!) {
       id
       name
       description
+      image {
+        url
+        formats
+        provider
+      }
     }
   }
 }

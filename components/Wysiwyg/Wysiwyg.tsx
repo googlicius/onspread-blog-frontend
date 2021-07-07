@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './Wysiwyg.module.scss';
 import { UploadFile } from '@/graphql/generated';
 import MediaLib from './MediaLib/MediaLib';
@@ -7,12 +7,14 @@ interface Props {
   onChange: (input) => void;
   name: string;
   value?: string;
-  placeholder?: string;
+  config?: {
+    [x: string]: any;
+  };
   [x: string]: any;
 }
 
 const Wysiwyg = React.forwardRef<any, Props>(
-  ({ name, value, placeholder, onChange }, ref) => {
+  ({ config, name, value, onChange }, ref) => {
     const editorRef = useRef<any>();
     const [editorLoaded, setEditorLoaded] = useState(false);
     const { CKEditor, OnspreadEditor } = editorRef.current || {};
@@ -66,6 +68,32 @@ const Wysiwyg = React.forwardRef<any, Props>(
       // Handle videos and other type of files by adding some code
     };
 
+    const combinedConfig = useMemo(() => {
+      const defaultConfig = {
+        blockToolbar: [
+          'paragraph',
+          'heading1',
+          'heading2',
+          'heading3',
+          '|',
+          'bulletedList',
+          'numberedList',
+          '|',
+          'blockQuote',
+          'codeBlock',
+          'insertImage',
+          '|',
+          'undo',
+          'redo',
+        ],
+        insertImage: {
+          openMediaLib: handleMediaLibToggle,
+        },
+      };
+
+      return Object.assign({}, defaultConfig, config);
+    }, [config]);
+
     if (!editorLoaded) {
       return <div>Loading editor...</div>;
     }
@@ -76,28 +104,7 @@ const Wysiwyg = React.forwardRef<any, Props>(
           <CKEditor
             ref={ref}
             editor={OnspreadEditor}
-            config={{
-              blockToolbar: [
-                'heading',
-                '|',
-                'bulletedList',
-                'numberedList',
-                '|',
-                'outdent',
-                'indent',
-                '|',
-                'blockQuote',
-                'codeBlock',
-                'insertImage',
-                '|',
-                'undo',
-                'redo',
-              ],
-              insertImage: {
-                openMediaLib: handleMediaLibToggle,
-              },
-              placeholder,
-            }}
+            config={combinedConfig}
             onReady={handleEditorReady}
             onChange={(_, editor) => {
               const newData = editor.getData();

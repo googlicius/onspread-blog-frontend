@@ -25,8 +25,10 @@ interface TempFile {
   tmpId: string;
 }
 
+type Screen = 'fileList' | 'upload' | 'uploadList';
+
 const MediaLib = ({ isOpen, mutiple = false, toggle, onChange }: Props) => {
-  const [screen, setScreen] = useState(1);
+  const [screen, setScreen] = useState<Screen>('fileList');
   const [files, setFiles] = useState<TempFile[]>([]);
   const [page, setPage] = useState(1);
   const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
@@ -53,7 +55,7 @@ const MediaLib = ({ isOpen, mutiple = false, toggle, onChange }: Props) => {
   const [mutipleUploadMutation] = useMutipleUploadMutation({
     onCompleted: () => {
       refetch();
-      setScreen(1);
+      setScreen('fileList');
     },
   });
 
@@ -65,11 +67,11 @@ const MediaLib = ({ isOpen, mutiple = false, toggle, onChange }: Props) => {
   }, [uploadFiles]);
 
   const handleAddMoreAssetsClick = () => {
-    setScreen(2);
+    setScreen('upload');
   };
 
   const backtoScreen1 = () => {
-    setScreen(1);
+    setScreen('fileList');
   };
 
   const handleFilesChange = (files: File[]) => {
@@ -80,7 +82,7 @@ const MediaLib = ({ isOpen, mutiple = false, toggle, onChange }: Props) => {
           file,
         })),
       );
-      setScreen(3);
+      setScreen('uploadList');
     }
   };
 
@@ -121,7 +123,7 @@ const MediaLib = ({ isOpen, mutiple = false, toggle, onChange }: Props) => {
     const newFiles = files.filter(({ tmpId }) => tmpId !== file.id);
     setFiles(newFiles);
     if (newFiles.length === 0) {
-      setScreen(2);
+      setScreen('upload');
     }
   };
 
@@ -144,7 +146,7 @@ const MediaLib = ({ isOpen, mutiple = false, toggle, onChange }: Props) => {
       {/* Kind of switch case */}
       {
         {
-          1: data && (
+          fileList: data && (
             <FileList
               data={data}
               page={page}
@@ -157,14 +159,14 @@ const MediaLib = ({ isOpen, mutiple = false, toggle, onChange }: Props) => {
               onAddMoreAssetsClick={handleAddMoreAssetsClick}
             />
           ),
-          2: (
+          upload: (
             <Upload
               toggle={toggle}
               onBack={backtoScreen1}
               onFilesChange={handleFilesChange}
             />
           ),
-          3: (
+          uploadList: (
             <UploadList
               uploadFiles={uploadFiles}
               toggle={toggle}

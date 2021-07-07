@@ -2051,6 +2051,10 @@ export type CreateStoryMutation = (
     & { story?: Maybe<(
       { __typename?: 'Story' }
       & Pick<Story, 'id' | 'name' | 'description'>
+      & { image?: Maybe<(
+        { __typename?: 'UploadFile' }
+        & Pick<UploadFile, 'url' | 'formats' | 'provider'>
+      )> }
     )> }
   )> }
 );
@@ -2089,6 +2093,26 @@ export type StoryQuery = (
     & { user?: Maybe<(
       { __typename?: 'UsersPermissionsUser' }
       & Pick<UsersPermissionsUser, 'id'>
+    )> }
+  )> }
+);
+
+export type UpdateStoryMutationVariables = Exact<{
+  input?: Maybe<UpdateStoryInput>;
+}>;
+
+
+export type UpdateStoryMutation = (
+  { __typename?: 'Mutation' }
+  & { updateStory?: Maybe<(
+    { __typename?: 'updateStoryPayload' }
+    & { story?: Maybe<(
+      { __typename?: 'Story' }
+      & Pick<Story, 'id' | 'name' | 'description'>
+      & { image?: Maybe<(
+        { __typename?: 'UploadFile' }
+        & Pick<UploadFile, 'url' | 'formats' | 'provider'>
+      )> }
     )> }
   )> }
 );
@@ -2841,6 +2865,11 @@ export const CreateStoryDocument = gql`
       id
       name
       description
+      image {
+        url
+        formats
+        provider
+      }
     }
   }
 }
@@ -2954,6 +2983,48 @@ export function useStoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Stor
 export type StoryQueryHookResult = ReturnType<typeof useStoryQuery>;
 export type StoryLazyQueryHookResult = ReturnType<typeof useStoryLazyQuery>;
 export type StoryQueryResult = Apollo.QueryResult<StoryQuery, StoryQueryVariables>;
+export const UpdateStoryDocument = gql`
+    mutation UpdateStory($input: updateStoryInput) {
+  updateStory(input: $input) {
+    story {
+      id
+      name
+      description
+      image {
+        url
+        formats
+        provider
+      }
+    }
+  }
+}
+    `;
+export type UpdateStoryMutationFn = Apollo.MutationFunction<UpdateStoryMutation, UpdateStoryMutationVariables>;
+
+/**
+ * __useUpdateStoryMutation__
+ *
+ * To run a mutation, you first call `useUpdateStoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateStoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateStoryMutation, { data, loading, error }] = useUpdateStoryMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateStoryMutation(baseOptions?: Apollo.MutationHookOptions<UpdateStoryMutation, UpdateStoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateStoryMutation, UpdateStoryMutationVariables>(UpdateStoryDocument, options);
+      }
+export type UpdateStoryMutationHookResult = ReturnType<typeof useUpdateStoryMutation>;
+export type UpdateStoryMutationResult = Apollo.MutationResult<UpdateStoryMutation>;
+export type UpdateStoryMutationOptions = Apollo.BaseMutationOptions<UpdateStoryMutation, UpdateStoryMutationVariables>;
 export const FilesDocument = gql`
     query Files($sort: String, $limit: Int, $start: Int, $where: JSON) {
   files(sort: $sort, limit: $limit, start: $start, where: $where) {

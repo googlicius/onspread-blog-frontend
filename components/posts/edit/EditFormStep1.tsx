@@ -31,7 +31,7 @@ const EditFormStep1 = ({ title, onNextStep }: Props) => {
 
   return (
     <>
-      <Navigation noHide isTransparentBg={false}>
+      <Navigation noHide>
         <li className="nav-item mr-3 d-flex align-items-center">
           <button
             type="button"
@@ -94,7 +94,7 @@ const EditFormStep1 = ({ title, onNextStep }: Props) => {
                     },
                   })}
                   value={getValues('content')}
-                  placeholder={t('Type the content here')}
+                  config={{ placeholder: t('Type the content here') }}
                 />
               </div>
               <div className="invalid-feedback">{errors.content?.message}</div>

@@ -128,7 +128,7 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
 
   return (
     <>
-      <Navigation noHide isTransparentBg={false}>
+      <Navigation noHide>
         <li className="nav-item mr-3 d-flex align-items-center">
           <button
             type="button"

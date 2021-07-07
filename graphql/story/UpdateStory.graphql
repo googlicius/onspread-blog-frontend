@@ -1,0 +1,14 @@
+mutation UpdateStory($input: updateStoryInput) {
+  updateStory(input: $input) {
+    story {
+      id
+      name
+      description
+      image {
+        url
+        formats
+        provider
+      }
+    }
+  }
+}

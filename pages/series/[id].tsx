@@ -39,7 +39,7 @@ const Series = ({ postsConnectionData, storyData }: Props) => {
         <title>{t('Seris')} - Onspread</title>
       </Head>
 
-      <Navigation isTransparentBg={false} />
+      <Navigation />
 
       <div className={cs(styles['story-header-wrapper'], 'mt-7', 'pb-4')}>
         <Container>

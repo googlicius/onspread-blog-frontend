@@ -60,7 +60,7 @@ const Login: NextPage = () => {
         <title>{t('Login')}</title>
       </Head>
 
-      <Navigation isTransparentBg={false} />
+      <Navigation />
 
       <div className="container mt-7">
         <div className="row">

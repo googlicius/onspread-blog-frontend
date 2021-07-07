@@ -8,6 +8,7 @@ import { Story, useCreateStoryMutation } from '@/graphql/generated';
 import { useSelector } from 'react-redux';
 import { selectMe } from '@/redux/meProducer';
 import { toast } from 'react-toastify';
+import Wysiwyg from '@/components/Wysiwyg/Wysiwyg';
 
 interface Props {
   newStoryAdded: (story: Story) => void;
@@ -31,6 +32,7 @@ const AddStoryModal = React.forwardRef<AddStoryModalRef, Props>(
     const {
       register,
       handleSubmit,
+      getValues,
       formState: { isSubmitting, errors },
     } = useForm<FormData>({
       defaultValues: {
@@ -125,9 +127,25 @@ const AddStoryModal = React.forwardRef<AddStoryModalRef, Props>(
                     <strong>{t('Description')}</strong>
                   </label>
 
-                  <textarea
+                  <Wysiwyg
                     {...register('description')}
-                    className="form-control"
+                    value={getValues('description')}
+                    config={{
+                      placeholder: t('Description'),
+                      toolbar: [
+                        'paragraph',
+                        'heading2',
+                        'heading3',
+                        '|',
+                        'bulletedList',
+                        'numberedList',
+                        '|',
+                        'blockQuote',
+                        '|',
+                        'undo',
+                        'redo',
+                      ],
+                    }}
                   />
                 </FormGroup>
               </Col>

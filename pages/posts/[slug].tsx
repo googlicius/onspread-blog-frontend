@@ -136,11 +136,7 @@ const PostDetail = (props: Props): JSX.Element => {
         {me.value?.id === postData.postBySlug?.user?.id && (
           <>
             <li className="nav-item mr-3 d-flex align-items-center">
-              <Link
-                href={`/posts/edit?slug=${encodeURIComponent(slug as string)}`}
-              >
-                {t('Edit')}
-              </Link>
+              <Link href={`/posts/${slug}/edit`}>{t('Edit')}</Link>
             </li>
 
             <li className="nav-item mr-3 d-flex align-items-center">

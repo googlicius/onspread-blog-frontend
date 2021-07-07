@@ -28,6 +28,7 @@
     "Edit Post": "Chỉnh sửa bài viết",
     "Type the content here": "Nhập nội dung",
     "Create new Post": "Tạo bài viết mới",
+    "Description": "Mô tả",
     "Enter description": "Nhập mô tả",
     "Do you want to cancel creating?": "Bạn có muốn hủy tạo không?",
     "Do you want to cancel editing?": "Bạn có muốn hủy chỉnh sửa không?",
@@ -53,7 +54,9 @@
     "There is no comment yet": "chưa có bình luận nào",
     "requiredMessage": "{{ name }} là trường bắt buộc.",
     "Name": "Tên",
-    "Create new Story": "Tạo một câu chuyện mới"
+    "Create new Story": "Tạo một câu chuyện mới",
+    "Update Story": "Cập nhật câu chuyện",
+    "Update successfully.": "Cập nhật thành công."
   },
   "mediaLib": {
     "Add more images": "Thêm hình ảnh khác",
