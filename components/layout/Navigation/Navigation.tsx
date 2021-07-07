@@ -15,17 +15,24 @@ import styles from './Navigation.module.scss';
 import debounce from 'lodash/debounce';
 import { useLogoutMutation } from '@/graphql/generated';
 import NotificationSvg from '@/components/svgs/NotificationSvg';
+import HandScissors from '@/components/svgs/HandScissors';
 
 interface Props {
   isTransparentBg?: boolean;
   noHide?: boolean;
+  loginText?: string | JSX.Element;
   children?;
 }
 
 const SCROLL_GAP = 50;
 
 export default function Navigation(props: Props): JSX.Element {
-  const { isTransparentBg = false, noHide = false, children } = props;
+  const {
+    isTransparentBg = false,
+    noHide = false,
+    loginText = <HandScissors />,
+    children,
+  } = props;
   const navElementRef = useRef<HTMLElement>(null);
   const me = useSelector(selectMe);
   const dispatch = useDispatch();
@@ -169,7 +176,7 @@ export default function Navigation(props: Props): JSX.Element {
                   return (
                     <li className="nav-item">
                       <Link href={`/login`}>
-                        <a className="nav-link">{t('Login')}</a>
+                        <a className="nav-link">{loginText}</a>
                       </Link>
                     </li>
                   );

@@ -10,6 +10,7 @@ import { selectMe, setLoggedInUser } from '@/redux/meProducer';
 import { useLoginMutation, UsersPermissionsMe } from '@/graphql/generated';
 import Navigation from '@/components/layout/Navigation/Navigation';
 import styles from './index.module.scss';
+import HandLizard from '@/components/svgs/HandLizard';
 
 interface FormData {
   identifier: string;
@@ -60,7 +61,7 @@ const Login: NextPage = () => {
         <title>{t('Login')}</title>
       </Head>
 
-      <Navigation />
+      <Navigation loginText={<HandLizard />} />
 
       <div className="container mt-7">
         <div className="row">
