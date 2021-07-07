@@ -1,5 +1,5 @@
 import { MeDocument, MeQuery, UsersPermissionsMe } from '@/graphql/generated';
-import { MeState, RootState } from './interface';
+import { MeState, RootState, SetLoggedInUserAction } from './interface';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import client from '@/apollo-client';
 // import { getApolloStateByType } from '@/utils/get-apollo-state-by-type';
@@ -40,7 +40,7 @@ const meSlice = createSlice({
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
-    setLoggedInUser(state, action) {
+    setLoggedInUser(state, action: SetLoggedInUserAction) {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
@@ -48,6 +48,9 @@ const meSlice = createSlice({
       state.value = action.payload;
     },
     clearLoggedInUser(state) {
+      client.cache.evict({
+        id: `UsersPermissionsMe:${state.value.id}`,
+      });
       state.value = null;
     },
   },

@@ -28,17 +28,15 @@ const CardItem = ({ card, index, canDrag, onMoveCard, onEndDrag }: Props) => {
   const [{ draggingId }, drag, dragPreview] = useDrag(
     () => ({
       type: 'post',
-      item: () => ({
+      canDrag,
+      item: {
         id: card.id,
         index,
-      }),
+      },
       collect(monitor) {
         return {
           draggingId: monitor.getItem()?.id,
         };
-      },
-      canDrag() {
-        return canDrag;
       },
       end(item) {
         onEndDrag(item.index);

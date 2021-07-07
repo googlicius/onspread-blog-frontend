@@ -1,8 +1,11 @@
 import { Container, Row, Col } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { NextPageContext } from 'next';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import Head from 'next/head';
+import cs from 'classnames';
 import client from '@/apollo-client';
 import {
   Post,
@@ -14,8 +17,9 @@ import {
 import Loading from '@/components/Loading/Loading';
 import Navigation from '@/components/layout/Navigation/Navigation';
 import PostPreview from '@/components/posts/PostPreview';
-import cs from 'classnames';
 import Pagination from '@/components/Pagination';
+import { selectMe } from '@/redux/meProducer';
+import PencilSvg from '@/components/svgs/PencilSvg';
 import styles from './styles.module.scss';
 
 interface Props {
@@ -26,7 +30,8 @@ interface Props {
 const Series = ({ postsConnectionData, storyData }: Props) => {
   const router = useRouter();
   const { t } = useTranslation();
-  const { page = 1 } = router.query;
+  const me = useSelector(selectMe);
+  const { page = 1, id } = router.query;
 
   return (
     <>
@@ -41,7 +46,21 @@ const Series = ({ postsConnectionData, storyData }: Props) => {
           <Row>
             <Col lg={8} md={10} className="mx-auto">
               <strong>{t('Series')}</strong>
-              <h1>{storyData.story.name}</h1>
+              <h1>
+                {storyData.story.name}{' '}
+                {me.value?.id === storyData.story.user?.id && (
+                  <Link href={`/series/${id}/edit`}>
+                    <a>
+                      <PencilSvg />
+                    </a>
+                  </Link>
+                )}
+              </h1>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: storyData.story.description,
+                }}
+              />
             </Col>
           </Row>
         </Container>

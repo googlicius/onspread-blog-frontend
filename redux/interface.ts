@@ -8,3 +8,8 @@ export interface MeState {
 export interface RootState {
   me: MeState;
 }
+
+export interface SetLoggedInUserAction {
+  payload: UsersPermissionsMe;
+  type: string;
+}

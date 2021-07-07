@@ -14,7 +14,6 @@ import {
 import styles from './Navigation.module.scss';
 import debounce from 'lodash/debounce';
 import { useLogoutMutation } from '@/graphql/generated';
-import client from '@/apollo-client';
 import NotificationSvg from '@/components/svgs/NotificationSvg';
 
 interface Props {
@@ -35,11 +34,7 @@ export default function Navigation(props: Props): JSX.Element {
 
   const handleLogOut = async () => {
     await logoutMutation();
-    const userId = me.value.id;
     dispatch(clearLoggedInUser());
-    client.cache.evict({
-      id: `UsersPermissionsMe:${userId}`,
-    });
   };
 
   // Handle scroll event.
@@ -151,7 +146,7 @@ export default function Navigation(props: Props): JSX.Element {
 
             <DropdownMenu right>
               <span className="dropdown-item text-secondary">
-                No notification
+                {t('No notification.')}
               </span>
             </DropdownMenu>
           </UncontrolledDropdown>

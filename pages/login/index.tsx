@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation, Trans } from 'react-i18next';
 import cs from 'classnames';
 import { selectMe, setLoggedInUser } from '@/redux/meProducer';
-import { useLoginMutation } from '@/graphql/generated';
+import { useLoginMutation, UsersPermissionsMe } from '@/graphql/generated';
 import Navigation from '@/components/layout/Navigation/Navigation';
 import styles from './index.module.scss';
 
@@ -48,7 +48,7 @@ const Login: NextPage = () => {
           input: formData,
         },
       });
-      dispatch(setLoggedInUser(data.login.user));
+      dispatch(setLoggedInUser(data.login.user as UsersPermissionsMe));
     } catch (err) {
       // Throw error
     }

@@ -2086,6 +2086,10 @@ export type StoryQuery = (
   & { story?: Maybe<(
     { __typename?: 'Story' }
     & Pick<Story, 'id' | 'name' | 'description'>
+    & { user?: Maybe<(
+      { __typename?: 'UsersPermissionsUser' }
+      & Pick<UsersPermissionsUser, 'id'>
+    )> }
   )> }
 );
 
@@ -2916,6 +2920,9 @@ export const StoryDocument = gql`
     id
     name
     description
+    user {
+      id
+    }
   }
 }
     `;

@@ -3,5 +3,8 @@ query Story($id: ID!) {
     id
     name
     description
+    user {
+      id
+    }
   }
 }
