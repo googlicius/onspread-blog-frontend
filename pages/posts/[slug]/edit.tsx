@@ -17,6 +17,7 @@ import EditFormStep1 from '@/components/posts/edit/EditFormStep1';
 import EditFormStep2 from '@/components/posts/edit/EditFormStep2';
 import { FormData } from '@/components/posts/edit/interface';
 import { useTranslation } from 'react-i18next';
+import useFormGuard from '@/hooks/form-guard';
 
 interface Props {
   postData: PostBySlugQuery;
@@ -48,37 +49,13 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
     formState: { isDirty },
   } = methods;
 
-  const checkPageUnSaved = useCallback(() => {
-    if (isDirty && !confirm(t('Do you want to cancel editing?'))) {
-      router.events.emit('routeChangeComplete');
-      throw 'Abort route change. Please ignore this error.';
-    }
-  }, [isDirty]);
+  const { checkUnSavedForm } = useFormGuard({ isDirty, isEditForm: true });
 
   useEffect(() => {
-    // Return because user is loading...
-    if (me.status !== 'idle') {
-      return;
-    }
-
-    if (!me.value) {
-      router.events.off('routeChangeStart', checkPageUnSaved);
-      router.push('/');
-      return;
-    }
-
     if (me.value?.id !== postData.postBySlug?.user?.id) {
       router.back();
     }
   }, [me, postData]);
-
-  useEffect(() => {
-    router.events.on('routeChangeStart', checkPageUnSaved);
-
-    return function cleanUp() {
-      router.events.off('routeChangeStart', checkPageUnSaved);
-    };
-  }, [checkPageUnSaved]);
 
   const onSubmit = async (data: FormData): Promise<void> => {
     const { data: updatePostData } = await updatePostMutation({
@@ -92,7 +69,7 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
       },
     });
 
-    router.events.off('routeChangeStart', checkPageUnSaved);
+    router.events.off('routeChangeStart', checkUnSavedForm);
     router.push(`/posts/${updatePostData.updatePost.post.slug}`);
     toast.dark(t('Post updated successfully.'));
   };

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -14,6 +14,7 @@ import EditFormStep1 from '@/components/posts/edit/EditFormStep1';
 import EditFormStep2 from '@/components/posts/edit/EditFormStep2';
 import { FormData } from '@/components/posts/edit/interface';
 import { useTranslation } from 'react-i18next';
+import useFormGuard from '@/hooks/form-guard';
 
 const PostCreate = (): JSX.Element => {
   const router = useRouter();
@@ -39,32 +40,7 @@ const PostCreate = (): JSX.Element => {
     formState: { isDirty },
   } = methods;
 
-  const checkUnSavedForm = useCallback(() => {
-    if (isDirty && !confirm(t('Do you want to cancel creating?'))) {
-      router.events.emit('routeChangeComplete');
-      throw 'Abort route change. Please ignore this error.';
-    }
-  }, [isDirty]);
-
-  useEffect(() => {
-    // Return because user is loading...
-    if (me.status !== 'idle') {
-      return;
-    }
-
-    if (!me.value) {
-      router.events.off('routeChangeStart', checkUnSavedForm);
-      router.push('/');
-    }
-  }, [me]);
-
-  useEffect(() => {
-    router.events.on('routeChangeStart', checkUnSavedForm);
-
-    return function cleanUp() {
-      router.events.off('routeChangeStart', checkUnSavedForm);
-    };
-  }, [checkUnSavedForm]);
+  const { checkUnSavedForm } = useFormGuard({ isDirty });
 
   const onSubmit = async (data: FormData): Promise<void> => {
     const { data: createPostData } = await createPostMutation({

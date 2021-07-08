@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { selectMe } from '@/redux/meProducer';
 import { useEffect } from 'react';
+import useFormGuard from '@/hooks/form-guard';
 
 interface Props {
   storyData: StoryQuery;
@@ -36,7 +37,7 @@ const SeriesEdit = ({ storyData }: Props) => {
     register,
     handleSubmit,
     getValues,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isDirty },
   } = useForm<FormData>({
     defaultValues: {
       name: story.name,
@@ -44,13 +45,17 @@ const SeriesEdit = ({ storyData }: Props) => {
     },
   });
 
-  useEffect(() => {
-    if (!me.value) {
-      router.push(`/series/${router.query.id}`);
-    }
-  }, [me]);
+  const { checkUnSavedForm } = useFormGuard({
+    isDirty,
+    isEditForm: true,
+    redirectUrl: `/series/${router.query.id}`,
+  });
 
-  const [updateStoryMutation, { loading }] = useUpdateStoryMutation();
+  const [updateStoryMutation] = useUpdateStoryMutation();
+
+  const handleCancel = () => {
+    router.back();
+  };
 
   const onSubmit = async (data: FormData) => {
     await updateStoryMutation({
@@ -63,6 +68,7 @@ const SeriesEdit = ({ storyData }: Props) => {
         },
       },
     });
+    router.events.off('routeChangeStart', checkUnSavedForm);
     toast.dark(t('Update successfully.'));
     router.push(`/series/${router.query.id}`);
   };
@@ -77,7 +83,15 @@ const SeriesEdit = ({ storyData }: Props) => {
         <Navigation noHide>
           <li className="nav-item mr-3 d-flex align-items-center">
             <button
-              disabled={isSubmitting || loading}
+              type="button"
+              disabled={isSubmitting}
+              className="btn btn-secondary btn-sm"
+              onClick={handleCancel}
+            >
+              {t('Cancel')}
+            </button>
+            <button
+              disabled={isSubmitting || !isDirty}
               className="btn btn-success btn-sm"
             >
               {t('Save')}

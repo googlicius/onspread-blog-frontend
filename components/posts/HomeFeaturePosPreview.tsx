@@ -1,11 +1,13 @@
 import { Post } from '@/graphql/generated';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   post: Post;
 }
 
 const HomeFeaturePosPreview = ({ post }: Props) => {
+  const { t } = useTranslation();
   const imageUrl = post.image?.url || '/assets/img/home-bg.jpg';
 
   return (
@@ -24,7 +26,7 @@ const HomeFeaturePosPreview = ({ post }: Props) => {
               <div className="mt-5">
                 <Link href={`/posts/${encodeURIComponent(post.slug)}`}>
                   <a className="btn btn-link btn-read-continue px-0">
-                    Continue Reading
+                    {t('Continue Reading')}
                   </a>
                 </Link>
               </div>

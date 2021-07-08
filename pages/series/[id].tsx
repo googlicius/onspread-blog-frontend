@@ -56,7 +56,7 @@ const Series = ({ postsConnectionData, storyData }: Props) => {
                   </Link>
                 )}
               </h1>
-              <p
+              <div
                 dangerouslySetInnerHTML={{
                   __html: storyData.story.description,
                 }}
