@@ -36,7 +36,9 @@ const Series = ({ postsConnectionData, storyData }: Props) => {
   return (
     <>
       <Head>
-        <title>{t('Seris')} - Onspread</title>
+        <title>
+          {t('Series')} {storyData.story.name} - Onspread
+        </title>
       </Head>
 
       <Navigation />

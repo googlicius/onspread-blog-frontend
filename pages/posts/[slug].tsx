@@ -34,6 +34,7 @@ import get from 'lodash/get';
 import TogglePublish from './TogglePublish';
 import { useTranslation } from 'react-i18next';
 import PostPreview from '@/components/posts/PostPreview';
+import PencilSvg from '@/components/svgs/PencilSvg';
 
 interface Props {
   postData: PostBySlugQuery;
@@ -136,7 +137,11 @@ const PostDetail = (props: Props): JSX.Element => {
         {me.value?.id === postData.postBySlug?.user?.id && (
           <>
             <li className="nav-item mr-3 d-flex align-items-center">
-              <Link href={`/posts/${slug}/edit`}>{t('Edit')}</Link>
+              <Link href={`/posts/${slug}/edit`}>
+                <a>
+                  <PencilSvg title={t('Edit')} />
+                </a>
+              </Link>
             </li>
 
             <li className="nav-item mr-3 d-flex align-items-center">

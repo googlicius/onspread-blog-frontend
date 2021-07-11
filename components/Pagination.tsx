@@ -59,7 +59,7 @@ const Pagination = ({
           })}
         >
           <a
-            className="page-link"
+            className="page-link shadow-none"
             href={`${listPath}?page=${currentPage - 1}`}
             onClick={handleLinkClick}
           >
@@ -73,7 +73,7 @@ const Pagination = ({
             key={page}
           >
             <a
-              className="page-link"
+              className="page-link shadow-none"
               href={`${listPath}?page=${page}`}
               onClick={handleLinkClick}
             >
@@ -88,7 +88,7 @@ const Pagination = ({
           })}
         >
           <a
-            className="page-link"
+            className="page-link shadow-none"
             href={`${listPath}?page=${currentPage + 1}`}
             onClick={handleLinkClick}
           >

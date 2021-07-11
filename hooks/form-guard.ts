@@ -10,8 +10,12 @@ interface Props {
   redirectUrl?: string;
 }
 
+interface UseFormGuardReturn {
+  checkUnSavedForm: () => void;
+}
+
 /**
- * A hook for guarding a form:
+ * Form Guard:
  * - Redirect when unauthenticated.
  * - Inform to user when leaving without save.
  */
@@ -19,7 +23,7 @@ const useFormGuard = ({
   isDirty,
   redirectUrl = '/',
   isEditForm = false,
-}: Props) => {
+}: Props): UseFormGuardReturn => {
   const { t } = useTranslation();
   const router = useRouter();
   const me = useSelector(selectMe);

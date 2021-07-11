@@ -14,9 +14,6 @@ import client from '@/apollo-client';
 import Wysiwyg from '@/components/Wysiwyg/Wysiwyg';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
-import { selectMe } from '@/redux/meProducer';
-import { useEffect } from 'react';
 import useFormGuard from '@/hooks/form-guard';
 
 interface Props {
@@ -32,7 +29,6 @@ const SeriesEdit = ({ storyData }: Props) => {
   const { story } = storyData;
   const { t } = useTranslation();
   const router = useRouter();
-  const me = useSelector(selectMe);
   const {
     register,
     handleSubmit,
@@ -52,10 +48,6 @@ const SeriesEdit = ({ storyData }: Props) => {
   });
 
   const [updateStoryMutation] = useUpdateStoryMutation();
-
-  const handleCancel = () => {
-    router.back();
-  };
 
   const onSubmit = async (data: FormData) => {
     await updateStoryMutation({
@@ -86,7 +78,7 @@ const SeriesEdit = ({ storyData }: Props) => {
               type="button"
               disabled={isSubmitting}
               className="btn btn-secondary btn-sm"
-              onClick={handleCancel}
+              onClick={router.back}
             >
               {t('Cancel')}
             </button>

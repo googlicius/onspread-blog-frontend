@@ -1,6 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import {
+  Col,
+  Row,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+} from 'reactstrap';
 import PropTypes from 'prop-types';
 import cs from 'classnames';
 import { FilesConnectionQuery, UploadFile } from '@/graphql/generated';
@@ -100,22 +106,23 @@ const FileList = ({
         </div>
 
         {/* Display files and images */}
-        <div className="row">
+        <Row>
           {data.filesConnection.values.map((file, index) => {
             return (
-              <FileItem
-                file={file as UploadFile}
-                selected={
-                  !!selectedFiles.find(
-                    (selectedFile) => selectedFile === file.id,
-                  )
-                }
-                key={index}
-                onSelect={onFileSelect}
-              />
+              <Col md={3} xs={6} key={index} className="mb-4">
+                <FileItem
+                  file={file as UploadFile}
+                  selected={
+                    !!selectedFiles.find(
+                      (selectedFile) => selectedFile === file.id,
+                    )
+                  }
+                  onSelect={onFileSelect}
+                />
+              </Col>
             );
           })}
-        </div>
+        </Row>
 
         {/* Pagination */}
         <Pagination

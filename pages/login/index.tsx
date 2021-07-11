@@ -24,7 +24,7 @@ const Login: NextPage = () => {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm();
+  } = useForm<FormData>();
   const [loginMutation, { error }] = useLoginMutation();
   const router = useRouter();
   const me = useSelector(selectMe);

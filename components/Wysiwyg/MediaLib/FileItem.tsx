@@ -40,10 +40,7 @@ const FileItem = ({ file, selected, onSelect, onDelete }: Props) => {
   };
 
   return (
-    <div
-      className={cs(styles['media-lib__file-item'], 'col-md-3', 'mb-4')}
-      onClick={handleFileSelect}
-    >
+    <div className={styles['media-lib__file-item']} onClick={handleFileSelect}>
       <div
         role="button"
         className={cs(styles['file-card'], {

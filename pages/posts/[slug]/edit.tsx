@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -52,6 +52,11 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
   const { checkUnSavedForm } = useFormGuard({ isDirty, isEditForm: true });
 
   useEffect(() => {
+    // Return because user is loading...
+    if (me.status !== 'idle') {
+      return;
+    }
+
     if (me.value?.id !== postData.postBySlug?.user?.id) {
       router.back();
     }
