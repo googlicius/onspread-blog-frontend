@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import cs from 'classnames';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import buildUrl from '@/utils/build-url';
 
 interface Props {
   currentPage: number;
@@ -18,7 +19,7 @@ const Pagination = ({
   perPage = +process.env.NEXT_PUBLIC_PER_PAGE,
   currentPage,
   totalCount,
-  listPath = '',
+  listPath = typeof window !== 'undefined' ? window.location.href : '',
   onNavigate,
 }: Props) => {
   const { t } = useTranslation();
@@ -36,13 +37,12 @@ const Pagination = ({
 
   const handleLinkClick = (e) => {
     e.preventDefault();
-    const href = e.target.href;
 
     if (onNavigate) {
-      const url = new URL(href);
+      const url = new URL(e.target.href);
       onNavigate(parseInt(url.searchParams.get('page')));
     } else {
-      router.push(href);
+      router.push(e.target.href);
     }
   };
 
@@ -60,7 +60,9 @@ const Pagination = ({
         >
           <a
             className="page-link shadow-none"
-            href={`${listPath}?page=${currentPage - 1}`}
+            href={`${buildUrl(listPath, {
+              queryParams: { page: currentPage - 1 },
+            })}`}
             onClick={handleLinkClick}
           >
             {t('pagination:Prev')}
@@ -74,7 +76,9 @@ const Pagination = ({
           >
             <a
               className="page-link shadow-none"
-              href={`${listPath}?page=${page}`}
+              href={`${buildUrl(listPath, {
+                queryParams: { page },
+              })}`}
               onClick={handleLinkClick}
             >
               {page}
@@ -89,7 +93,9 @@ const Pagination = ({
         >
           <a
             className="page-link shadow-none"
-            href={`${listPath}?page=${currentPage + 1}`}
+            href={`${buildUrl(listPath, {
+              queryParams: { page: currentPage + 1 },
+            })}`}
             onClick={handleLinkClick}
           >
             {t('pagination:Next')}

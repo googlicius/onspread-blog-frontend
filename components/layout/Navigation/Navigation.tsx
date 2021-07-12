@@ -203,6 +203,10 @@ export default function Navigation(props: Props): JSX.Element {
                         <a className="dropdown-item">{t('Create new Post')}</a>
                       </Link>
 
+                      <Link href="/manage-posts?sort=createdAt%3Adesc">
+                        <a className="dropdown-item">{t('Manage Posts')}</a>
+                      </Link>
+
                       <Link href="/me">
                         <a className="dropdown-item">{t('Profile')}</a>
                       </Link>

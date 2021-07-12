@@ -33,6 +33,7 @@ const PostCreate = (): JSX.Element => {
       category: null,
       story: null,
       storySeq: null,
+      published_at: null,
     },
   });
   const {

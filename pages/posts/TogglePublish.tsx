@@ -1,4 +1,3 @@
-import { Post } from '@/graphql/generated';
 import {
   usePublishPostMutation,
   useUnPublishPostMutation,
@@ -8,11 +7,12 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 interface Props {
-  post?: Post;
+  id: string;
+  published_at: string;
 }
 
-const TogglePublish = ({ post }: Props): JSX.Element => {
-  const [isPublished, setIsPublished] = useState(!!post?.published_at);
+const TogglePublish = ({ id, published_at }: Props): JSX.Element => {
+  const [isPublished, setIsPublished] = useState(!!published_at);
   const [
     publishPostMutation,
     { loading: pulishLoading },
@@ -27,7 +27,7 @@ const TogglePublish = ({ post }: Props): JSX.Element => {
     try {
       await publishPostMutation({
         variables: {
-          id: post.id,
+          id,
         },
       });
       setIsPublished(true);
@@ -38,16 +38,18 @@ const TogglePublish = ({ post }: Props): JSX.Element => {
   };
 
   const handleUnPublish = async (): Promise<void> => {
-    try {
-      await unPublishPostMutation({
-        variables: {
-          id: post.id,
-        },
-      });
-      setIsPublished(false);
-      toast.info('Unpublished.');
-    } catch (error) {
-      toast.error(error.message);
+    if (confirm(t('Are you sure to unpblish this post?'))) {
+      try {
+        await unPublishPostMutation({
+          variables: {
+            id,
+          },
+        });
+        setIsPublished(false);
+        toast.info('Unpublished.');
+      } catch (error) {
+        toast.error(error.message);
+      }
     }
   };
 
@@ -56,7 +58,7 @@ const TogglePublish = ({ post }: Props): JSX.Element => {
       {!isPublished ? (
         <button
           type="button"
-          className="btn btn-primary btn-sm"
+          className="btn btn-success btn-sm text-nowrap"
           disabled={pulishLoading || unPublishLoading}
           onClick={handlePublish}
         >
@@ -65,7 +67,7 @@ const TogglePublish = ({ post }: Props): JSX.Element => {
       ) : (
         <button
           type="button"
-          className="btn btn-primary btn-sm"
+          className="btn btn-primary btn-sm text-nowrap"
           disabled={pulishLoading || unPublishLoading}
           onClick={handleUnPublish}
         >

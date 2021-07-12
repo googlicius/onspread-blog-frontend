@@ -13,4 +13,5 @@ export interface FormData {
   story?: string;
   storySeq?: number;
   displayType?: Enum_Post_Displaytype;
+  published_at?: string;
 }

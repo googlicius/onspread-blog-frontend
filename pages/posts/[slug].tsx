@@ -145,7 +145,10 @@ const PostDetail = (props: Props): JSX.Element => {
             </li>
 
             <li className="nav-item mr-3 d-flex align-items-center">
-              <TogglePublish post={postData.postBySlug as Post} />
+              <TogglePublish
+                id={postData.postBySlug.id}
+                published_at={postData.postBySlug.published_at}
+              />
             </li>
           </>
         )}
