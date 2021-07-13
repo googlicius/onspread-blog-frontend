@@ -148,7 +148,7 @@ export default function Navigation(props: Props): JSX.Element {
           {/* Notification */}
           <UncontrolledDropdown tag="li" className="nav-item mr-2">
             <DropdownToggle tag="a" role="button" className="pointer nav-link">
-              <NotificationSvg />
+              <NotificationSvg title={t('notifications')} />
             </DropdownToggle>
 
             <DropdownMenu right>

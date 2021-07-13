@@ -31,7 +31,7 @@ const TogglePublish = ({ id, published_at }: Props): JSX.Element => {
         },
       });
       setIsPublished(true);
-      toast.info('Published.');
+      toast.info(t('Published.'));
     } catch (error) {
       toast.error(error.message);
     }
@@ -46,7 +46,7 @@ const TogglePublish = ({ id, published_at }: Props): JSX.Element => {
           },
         });
         setIsPublished(false);
-        toast.info('Unpublished.');
+        toast.info(t('Unpublished.'));
       } catch (error) {
         toast.error(error.message);
       }

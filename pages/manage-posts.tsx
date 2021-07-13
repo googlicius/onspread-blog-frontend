@@ -12,7 +12,7 @@ import TogglePublish from './posts/TogglePublish';
 import { useRouter } from 'next/router';
 import Pagination from '@/components/Pagination';
 import Table from '@/components/Table';
-import Loading from '@/components/Loading/Loading';
+import TrashSvg from '@/components/svgs/TrashSvg';
 
 const ManagePosts = () => {
   const me = useAuthGuard();
@@ -30,7 +30,7 @@ const ManagePosts = () => {
       },
       ...(sort && { sort }),
     },
-    skip: me.status !== 'idle',
+    skip: !me.value,
   });
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const ManagePosts = () => {
         accessor: 'createdAt',
       },
       {
-        Header: t('Publication'),
+        Header: t('Status'),
         accessor: 'published_at',
         disableSortBy: true,
         Cell: function TogglePublishCell({ cell }) {
@@ -74,11 +74,17 @@ const ManagePosts = () => {
         disableSortBy: true,
         Cell: function AcctionCell({ cell }) {
           return (
-            <Link href={`/posts/${cell.row.original.slug}/edit`}>
-              <a>
-                <PencilSvg />
-              </a>
-            </Link>
+            <div className="d-flex align-items-center">
+              <Link href={`/posts/${cell.row.original.slug}/edit`}>
+                <a>
+                  <PencilSvg title={t('Edit')} />
+                </a>
+              </Link>
+
+              <button type="button" className="btn ml-2">
+                <TrashSvg title={t('Delete')} />
+              </button>
+            </div>
           );
         },
       },
@@ -88,7 +94,7 @@ const ManagePosts = () => {
 
   const data = React.useMemo(() => {
     if (!postsConnection) {
-      return;
+      return [];
     }
     return postsConnection.values.map((post) => ({
       id: post.id,
@@ -110,7 +116,7 @@ const ManagePosts = () => {
       <Container>
         <h1 className="mt-7 mb-5">{t('Manage Posts')}</h1>
 
-        {data ? <Table columns={columns} data={data} /> : <Loading />}
+        <Table columns={columns} data={data} />
 
         <Pagination
           className="my-5"

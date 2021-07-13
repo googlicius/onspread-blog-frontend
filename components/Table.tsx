@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useTable, Column, useSortBy } from 'react-table';
 import { useRouter } from 'next/router';
 import buildUrl from '@/utils/build-url';
+import { useTranslation } from 'react-i18next';
 
 const buildSortBy = (strSort: string) => {
   const [id, sort] = strSort.split(':');
@@ -23,8 +24,9 @@ interface Props {
  * - Sort state is stored in url query params in order to easy access from parent.
  * - Keep table's state when navigating around.
  */
-const Table = ({ columns, data }: Props) => {
+const Table = ({ columns, data = [] }: Props) => {
   const router = useRouter();
+  const { t } = useTranslation();
   const sort = router.query.sort as string;
 
   const {
@@ -79,7 +81,11 @@ const Table = ({ columns, data }: Props) => {
           // Loop over the header rows
           headerGroups.map((headerGroup, index) => (
             // Apply the header row props
-            <tr key={index} {...headerGroup.getHeaderGroupProps()}>
+            <tr
+              key={index}
+              {...headerGroup.getHeaderGroupProps()}
+              className="text-nowrap"
+            >
               {
                 // Loop over the headers in each row
                 headerGroup.headers.map((column, index2) => (
@@ -109,8 +115,8 @@ const Table = ({ columns, data }: Props) => {
       </thead>
 
       <tbody {...getTableBodyProps()}>
-        {
-          // Loop over the table rows
+        {/* Loop over the table rows */}
+        {rows.length > 0 ? (
           rows.map((row, index) => {
             // Prepare the row for display
             prepareRow(row);
@@ -123,7 +129,11 @@ const Table = ({ columns, data }: Props) => {
                   row.cells.map((cell, index2) => {
                     // Apply the cell props
                     return (
-                      <td key={index2} {...cell.getCellProps()}>
+                      <td
+                        key={index2}
+                        {...cell.getCellProps()}
+                        className="align-middle"
+                      >
                         {
                           // Render the cell contents
                           cell.render('Cell')
@@ -135,7 +145,11 @@ const Table = ({ columns, data }: Props) => {
               </tr>
             );
           })
-        }
+        ) : (
+          <tr>
+            <td>{t('No records')}</td>
+          </tr>
+        )}
       </tbody>
     </table>
   );

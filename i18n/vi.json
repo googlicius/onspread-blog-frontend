@@ -4,6 +4,7 @@
     "Cancel": "Bỏ qua",
     "Next": "Tiếp theo",
     "Edit": "Sửa",
+    "Delete": "Xóa",
     "Back": "Quay lại",
     "Save": "Lưu",
     "Publish": "Xuất bản",
@@ -11,7 +12,8 @@
     "Title": "Tiêu đề",
     "Content": "Nội dung",
     "Profile": "Hồ sơ",
-    "No notification.": "Không có thông báo.",
+    "No notification.": "Không có thông báo nào.",
+    "notifications": "thông báo",
     "Login": "Đăng nhập",
     "Register": "Đăng ký",
     "Logout": "Đăng xuất",
@@ -58,7 +60,14 @@
     "Name": "Tên",
     "Create new Story": "Tạo một câu chuyện mới",
     "Update Story": "Cập nhật câu chuyện",
-    "Update successfully.": "Cập nhật thành công."
+    "Update successfully.": "Cập nhật thành công.",
+    "Created at": "Tạo lúc",
+    "Status": "Trạng thái",
+    "Action": "Thao tác",
+    "Are you sure to unpblish this post?": "Bạn có muốn hủy xuất bản bài viết này?",
+    "Published.": "Đã xuất bản.",
+    "Unpublished.": "Đã hủy xuất bản.",
+    "Copyright": "Bản quyền"
   },
   "mediaLib": {
     "Add more images": "Thêm hình ảnh khác",
