@@ -31,7 +31,7 @@ const UploadDropZone = ({ onDrop }: Props) => {
 };
 
 UploadDropZone.propTypes = {
-  onFilesChange: PropTypes.func.isRequired,
+  onDrop: PropTypes.func.isRequired,
 };
 
 export default UploadDropZone;

@@ -1,0 +1,12 @@
+query TagsConnection($start: Int = 0, $search: String = "") {
+  tagsConnection(start: $start, where: { name_contains: $search }) {
+    values {
+      id
+      name
+      description
+    }
+    aggregate {
+      totalCount
+    }
+  }
+}

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { NextPageContext } from 'next';
+import map from 'lodash/map';
 import {
   Post,
   PostBySlugDocument,
@@ -12,7 +12,6 @@ import {
   useUpdatePostMutation,
 } from '@/graphql/generated';
 import client from '@/apollo-client';
-import { selectMe } from '@/redux/meProducer';
 import EditFormStep1 from '@/components/posts/edit/EditFormStep1';
 import EditFormStep2 from '@/components/posts/edit/EditFormStep2';
 import { FormData } from '@/components/posts/edit/interface';
@@ -29,7 +28,6 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
   const { postBySlug } = postData;
   const { t } = useTranslation();
 
-  const me = useSelector(selectMe);
   const [updatePostMutation] = useUpdatePostMutation();
   const methods = useForm<FormData>({
     defaultValues: {
@@ -42,6 +40,10 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
       category: postBySlug.category.id,
       story: postBySlug.story?.id,
       storySeq: postBySlug.storySeq,
+      tags: map(postBySlug.tags, (tag) => ({
+        label: tag.name,
+        value: tag.id,
+      })),
     },
   });
   const {
@@ -49,7 +51,7 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
     formState: { isDirty },
   } = methods;
 
-  const { checkUnSavedForm } = useFormGuard({ isDirty, isEditForm: true });
+  const { me, checkUnSavedForm } = useFormGuard({ isDirty, isEditForm: true });
 
   useEffect(() => {
     // Return because user is loading...
@@ -69,7 +71,10 @@ const PostEdit = ({ postData }: Props): JSX.Element => {
           where: {
             id: postData.postBySlug.id,
           },
-          data,
+          data: {
+            ...data,
+            tags: map(data.tags, 'value'),
+          },
         },
       },
     });

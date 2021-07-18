@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+import { Col, Container, FormGroup, Row } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
 import cs from 'classnames';
 import Navigation from '../../layout/Navigation/Navigation';
@@ -52,9 +53,9 @@ const EditFormStep1 = ({ title, onNextStep }: Props) => {
         </li>
       </Navigation>
 
-      <div className="container mt-7">
-        <div className="row">
-          <div className="col-lg-8 col-md-10 mx-auto">
+      <Container className="mt-7">
+        <Row>
+          <Col lg={8} md={10} className="mx-auto">
             <h2 className="mb-4">{title}</h2>
 
             <input
@@ -62,7 +63,7 @@ const EditFormStep1 = ({ title, onNextStep }: Props) => {
               type="hidden"
             />
 
-            <div className="form-group">
+            <FormGroup>
               <label>{t('Title')}</label>
               <input
                 {...register('title', {
@@ -77,9 +78,9 @@ const EditFormStep1 = ({ title, onNextStep }: Props) => {
                 placeholder={t('Title')}
               />
               <div className="invalid-feedback">{errors.title?.message}</div>
-            </div>
+            </FormGroup>
 
-            <div className="form-group">
+            <FormGroup>
               <label>{t('Content')}</label>
               <div
                 className={cs(postStyles['post-content'], {
@@ -98,10 +99,10 @@ const EditFormStep1 = ({ title, onNextStep }: Props) => {
                 />
               </div>
               <div className="invalid-feedback">{errors.content?.message}</div>
-            </div>
-          </div>
-        </div>
-      </div>
+            </FormGroup>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 };

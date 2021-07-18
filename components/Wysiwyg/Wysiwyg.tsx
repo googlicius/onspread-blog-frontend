@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './Wysiwyg.module.scss';
 import { UploadFile } from '@/graphql/generated';
-import MediaLib from './MediaLib/MediaLib';
+import MediaLib, { MediaLibRef } from './MediaLib/MediaLib';
 
 interface Props {
   onChange: (input) => void;
@@ -18,9 +18,9 @@ const Wysiwyg = React.forwardRef<any, Props>(
     const editorRef = useRef<any>();
     const [editorLoaded, setEditorLoaded] = useState(false);
     const { CKEditor, OnspreadEditor } = editorRef.current || {};
+    const mediaLibRef = useRef<MediaLibRef>(null);
 
     const [ckEditor, setCkEditor] = useState(null);
-    const [isMediaLibOpen, setIsMediaLibOpen] = useState(false);
 
     const handleEditorReady = (editor) => {
       if (!editor) {
@@ -47,7 +47,7 @@ const Wysiwyg = React.forwardRef<any, Props>(
     }, []);
 
     const handleMediaLibToggle = () => {
-      setIsMediaLibOpen((prev) => !prev);
+      mediaLibRef.current?.toggleOpen();
     };
 
     const handleInsertImage = (data: UploadFile) => {
@@ -117,11 +117,7 @@ const Wysiwyg = React.forwardRef<any, Props>(
           />
         </div>
 
-        <MediaLib
-          isOpen={isMediaLibOpen}
-          toggle={handleMediaLibToggle}
-          onChange={handleInsertImage}
-        />
+        <MediaLib ref={mediaLibRef} onChange={handleInsertImage} />
       </>
     );
   },

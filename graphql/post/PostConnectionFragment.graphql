@@ -13,4 +13,7 @@ fragment PostsConnectionFragment on Post {
     provider
     formats
   }
+  tags {
+    slug
+  }
 }

@@ -9,6 +9,7 @@ import {
   Enum_Post_Contenttype,
   Enum_Post_Displaytype,
   Post,
+  Tag,
 } from '@/graphql/generated';
 import Head from 'next/head';
 import cs from 'classnames';
@@ -22,6 +23,7 @@ import ViewCommentsBtn from '@/components/posts/ViewCommentsBtn';
 import Comments from '@/components/posts/Comments/Comments';
 import client from '@/apollo-client';
 import debounce from 'lodash/debounce';
+import get from 'lodash/get';
 import { selectMe } from '@/redux/meProducer';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
@@ -30,11 +32,11 @@ import Loading from '@/components/Loading/Loading';
 import styles from './PostDetail.module.scss';
 import postStyles from '@/styles/scss/modules/post.module.scss';
 import format from 'date-fns/format';
-import get from 'lodash/get';
 import TogglePublish from './TogglePublish';
 import { useTranslation } from 'react-i18next';
 import PostPreview from '@/components/posts/PostPreview';
 import PencilSvg from '@/components/svgs/PencilSvg';
+import TagLinks from '@/components/posts/TagLinks/TagLinks';
 
 interface Props {
   postData: PostBySlugQuery;
@@ -177,6 +179,12 @@ const PostDetail = (props: Props): JSX.Element => {
                       {postData.postBySlug.title}
                     </h1>
                   )}
+
+                  {/* Tags */}
+                  <TagLinks
+                    tags={postData.postBySlug.tags as Tag[]}
+                    className="mb-4"
+                  />
 
                   {/* Author info and published date */}
                   <div className="d-flex mb-4 align-items-center">

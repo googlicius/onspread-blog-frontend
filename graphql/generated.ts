@@ -272,7 +272,7 @@ export type LocaleInput = {
 };
 
 
-export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnection_Id | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | CategoryConnectionDescription | CategoryConnectionImage | CreateCategoryPayload | UpdateCategoryPayload | DeleteCategoryPayload | Comment | CommentConnection | CommentAggregator | CommentGroupBy | CommentConnectionId | CommentConnection_Id | CommentConnectionCreatedAt | CommentConnectionUpdatedAt | CommentConnectionContent | CommentConnectionUser | CommentConnectionPost | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Post | PostConnection | PostAggregator | PostAggregatorSum | PostAggregatorAvg | PostAggregatorMin | PostAggregatorMax | PostGroupBy | PostConnectionId | PostConnection_Id | PostConnectionCreatedAt | PostConnectionUpdatedAt | PostConnectionTitle | PostConnectionContent | PostConnectionImage | PostConnectionCategory | PostConnectionUser | PostConnectionSlug | PostConnectionDescription | PostConnectionHeart | PostConnectionHomeFeatured | PostConnectionContentType | PostConnectionDisplayType | PostConnectionStory | PostConnectionStorySeq | PostConnectionPublished_At | CreatePostPayload | UpdatePostPayload | DeletePostPayload | Story | StoryConnection | StoryAggregator | StoryGroupBy | StoryConnectionId | StoryConnection_Id | StoryConnectionCreatedAt | StoryConnectionUpdatedAt | StoryConnectionName | StoryConnectionDescription | StoryConnectionImage | StoryConnectionUser | CreateStoryPayload | UpdateStoryPayload | DeleteStoryPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnection_Id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnection_Id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnection_Id | UsersPermissionsUserConnectionCreatedAt | UsersPermissionsUserConnectionUpdatedAt | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionAvatar | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
+export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnection_Id | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | CategoryConnectionDescription | CategoryConnectionImage | CreateCategoryPayload | UpdateCategoryPayload | DeleteCategoryPayload | Comment | CommentConnection | CommentAggregator | CommentGroupBy | CommentConnectionId | CommentConnection_Id | CommentConnectionCreatedAt | CommentConnectionUpdatedAt | CommentConnectionContent | CommentConnectionUser | CommentConnectionPost | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Post | PostConnection | PostAggregator | PostAggregatorSum | PostAggregatorAvg | PostAggregatorMin | PostAggregatorMax | PostGroupBy | PostConnectionId | PostConnection_Id | PostConnectionCreatedAt | PostConnectionUpdatedAt | PostConnectionTitle | PostConnectionContent | PostConnectionImage | PostConnectionCategory | PostConnectionUser | PostConnectionSlug | PostConnectionDescription | PostConnectionHeart | PostConnectionHomeFeatured | PostConnectionContentType | PostConnectionDisplayType | PostConnectionStory | PostConnectionStorySeq | PostConnectionPublished_At | CreatePostPayload | UpdatePostPayload | DeletePostPayload | Story | StoryConnection | StoryAggregator | StoryGroupBy | StoryConnectionId | StoryConnection_Id | StoryConnectionCreatedAt | StoryConnectionUpdatedAt | StoryConnectionName | StoryConnectionDescription | StoryConnectionImage | StoryConnectionUser | CreateStoryPayload | UpdateStoryPayload | DeleteStoryPayload | Tag | TagConnection | TagAggregator | TagGroupBy | TagConnectionId | TagConnection_Id | TagConnectionCreatedAt | TagConnectionUpdatedAt | TagConnectionName | TagConnectionDescription | TagConnectionImage | TagConnectionSlug | CreateTagPayload | UpdateTagPayload | DeleteTagPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnection_Id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnection_Id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnection_Id | UsersPermissionsUserConnectionCreatedAt | UsersPermissionsUserConnectionUpdatedAt | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionAvatar | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -288,6 +288,9 @@ export type Mutation = {
   createStory?: Maybe<CreateStoryPayload>;
   updateStory?: Maybe<UpdateStoryPayload>;
   deleteStory?: Maybe<DeleteStoryPayload>;
+  createTag?: Maybe<CreateTagPayload>;
+  updateTag?: Maybe<UpdateTagPayload>;
+  deleteTag?: Maybe<DeleteTagPayload>;
   /** Delete one file */
   deleteFile?: Maybe<DeleteFilePayload>;
   /** Create a new role */
@@ -377,6 +380,21 @@ export type MutationUpdateStoryArgs = {
 
 export type MutationDeleteStoryArgs = {
   input?: Maybe<DeleteStoryInput>;
+};
+
+
+export type MutationCreateTagArgs = {
+  input?: Maybe<CreateTagInput>;
+};
+
+
+export type MutationUpdateTagArgs = {
+  input?: Maybe<UpdateTagInput>;
+};
+
+
+export type MutationDeleteTagArgs = {
+  input?: Maybe<DeleteTagInput>;
 };
 
 
@@ -502,8 +520,17 @@ export type Post = {
   story?: Maybe<Story>;
   storySeq?: Maybe<Scalars['Float']>;
   published_at?: Maybe<Scalars['DateTime']>;
+  tags?: Maybe<Array<Maybe<Tag>>>;
   /** Next post of series. */
   nextPost?: Maybe<Post>;
+};
+
+
+export type PostTagsArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
 };
 
 export type PostAggregator = {
@@ -691,6 +718,7 @@ export type PostInput = {
   displayType?: Maybe<Enum_Post_Displaytype>;
   story?: Maybe<Scalars['ID']>;
   storySeq?: Maybe<Scalars['Float']>;
+  tags?: Maybe<Array<Maybe<Scalars['ID']>>>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -715,6 +743,9 @@ export type Query = {
   story?: Maybe<Story>;
   stories?: Maybe<Array<Maybe<Story>>>;
   storiesConnection?: Maybe<StoryConnection>;
+  tag?: Maybe<Tag>;
+  tags?: Maybe<Array<Maybe<Tag>>>;
+  tagsConnection?: Maybe<TagConnection>;
   files?: Maybe<Array<Maybe<UploadFile>>>;
   filesConnection?: Maybe<UploadFileConnection>;
   role?: Maybe<UsersPermissionsRole>;
@@ -819,6 +850,29 @@ export type QueryStoriesArgs = {
 
 
 export type QueryStoriesConnectionArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+};
+
+
+export type QueryTagArgs = {
+  id: Scalars['ID'];
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QueryTagsArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QueryTagsConnectionArgs = {
   sort?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
   start?: Maybe<Scalars['Int']>;
@@ -998,6 +1052,100 @@ export type StoryInput = {
   description?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['ID']>;
   user?: Maybe<Scalars['ID']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
+export type Tag = {
+  __typename?: 'Tag';
+  id: Scalars['ID'];
+  _id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+  name: Scalars['String'];
+  description: Scalars['String'];
+  image?: Maybe<UploadFile>;
+  slug?: Maybe<Scalars['String']>;
+};
+
+export type TagAggregator = {
+  __typename?: 'TagAggregator';
+  count?: Maybe<Scalars['Int']>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type TagConnection = {
+  __typename?: 'TagConnection';
+  values?: Maybe<Array<Maybe<Tag>>>;
+  groupBy?: Maybe<TagGroupBy>;
+  aggregate?: Maybe<TagAggregator>;
+};
+
+export type TagConnectionCreatedAt = {
+  __typename?: 'TagConnectionCreatedAt';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<TagConnection>;
+};
+
+export type TagConnectionDescription = {
+  __typename?: 'TagConnectionDescription';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<TagConnection>;
+};
+
+export type TagConnectionId = {
+  __typename?: 'TagConnectionId';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<TagConnection>;
+};
+
+export type TagConnectionImage = {
+  __typename?: 'TagConnectionImage';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<TagConnection>;
+};
+
+export type TagConnectionName = {
+  __typename?: 'TagConnectionName';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<TagConnection>;
+};
+
+export type TagConnectionSlug = {
+  __typename?: 'TagConnectionSlug';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<TagConnection>;
+};
+
+export type TagConnectionUpdatedAt = {
+  __typename?: 'TagConnectionUpdatedAt';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<TagConnection>;
+};
+
+export type TagConnection_Id = {
+  __typename?: 'TagConnection_id';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<TagConnection>;
+};
+
+export type TagGroupBy = {
+  __typename?: 'TagGroupBy';
+  id?: Maybe<Array<Maybe<TagConnectionId>>>;
+  _id?: Maybe<Array<Maybe<TagConnection_Id>>>;
+  createdAt?: Maybe<Array<Maybe<TagConnectionCreatedAt>>>;
+  updatedAt?: Maybe<Array<Maybe<TagConnectionUpdatedAt>>>;
+  name?: Maybe<Array<Maybe<TagConnectionName>>>;
+  description?: Maybe<Array<Maybe<TagConnectionDescription>>>;
+  image?: Maybe<Array<Maybe<TagConnectionImage>>>;
+  slug?: Maybe<Array<Maybe<TagConnectionSlug>>>;
+};
+
+export type TagInput = {
+  name: Scalars['String'];
+  description: Scalars['String'];
+  image?: Maybe<Scalars['ID']>;
+  slug?: Maybe<Scalars['String']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1521,6 +1669,15 @@ export type CreateStoryPayload = {
   story?: Maybe<Story>;
 };
 
+export type CreateTagInput = {
+  data?: Maybe<TagInput>;
+};
+
+export type CreateTagPayload = {
+  __typename?: 'createTagPayload';
+  tag?: Maybe<Tag>;
+};
+
 export type CreateUserInput = {
   data?: Maybe<UserInput>;
 };
@@ -1582,6 +1739,15 @@ export type DeleteStoryInput = {
 export type DeleteStoryPayload = {
   __typename?: 'deleteStoryPayload';
   story?: Maybe<Story>;
+};
+
+export type DeleteTagInput = {
+  where?: Maybe<InputId>;
+};
+
+export type DeleteTagPayload = {
+  __typename?: 'deleteTagPayload';
+  tag?: Maybe<Tag>;
 };
 
 export type DeleteUserInput = {
@@ -1650,6 +1816,7 @@ export type EditPostInput = {
   displayType?: Maybe<Enum_Post_Displaytype>;
   story?: Maybe<Scalars['ID']>;
   storySeq?: Maybe<Scalars['Float']>;
+  tags?: Maybe<Array<Maybe<Scalars['ID']>>>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -1670,6 +1837,15 @@ export type EditStoryInput = {
   description?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['ID']>;
   user?: Maybe<Scalars['ID']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
+export type EditTagInput = {
+  name?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['ID']>;
+  slug?: Maybe<Scalars['String']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1737,6 +1913,16 @@ export type UpdateStoryInput = {
 export type UpdateStoryPayload = {
   __typename?: 'updateStoryPayload';
   story?: Maybe<Story>;
+};
+
+export type UpdateTagInput = {
+  where?: Maybe<InputId>;
+  data?: Maybe<EditTagInput>;
+};
+
+export type UpdateTagPayload = {
+  __typename?: 'updateTagPayload';
+  tag?: Maybe<Tag>;
 };
 
 export type UpdateUserInput = {
@@ -1879,7 +2065,10 @@ export type CreatePostMutation = (
       & { category?: Maybe<(
         { __typename?: 'Category' }
         & Pick<Category, 'id' | 'name'>
-      )> }
+      )>, tags?: Maybe<Array<Maybe<(
+        { __typename?: 'Tag' }
+        & Pick<Tag, 'id' | 'name' | 'slug'>
+      )>>> }
     )> }
   )> }
 );
@@ -1926,7 +2115,10 @@ export type PostBySlugQuery = (
     )>, story?: Maybe<(
       { __typename?: 'Story' }
       & Pick<Story, 'id' | 'name'>
-    )>, image?: Maybe<(
+    )>, tags?: Maybe<Array<Maybe<(
+      { __typename?: 'Tag' }
+      & Pick<Tag, 'id' | 'name' | 'slug'>
+    )>>>, image?: Maybe<(
       { __typename?: 'UploadFile' }
       & Pick<UploadFile, 'id' | 'url' | 'provider' | 'formats'>
     )>, user?: Maybe<(
@@ -1952,7 +2144,10 @@ export type PostsConnectionFragmentFragment = (
   )>, image?: Maybe<(
     { __typename?: 'UploadFile' }
     & Pick<UploadFile, 'url' | 'provider' | 'formats'>
-  )> }
+  )>, tags?: Maybe<Array<Maybe<(
+    { __typename?: 'Tag' }
+    & Pick<Tag, 'slug'>
+  )>>> }
 );
 
 export type PostsByStoryQueryVariables = Exact<{
@@ -2034,7 +2229,10 @@ export type UpdatePostMutation = (
       )>, category?: Maybe<(
         { __typename?: 'Category' }
         & Pick<Category, 'id' | 'name'>
-      )> }
+      )>, tags?: Maybe<Array<Maybe<(
+        { __typename?: 'Tag' }
+        & Pick<Tag, 'id' | 'name' | 'slug'>
+      )>>> }
     )> }
   )> }
 );
@@ -2113,6 +2311,26 @@ export type UpdateStoryMutation = (
         { __typename?: 'UploadFile' }
         & Pick<UploadFile, 'url' | 'formats' | 'provider'>
       )> }
+    )> }
+  )> }
+);
+
+export type TagsConnectionQueryVariables = Exact<{
+  start?: Maybe<Scalars['Int']>;
+  search?: Maybe<Scalars['String']>;
+}>;
+
+
+export type TagsConnectionQuery = (
+  { __typename?: 'Query' }
+  & { tagsConnection?: Maybe<(
+    { __typename?: 'TagConnection' }
+    & { values?: Maybe<Array<Maybe<(
+      { __typename?: 'Tag' }
+      & Pick<Tag, 'id' | 'name' | 'description'>
+    )>>>, aggregate?: Maybe<(
+      { __typename?: 'TagAggregator' }
+      & Pick<TagAggregator, 'totalCount'>
     )> }
   )> }
 );
@@ -2198,6 +2416,9 @@ export const PostsConnectionFragmentFragmentDoc = gql`
     url
     provider
     formats
+  }
+  tags {
+    slug
   }
 }
     `;
@@ -2486,6 +2707,11 @@ export const CreatePostDocument = gql`
         id
         name
       }
+      tags {
+        id
+        name
+        slug
+      }
     }
   }
 }
@@ -2605,6 +2831,11 @@ export const PostBySlugDocument = gql`
     story {
       id
       name
+    }
+    tags {
+      id
+      name
+      slug
     }
     storySeq
     image {
@@ -2828,6 +3059,11 @@ export const UpdatePostDocument = gql`
         id
         name
       }
+      tags {
+        id
+        name
+        slug
+      }
     }
   }
 }
@@ -3025,6 +3261,49 @@ export function useUpdateStoryMutation(baseOptions?: Apollo.MutationHookOptions<
 export type UpdateStoryMutationHookResult = ReturnType<typeof useUpdateStoryMutation>;
 export type UpdateStoryMutationResult = Apollo.MutationResult<UpdateStoryMutation>;
 export type UpdateStoryMutationOptions = Apollo.BaseMutationOptions<UpdateStoryMutation, UpdateStoryMutationVariables>;
+export const TagsConnectionDocument = gql`
+    query TagsConnection($start: Int = 0, $search: String = "") {
+  tagsConnection(start: $start, where: {name_contains: $search}) {
+    values {
+      id
+      name
+      description
+    }
+    aggregate {
+      totalCount
+    }
+  }
+}
+    `;
+
+/**
+ * __useTagsConnectionQuery__
+ *
+ * To run a query within a React component, call `useTagsConnectionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTagsConnectionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTagsConnectionQuery({
+ *   variables: {
+ *      start: // value for 'start'
+ *      search: // value for 'search'
+ *   },
+ * });
+ */
+export function useTagsConnectionQuery(baseOptions?: Apollo.QueryHookOptions<TagsConnectionQuery, TagsConnectionQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TagsConnectionQuery, TagsConnectionQueryVariables>(TagsConnectionDocument, options);
+      }
+export function useTagsConnectionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TagsConnectionQuery, TagsConnectionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TagsConnectionQuery, TagsConnectionQueryVariables>(TagsConnectionDocument, options);
+        }
+export type TagsConnectionQueryHookResult = ReturnType<typeof useTagsConnectionQuery>;
+export type TagsConnectionLazyQueryHookResult = ReturnType<typeof useTagsConnectionLazyQuery>;
+export type TagsConnectionQueryResult = Apollo.QueryResult<TagsConnectionQuery, TagsConnectionQueryVariables>;
 export const FilesDocument = gql`
     query Files($sort: String, $limit: Int, $start: Int, $where: JSON) {
   files(sort: $sort, limit: $limit, start: $start, where: $where) {

@@ -10,7 +10,7 @@ interface Props {
 
 /**
  * Auth Guard:
- * - Redirect to login page when unauthenticated.
+ * - Redirect when unauthenticated.
  */
 const useAuthGuard = (props?: Props): MeState => {
   const router = useRouter();

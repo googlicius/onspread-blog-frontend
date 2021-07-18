@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import Navigation from '@/components/layout/Navigation/Navigation';
 import { Controller, useFormContext } from 'react-hook-form';
-import { Col, Row, FormGroup } from 'reactstrap';
+import { Col, Row, FormGroup, Container } from 'reactstrap';
 import ReactSelect from 'react-select';
 import cs from 'classnames';
 import { FormData } from './interface';
@@ -14,10 +14,11 @@ import {
 } from '@/graphql/generated';
 import Option from '@/types/Option';
 import CategorySelect from './CategorySelect/CategorySelect';
-import MediaLib from '@/components/Wysiwyg/MediaLib/MediaLib';
+import MediaLib, { MediaLibRef } from '@/components/Wysiwyg/MediaLib/MediaLib';
 import { useTranslation } from 'react-i18next';
 import { TFunction } from 'i18next';
 import StorySelect from './StorySelect/StorySelect';
+import TagSelect from './TagSelect/TagSelect';
 import getTime from 'date-fns/getTime';
 import PostSequence from './PostSequence/PostSequence';
 import { Card } from './PostSequence/CardItem';
@@ -55,7 +56,7 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
     formState: { errors, isSubmitting },
   } = useFormContext<FormData>();
   const { t } = useTranslation();
-  const [isMediaLibOpen, setIsMediaLibOpen] = useState(false);
+  const mediaLibRef = useRef<MediaLibRef>(null);
   const storyId = watch('story');
 
   const { data: postsByStoryData } = usePostsByStoryQuery({
@@ -116,10 +117,6 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
     setValue('image', data.id);
   };
 
-  const handleToggleMediaLib = () => {
-    setIsMediaLibOpen((prev) => !prev);
-  };
-
   const handleSequenceChanged = (seq: number) => {
     setValue('storySeq', seq);
   };
@@ -138,20 +135,24 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
             {t('Back')}
           </button>
 
-          <button disabled={isSubmitting} className="btn btn-success btn-sm">
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="btn btn-success btn-sm"
+          >
             {t('Save')}
           </button>
         </li>
       </Navigation>
 
-      <div className="container mt-7">
+      <Container className="mt-7">
         <Row>
-          <div className="col-lg-8 col-md-10 mx-auto">
+          <Col lg={8} md={10} className="mx-auto">
             <h2>{t('Preview')}</h2>
 
             <EdittingPostPreview
               post={post}
-              openMediaLib={handleToggleMediaLib}
+              openMediaLib={mediaLibRef.current?.toggleOpen}
             />
 
             <Row className="mb-3">
@@ -246,15 +247,23 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
                     name="story"
                     control={control}
                     render={({ field }) => {
-                      const { onChange, ...rest } = field;
-                      return (
-                        <StorySelect
-                          {...rest}
-                          onChange={(data: Option) => {
-                            onChange(data.value);
-                          }}
-                        />
-                      );
+                      return <StorySelect {...field} />;
+                    }}
+                  />
+                </FormGroup>
+              </Col>
+
+              <Col md={6}>
+                <FormGroup>
+                  <label>
+                    <strong>{t('Tags')}</strong>
+                  </label>
+
+                  <Controller
+                    name="tags"
+                    control={control}
+                    render={({ field }) => {
+                      return <TagSelect {...field} isMulti />;
                     }}
                   />
                 </FormGroup>
@@ -274,15 +283,11 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
                 </Col>
               </Row>
             )}
-          </div>
+          </Col>
         </Row>
-      </div>
+      </Container>
 
-      <MediaLib
-        isOpen={isMediaLibOpen}
-        toggle={() => setIsMediaLibOpen(!isMediaLibOpen)}
-        onChange={handleMediaChange}
-      />
+      <MediaLib ref={mediaLibRef} onChange={handleMediaChange} />
     </>
   );
 };

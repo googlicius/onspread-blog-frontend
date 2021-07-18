@@ -18,6 +18,11 @@ mutation UpdatePost($input: updatePostInput) {
         id
         name
       }
+      tags {
+        id
+        name
+        slug
+      }
     }
   }
 }

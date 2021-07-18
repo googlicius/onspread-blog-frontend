@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
@@ -9,7 +8,6 @@ import {
   Enum_Post_Displaytype,
   useCreatePostMutation,
 } from '@/graphql/generated';
-import { selectMe } from '@/redux/meProducer';
 import EditFormStep1 from '@/components/posts/edit/EditFormStep1';
 import EditFormStep2 from '@/components/posts/edit/EditFormStep2';
 import { FormData } from '@/components/posts/edit/interface';
@@ -20,7 +18,6 @@ const PostCreate = (): JSX.Element => {
   const router = useRouter();
   const [step, setStep] = useState(1);
 
-  const me = useSelector(selectMe);
   const [createPostMutation] = useCreatePostMutation();
   const { t } = useTranslation();
   const methods = useForm<FormData>({
@@ -41,7 +38,7 @@ const PostCreate = (): JSX.Element => {
     formState: { isDirty },
   } = methods;
 
-  const { checkUnSavedForm } = useFormGuard({ isDirty });
+  const { me, checkUnSavedForm } = useFormGuard({ isDirty });
 
   const onSubmit = async (data: FormData): Promise<void> => {
     const { data: createPostData } = await createPostMutation({

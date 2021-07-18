@@ -16,6 +16,11 @@ query PostBySlug($slug: String!) {
       id
       name
     }
+    tags {
+      id
+      name
+      slug
+    }
     storySeq
     image {
       id

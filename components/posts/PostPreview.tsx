@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
 import Link from 'next/link';
-import { Post } from '@/graphql/generated';
+import { Post, Tag } from '@/graphql/generated';
 import format from 'date-fns/format';
 import classNames from 'classnames';
+import TagLinks from './TagLinks/TagLinks';
 
 interface Props {
   post: Post;
@@ -48,16 +49,19 @@ const PostPreview = ({ post, displayBorder = false }: Props) => {
             </a>
           </Link>
 
-          <p className="post-meta">
+          {/* Tags */}
+          <TagLinks tags={post.tags as Tag[]} className="mb-1" />
+
+          <small className="post-meta">
             Posted by <Link href={'#'}>{post.user?.username}</Link> on{' '}
             {format(
               new Date(post.published_at),
               process.env.NEXT_PUBLIC_DATE_DISPLAY_FORMAT,
             )}
-          </p>
+          </small>
         </div>
       </div>
-      {displayBorder && <hr />}
+      {displayBorder && <hr className="my-0" />}
     </>
   );
 };
