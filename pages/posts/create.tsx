@@ -13,6 +13,7 @@ import EditFormStep2 from '@/components/posts/edit/EditFormStep2';
 import { FormData } from '@/components/posts/edit/interface';
 import { useTranslation } from 'react-i18next';
 import useFormGuard from '@/hooks/form-guard';
+import map from 'lodash/map';
 
 const PostCreate = (): JSX.Element => {
   const router = useRouter();
@@ -46,6 +47,7 @@ const PostCreate = (): JSX.Element => {
         input: {
           data: {
             ...data,
+            tags: map(data.tags, 'value'),
             user: me.value.id,
           },
         },
