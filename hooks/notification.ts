@@ -5,9 +5,9 @@ import {
   useMarkAsSeenMutation,
   useMarkAsReadMutation,
 } from '@/graphql/generated';
-import socket from '@/configs/socket.io';
 import { useSelector } from 'react-redux';
 import { selectMe } from '@/redux/meProducer';
+import { selectSocket } from '@/redux/socketReducer';
 
 interface UseNotificationReturn {
   notifications: Partial<Notification>[];
@@ -23,6 +23,7 @@ const useNotification = (): UseNotificationReturn => {
     Partial<Notification>[]
   >([]);
   const me = useSelector(selectMe);
+  const socketState = useSelector(selectSocket);
   const [
     notificationsConnectionQuery,
     { data, loading, refetch },
@@ -44,11 +45,15 @@ const useNotification = (): UseNotificationReturn => {
         },
       },
     });
-
-    socket.on('notification', (data) => {
-      setNewNotifications((prev) => [data, ...prev]);
-    });
   }, [me]);
+
+  useEffect(() => {
+    if (socketState.isLoaded) {
+      socketState.value.on('notification', (data) => {
+        setNewNotifications((prev) => [data, ...prev]);
+      });
+    }
+  }, [socketState]);
 
   const notifications: Partial<Notification>[] = useMemo(() => {
     if (!data) {

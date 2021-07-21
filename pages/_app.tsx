@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import { Provider, useSelector } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { ApolloProvider } from '@apollo/client';
 import client from '@/configs/apollo-client';
@@ -11,7 +11,7 @@ import 'nprogress/nprogress.css';
 import '@/styles/scss/styles.scss';
 import '@/configs/i18n';
 import { meQueryAsync, selectMe } from '@/redux/meProducer';
-import socket from '@/configs/socket.io';
+import { loadSocketAsync, selectSocket } from '@/redux/socketReducer';
 
 let progressBarTimeout = null;
 
@@ -35,12 +35,18 @@ Router.events.on('routeChangeError', stopProgressBar);
 
 const InitApp = ({ children }) => {
   const me = useSelector(selectMe);
+  const socketState = useSelector(selectSocket);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (me.value) {
-      socket.emit('join', { userId: me.value.id });
+    dispatch(loadSocketAsync());
+  }, []);
+
+  useEffect(() => {
+    if (me.value && socketState.isLoaded) {
+      socketState.value.emit('join', { userId: me.value.id });
     }
-  }, [me]);
+  }, [me, socketState]);
 
   return <>{children}</>;
 };
