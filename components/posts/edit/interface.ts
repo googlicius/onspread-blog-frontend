@@ -1,7 +1,4 @@
-import {
-  Enum_Post_Contenttype,
-  Enum_Post_Displaytype,
-} from '@/graphql/generated';
+import { Enum_Post_Contenttype } from '@/graphql/generated';
 import Option from '@/types/Option';
 
 export interface FormData {
@@ -11,9 +8,9 @@ export interface FormData {
   contentType: Enum_Post_Contenttype;
   description?: string;
   category: string;
-  story?: string;
+  story?: Option;
   tags: Option[];
   storySeq?: number;
-  displayType?: Enum_Post_Displaytype;
+  displayType?: Option;
   published_at?: string;
 }

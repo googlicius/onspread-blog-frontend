@@ -6,46 +6,22 @@ import ReactSelect from 'react-select';
 import cs from 'classnames';
 import { FormData } from './interface';
 import EdittingPostPreview from './EdittingPostPreview';
-import {
-  Enum_Post_Displaytype,
-  Post,
-  UploadFile,
-  usePostsByStoryQuery,
-} from '@/graphql/generated';
+import { Post, UploadFile, usePostsByStoryQuery } from '@/graphql/generated';
 import Option from '@/types/Option';
 import CategorySelect from './CategorySelect/CategorySelect';
 import MediaLib, { MediaLibRef } from '@/components/Wysiwyg/MediaLib/MediaLib';
 import { useTranslation } from 'react-i18next';
-import { TFunction } from 'i18next';
 import StorySelect from './StorySelect/StorySelect';
 import TagSelect from './TagSelect/TagSelect';
 import getTime from 'date-fns/getTime';
 import PostSequence from './PostSequence/PostSequence';
 import { Card } from './PostSequence/CardItem';
+import displayTypeOptions from '@/utils/display-type-options';
 
 interface Props {
   post?: Post;
   goBack: () => void;
 }
-
-const displayTypeOptions = (t: TFunction): Option[] => [
-  {
-    label: t('Select a type...'),
-    value: null,
-  },
-  {
-    label: t('With Image'),
-    value: Enum_Post_Displaytype.WithImage,
-  },
-  {
-    label: t('Fullscreen Image'),
-    value: Enum_Post_Displaytype.FullscreenImage,
-  },
-  {
-    label: t('No Image'),
-    value: Enum_Post_Displaytype.NoImage,
-  },
-];
 
 const EditFormStep2 = ({ post, goBack }: Props) => {
   const {
@@ -57,13 +33,13 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
   } = useFormContext<FormData>();
   const { t } = useTranslation();
   const mediaLibRef = useRef<MediaLibRef>(null);
-  const storyId = watch('story');
+  const storyOption = watch('story');
 
   const { data: postsByStoryData } = usePostsByStoryQuery({
     variables: {
-      story: storyId,
+      story: storyOption?.value,
     },
-    skip: !storyId,
+    skip: !storyOption?.value,
     fetchPolicy: 'network-only',
   });
 
@@ -80,7 +56,7 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
       );
     }
 
-    if (!post || storyId !== post.story?.id) {
+    if (!post || storyOption?.value !== post.story?.id) {
       cards.push({
         id: post?.id,
         text: getValues('title'),
@@ -89,7 +65,7 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
     }
 
     return cards;
-  }, [postsByStoryData, storyId]);
+  }, [postsByStoryData, storyOption]);
 
   const editingCard: Card = useMemo(() => {
     if (post) {
@@ -108,10 +84,10 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
   }, [post]);
 
   useEffect(() => {
-    if (storyId) {
+    if (storyOption?.value) {
       setValue('storySeq', getTime(new Date()));
     }
-  }, [storyId]);
+  }, [storyOption]);
 
   const handleMediaChange = (data: UploadFile) => {
     setValue('image', data.id);
@@ -119,6 +95,10 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
 
   const handleSequenceChanged = (seq: number) => {
     setValue('storySeq', seq);
+  };
+
+  const handleToggleMediaLib = () => {
+    mediaLibRef.current.toggleOpen();
   };
 
   const DisplayTypeOptions = displayTypeOptions(t);
@@ -152,7 +132,7 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
 
             <EdittingPostPreview
               post={post}
-              openMediaLib={mediaLibRef.current?.toggleOpen}
+              openMediaLib={handleToggleMediaLib}
             />
 
             <Row className="mb-3">
@@ -213,22 +193,8 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
                     name="displayType"
                     control={control}
                     render={({ field }) => {
-                      const { onChange, value, ...rest } = field;
-                      const selectedOption =
-                        value &&
-                        DisplayTypeOptions.find(
-                          (option) => option.value === value,
-                        );
-
                       return (
-                        <ReactSelect
-                          {...rest}
-                          value={selectedOption}
-                          onChange={(option) => {
-                            onChange(option.value);
-                          }}
-                          options={DisplayTypeOptions}
-                        />
+                        <ReactSelect {...field} options={DisplayTypeOptions} />
                       );
                     }}
                   />
@@ -270,7 +236,7 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
               </Col>
             </Row>
 
-            {storyId && (
+            {storyOption?.value && (
               <Row className="mt-3">
                 <Col md={12}>
                   <h4>{t('Posts of series')}</h4>

@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { ApolloProvider } from '@apollo/client';
-import client from '@/apollo-client';
+import client from '@/configs/apollo-client';
 import store from '@/redux/store';
 import 'react-toastify/dist/ReactToastify.css';
 import 'nprogress/nprogress.css';
 import '@/styles/scss/styles.scss';
-import '@/i18n';
-import { meQueryAsync } from '@/redux/meProducer';
+import '@/configs/i18n';
+import { meQueryAsync, selectMe } from '@/redux/meProducer';
+import socket from '@/configs/socket.io';
 
 let progressBarTimeout = null;
 
@@ -32,6 +33,18 @@ Router.events.on('routeChangeStart', startProgressBar);
 Router.events.on('routeChangeComplete', stopProgressBar);
 Router.events.on('routeChangeError', stopProgressBar);
 
+const InitApp = ({ children }) => {
+  const me = useSelector(selectMe);
+
+  useEffect(() => {
+    if (me.value) {
+      socket.emit('join', { userId: me.value.id });
+    }
+  }, [me]);
+
+  return <>{children}</>;
+};
+
 function MyApp({ Component, pageProps }): JSX.Element {
   const [initialized, setInitialized] = useState(false);
 
@@ -50,21 +63,23 @@ function MyApp({ Component, pageProps }): JSX.Element {
   return (
     <ApolloProvider client={client}>
       <Provider store={store}>
-        <div className="wrapper">
-          <Component {...pageProps} />
-        </div>
-        <ToastContainer
-          position="top-center"
-          autoClose={3000}
-          newestOnTop={false}
-          closeOnClick
-          hideProgressBar
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          toastStyle={{ fontSize: '14px' }}
-        />
+        <InitApp>
+          <div className="wrapper">
+            <Component {...pageProps} />
+          </div>
+          <ToastContainer
+            position="top-center"
+            autoClose={3000}
+            newestOnTop={false}
+            closeOnClick
+            hideProgressBar
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            toastStyle={{ fontSize: '14px' }}
+          />
+        </InitApp>
       </Provider>
     </ApolloProvider>
   );

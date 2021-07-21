@@ -21,7 +21,7 @@ import PageHeader from '@/components/layout/PageHeader';
 import ReactMarkdown from 'react-markdown';
 import ViewCommentsBtn from '@/components/posts/ViewCommentsBtn';
 import Comments from '@/components/posts/Comments/Comments';
-import client from '@/apollo-client';
+import client from '@/configs/apollo-client';
 import debounce from 'lodash/debounce';
 import get from 'lodash/get';
 import { selectMe } from '@/redux/meProducer';

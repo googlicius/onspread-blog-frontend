@@ -1,0 +1,21 @@
+query NotificationsConnection($start: Int = 0, $where: JSON) {
+  notificationsConnection(
+    start: $start
+    sort: "createdAt:desc"
+    limit: 10
+    where: $where
+  ) {
+    values {
+      id
+      title
+      channel
+      readAt
+      url
+      new
+      message
+    }
+    aggregate {
+      count
+    }
+  }
+}

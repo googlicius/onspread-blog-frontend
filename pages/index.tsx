@@ -14,7 +14,7 @@ import Pagination from '@/components/Pagination';
 import PostPreview from '@/components/posts/PostPreview';
 import HomeFeaturePosPreview from '@/components/posts/HomeFeaturePosPreview';
 import Loading from '@/components/Loading/Loading';
-import client from '@/apollo-client';
+import client from '@/configs/apollo-client';
 import { useTranslation } from 'react-i18next';
 
 interface Props {

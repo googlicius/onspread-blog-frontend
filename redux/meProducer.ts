@@ -1,7 +1,7 @@
 import { MeDocument, MeQuery, UsersPermissionsMe } from '@/graphql/generated';
 import { MeState, RootState, SetLoggedInUserAction } from './interface';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import client from '@/apollo-client';
+import client from '@/configs/apollo-client';
 // import { getApolloStateByType } from '@/utils/get-apollo-state-by-type';
 
 const initialState: MeState = {

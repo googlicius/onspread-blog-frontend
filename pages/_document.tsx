@@ -7,7 +7,7 @@ import Document, {
 } from 'next/document';
 import { NormalizedCacheObject } from '@apollo/client';
 import { Footer } from '@/components/layout/Footer';
-import client from '@/apollo-client';
+import client from '@/configs/apollo-client';
 
 interface Props extends DocumentInitialProps {
   apolloState: NormalizedCacheObject;

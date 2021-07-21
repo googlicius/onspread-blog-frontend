@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
 import cs from 'classnames';
-import client from '@/apollo-client';
+import client from '@/configs/apollo-client';
 import {
   Post,
   PostsConnectionDocument,

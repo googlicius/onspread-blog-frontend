@@ -1,0 +1,3 @@
+mutation MarkAsSeen($user: ID!) {
+  markNotificationsAsSeen(user: $user)
+}

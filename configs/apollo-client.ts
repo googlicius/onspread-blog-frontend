@@ -9,7 +9,7 @@ import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries'
 import { createUploadLink } from 'apollo-upload-client';
 import { sha256 } from 'crypto-hash';
 
-export let httpLink: ApolloLink = new createUploadLink({
+let httpLink: ApolloLink = new createUploadLink({
   uri: process.env.NEXT_PUBLIC_GRAPHQL_URL,
   credentials: 'include',
 });

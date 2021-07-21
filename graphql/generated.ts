@@ -212,6 +212,12 @@ export type CommentInput = {
 
 
 
+export enum Enum_Notification_Channel {
+  PostCommented = 'PostCommented',
+  UserRegistered = 'UserRegistered',
+  UserRegistrationFailed = 'UserRegistrationFailed'
+}
+
 export enum Enum_Post_Contenttype {
   Markdown = 'Markdown',
   Html = 'Html'
@@ -272,7 +278,7 @@ export type LocaleInput = {
 };
 
 
-export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnection_Id | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | CategoryConnectionDescription | CategoryConnectionImage | CreateCategoryPayload | UpdateCategoryPayload | DeleteCategoryPayload | Comment | CommentConnection | CommentAggregator | CommentGroupBy | CommentConnectionId | CommentConnection_Id | CommentConnectionCreatedAt | CommentConnectionUpdatedAt | CommentConnectionContent | CommentConnectionUser | CommentConnectionPost | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Post | PostConnection | PostAggregator | PostAggregatorSum | PostAggregatorAvg | PostAggregatorMin | PostAggregatorMax | PostGroupBy | PostConnectionId | PostConnection_Id | PostConnectionCreatedAt | PostConnectionUpdatedAt | PostConnectionTitle | PostConnectionContent | PostConnectionImage | PostConnectionCategory | PostConnectionUser | PostConnectionSlug | PostConnectionDescription | PostConnectionHeart | PostConnectionHomeFeatured | PostConnectionContentType | PostConnectionDisplayType | PostConnectionStory | PostConnectionStorySeq | PostConnectionPublished_At | CreatePostPayload | UpdatePostPayload | DeletePostPayload | Story | StoryConnection | StoryAggregator | StoryGroupBy | StoryConnectionId | StoryConnection_Id | StoryConnectionCreatedAt | StoryConnectionUpdatedAt | StoryConnectionName | StoryConnectionDescription | StoryConnectionImage | StoryConnectionUser | CreateStoryPayload | UpdateStoryPayload | DeleteStoryPayload | Tag | TagConnection | TagAggregator | TagGroupBy | TagConnectionId | TagConnection_Id | TagConnectionCreatedAt | TagConnectionUpdatedAt | TagConnectionName | TagConnectionDescription | TagConnectionImage | TagConnectionSlug | CreateTagPayload | UpdateTagPayload | DeleteTagPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnection_Id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnection_Id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnection_Id | UsersPermissionsUserConnectionCreatedAt | UsersPermissionsUserConnectionUpdatedAt | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionAvatar | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
+export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnection_Id | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | CategoryConnectionDescription | CategoryConnectionImage | CreateCategoryPayload | UpdateCategoryPayload | DeleteCategoryPayload | Comment | CommentConnection | CommentAggregator | CommentGroupBy | CommentConnectionId | CommentConnection_Id | CommentConnectionCreatedAt | CommentConnectionUpdatedAt | CommentConnectionContent | CommentConnectionUser | CommentConnectionPost | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Notification | NotificationConnection | NotificationAggregator | NotificationGroupBy | NotificationConnectionId | NotificationConnection_Id | NotificationConnectionCreatedAt | NotificationConnectionUpdatedAt | NotificationConnectionTitle | NotificationConnectionUser | NotificationConnectionChannel | NotificationConnectionIsVisible | NotificationConnectionReadAt | NotificationConnectionNew | NotificationConnectionUrl | NotificationConnectionMessage | CreateNotificationPayload | UpdateNotificationPayload | DeleteNotificationPayload | Post | PostConnection | PostAggregator | PostAggregatorSum | PostAggregatorAvg | PostAggregatorMin | PostAggregatorMax | PostGroupBy | PostConnectionId | PostConnection_Id | PostConnectionCreatedAt | PostConnectionUpdatedAt | PostConnectionTitle | PostConnectionContent | PostConnectionImage | PostConnectionCategory | PostConnectionUser | PostConnectionSlug | PostConnectionDescription | PostConnectionHeart | PostConnectionHomeFeatured | PostConnectionContentType | PostConnectionDisplayType | PostConnectionStory | PostConnectionStorySeq | PostConnectionPublished_At | CreatePostPayload | UpdatePostPayload | DeletePostPayload | Story | StoryConnection | StoryAggregator | StoryGroupBy | StoryConnectionId | StoryConnection_Id | StoryConnectionCreatedAt | StoryConnectionUpdatedAt | StoryConnectionName | StoryConnectionDescription | StoryConnectionImage | StoryConnectionUser | CreateStoryPayload | UpdateStoryPayload | DeleteStoryPayload | Tag | TagConnection | TagAggregator | TagGroupBy | TagConnectionId | TagConnection_Id | TagConnectionCreatedAt | TagConnectionUpdatedAt | TagConnectionName | TagConnectionDescription | TagConnectionImage | TagConnectionSlug | CreateTagPayload | UpdateTagPayload | DeleteTagPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnection_Id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnection_Id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnection_Id | UsersPermissionsUserConnectionCreatedAt | UsersPermissionsUserConnectionUpdatedAt | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionAvatar | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -282,6 +288,9 @@ export type Mutation = {
   createComment?: Maybe<CreateCommentPayload>;
   updateComment?: Maybe<UpdateCommentPayload>;
   deleteComment?: Maybe<DeleteCommentPayload>;
+  createNotification?: Maybe<CreateNotificationPayload>;
+  updateNotification?: Maybe<UpdateNotificationPayload>;
+  deleteNotification?: Maybe<DeleteNotificationPayload>;
   createPost?: Maybe<CreatePostPayload>;
   updatePost?: Maybe<UpdatePostPayload>;
   deletePost?: Maybe<DeletePostPayload>;
@@ -314,6 +323,10 @@ export type Mutation = {
   resetPassword?: Maybe<UsersPermissionsLoginPayload>;
   emailConfirmation?: Maybe<UsersPermissionsLoginPayload>;
   logout?: Maybe<Scalars['String']>;
+  /** Mark all new notifications as seen. */
+  markNotificationsAsSeen: Scalars['String'];
+  /** Mark all notifications as read. */
+  markNotificationsAsRead: Scalars['String'];
   /** Give heart from user to post */
   giveHeart: Scalars['Int'];
   /** Publish post */
@@ -350,6 +363,21 @@ export type MutationUpdateCommentArgs = {
 
 export type MutationDeleteCommentArgs = {
   input?: Maybe<DeleteCommentInput>;
+};
+
+
+export type MutationCreateNotificationArgs = {
+  input?: Maybe<CreateNotificationInput>;
+};
+
+
+export type MutationUpdateNotificationArgs = {
+  input?: Maybe<UpdateNotificationInput>;
+};
+
+
+export type MutationDeleteNotificationArgs = {
+  input?: Maybe<DeleteNotificationInput>;
 };
 
 
@@ -485,6 +513,17 @@ export type MutationEmailConfirmationArgs = {
 };
 
 
+export type MutationMarkNotificationsAsSeenArgs = {
+  user: Scalars['ID'];
+};
+
+
+export type MutationMarkNotificationsAsReadArgs = {
+  user: Scalars['ID'];
+  id?: Maybe<Scalars['ID']>;
+};
+
+
 export type MutationGiveHeartArgs = {
   postId: Scalars['ID'];
   heart: Scalars['Int'];
@@ -498,6 +537,136 @@ export type MutationPublishPostArgs = {
 
 export type MutationUnPublishPostArgs = {
   id: Scalars['ID'];
+};
+
+export type Notification = {
+  __typename?: 'Notification';
+  id: Scalars['ID'];
+  _id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+  title: Scalars['String'];
+  user?: Maybe<UsersPermissionsUser>;
+  channel: Enum_Notification_Channel;
+  isVisible?: Maybe<Scalars['Boolean']>;
+  readAt?: Maybe<Scalars['DateTime']>;
+  new?: Maybe<Scalars['Boolean']>;
+  url: Scalars['String'];
+  message?: Maybe<Scalars['String']>;
+};
+
+export type NotificationAggregator = {
+  __typename?: 'NotificationAggregator';
+  count?: Maybe<Scalars['Int']>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type NotificationConnection = {
+  __typename?: 'NotificationConnection';
+  values?: Maybe<Array<Maybe<Notification>>>;
+  groupBy?: Maybe<NotificationGroupBy>;
+  aggregate?: Maybe<NotificationAggregator>;
+};
+
+export type NotificationConnectionChannel = {
+  __typename?: 'NotificationConnectionChannel';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<NotificationConnection>;
+};
+
+export type NotificationConnectionCreatedAt = {
+  __typename?: 'NotificationConnectionCreatedAt';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<NotificationConnection>;
+};
+
+export type NotificationConnectionId = {
+  __typename?: 'NotificationConnectionId';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<NotificationConnection>;
+};
+
+export type NotificationConnectionIsVisible = {
+  __typename?: 'NotificationConnectionIsVisible';
+  key?: Maybe<Scalars['Boolean']>;
+  connection?: Maybe<NotificationConnection>;
+};
+
+export type NotificationConnectionMessage = {
+  __typename?: 'NotificationConnectionMessage';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<NotificationConnection>;
+};
+
+export type NotificationConnectionNew = {
+  __typename?: 'NotificationConnectionNew';
+  key?: Maybe<Scalars['Boolean']>;
+  connection?: Maybe<NotificationConnection>;
+};
+
+export type NotificationConnectionReadAt = {
+  __typename?: 'NotificationConnectionReadAt';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<NotificationConnection>;
+};
+
+export type NotificationConnectionTitle = {
+  __typename?: 'NotificationConnectionTitle';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<NotificationConnection>;
+};
+
+export type NotificationConnectionUpdatedAt = {
+  __typename?: 'NotificationConnectionUpdatedAt';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<NotificationConnection>;
+};
+
+export type NotificationConnectionUrl = {
+  __typename?: 'NotificationConnectionUrl';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<NotificationConnection>;
+};
+
+export type NotificationConnectionUser = {
+  __typename?: 'NotificationConnectionUser';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<NotificationConnection>;
+};
+
+export type NotificationConnection_Id = {
+  __typename?: 'NotificationConnection_id';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<NotificationConnection>;
+};
+
+export type NotificationGroupBy = {
+  __typename?: 'NotificationGroupBy';
+  id?: Maybe<Array<Maybe<NotificationConnectionId>>>;
+  _id?: Maybe<Array<Maybe<NotificationConnection_Id>>>;
+  createdAt?: Maybe<Array<Maybe<NotificationConnectionCreatedAt>>>;
+  updatedAt?: Maybe<Array<Maybe<NotificationConnectionUpdatedAt>>>;
+  title?: Maybe<Array<Maybe<NotificationConnectionTitle>>>;
+  user?: Maybe<Array<Maybe<NotificationConnectionUser>>>;
+  channel?: Maybe<Array<Maybe<NotificationConnectionChannel>>>;
+  isVisible?: Maybe<Array<Maybe<NotificationConnectionIsVisible>>>;
+  readAt?: Maybe<Array<Maybe<NotificationConnectionReadAt>>>;
+  new?: Maybe<Array<Maybe<NotificationConnectionNew>>>;
+  url?: Maybe<Array<Maybe<NotificationConnectionUrl>>>;
+  message?: Maybe<Array<Maybe<NotificationConnectionMessage>>>;
+};
+
+export type NotificationInput = {
+  title: Scalars['String'];
+  user?: Maybe<Scalars['ID']>;
+  channel: Enum_Notification_Channel;
+  isVisible?: Maybe<Scalars['Boolean']>;
+  readAt?: Maybe<Scalars['DateTime']>;
+  new?: Maybe<Scalars['Boolean']>;
+  url: Scalars['String'];
+  message?: Maybe<Scalars['String']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
 };
 
 export type Post = {
@@ -737,6 +906,9 @@ export type Query = {
   comment?: Maybe<Comment>;
   comments?: Maybe<Array<Maybe<Comment>>>;
   commentsConnection?: Maybe<CommentConnection>;
+  notification?: Maybe<Notification>;
+  notifications?: Maybe<Array<Maybe<Notification>>>;
+  notificationsConnection?: Maybe<NotificationConnection>;
   post?: Maybe<Post>;
   posts?: Maybe<Array<Maybe<Post>>>;
   postsConnection?: Maybe<PostConnection>;
@@ -804,6 +976,29 @@ export type QueryCommentsArgs = {
 
 
 export type QueryCommentsConnectionArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+};
+
+
+export type QueryNotificationArgs = {
+  id: Scalars['ID'];
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QueryNotificationsArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QueryNotificationsConnectionArgs = {
   sort?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
   start?: Maybe<Scalars['Int']>;
@@ -1642,6 +1837,15 @@ export type CreateCommentPayload = {
   comment?: Maybe<Comment>;
 };
 
+export type CreateNotificationInput = {
+  data?: Maybe<NotificationInput>;
+};
+
+export type CreateNotificationPayload = {
+  __typename?: 'createNotificationPayload';
+  notification?: Maybe<Notification>;
+};
+
 export type CreatePostInput = {
   data?: Maybe<PostInput>;
 };
@@ -1712,6 +1916,15 @@ export type DeleteFileInput = {
 export type DeleteFilePayload = {
   __typename?: 'deleteFilePayload';
   file?: Maybe<UploadFile>;
+};
+
+export type DeleteNotificationInput = {
+  where?: Maybe<InputId>;
+};
+
+export type DeleteNotificationPayload = {
+  __typename?: 'deleteNotificationPayload';
+  notification?: Maybe<Notification>;
 };
 
 export type DeletePostInput = {
@@ -1802,6 +2015,19 @@ export type EditLocaleInput = {
   updated_by?: Maybe<Scalars['ID']>;
 };
 
+export type EditNotificationInput = {
+  title?: Maybe<Scalars['String']>;
+  user?: Maybe<Scalars['ID']>;
+  channel?: Maybe<Enum_Notification_Channel>;
+  isVisible?: Maybe<Scalars['Boolean']>;
+  readAt?: Maybe<Scalars['DateTime']>;
+  new?: Maybe<Scalars['Boolean']>;
+  url?: Maybe<Scalars['String']>;
+  message?: Maybe<Scalars['String']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
 export type EditPostInput = {
   title?: Maybe<Scalars['String']>;
   content?: Maybe<Scalars['String']>;
@@ -1883,6 +2109,16 @@ export type UpdateCommentInput = {
 export type UpdateCommentPayload = {
   __typename?: 'updateCommentPayload';
   comment?: Maybe<Comment>;
+};
+
+export type UpdateNotificationInput = {
+  where?: Maybe<InputId>;
+  data?: Maybe<EditNotificationInput>;
+};
+
+export type UpdateNotificationPayload = {
+  __typename?: 'updateNotificationPayload';
+  notification?: Maybe<Notification>;
 };
 
 export type UpdatePostInput = {
@@ -2036,6 +2272,47 @@ export type CreateCommentMutation = (
         { __typename?: 'UsersPermissionsUser' }
         & Pick<UsersPermissionsUser, 'id' | 'username'>
       )> }
+    )> }
+  )> }
+);
+
+export type MarkAsReadMutationVariables = Exact<{
+  user: Scalars['ID'];
+  id?: Maybe<Scalars['ID']>;
+}>;
+
+
+export type MarkAsReadMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'markNotificationsAsRead'>
+);
+
+export type MarkAsSeenMutationVariables = Exact<{
+  user: Scalars['ID'];
+}>;
+
+
+export type MarkAsSeenMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'markNotificationsAsSeen'>
+);
+
+export type NotificationsConnectionQueryVariables = Exact<{
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+}>;
+
+
+export type NotificationsConnectionQuery = (
+  { __typename?: 'Query' }
+  & { notificationsConnection?: Maybe<(
+    { __typename?: 'NotificationConnection' }
+    & { values?: Maybe<Array<Maybe<(
+      { __typename?: 'Notification' }
+      & Pick<Notification, 'id' | 'title' | 'channel' | 'readAt' | 'url' | 'new' | 'message'>
+    )>>>, aggregate?: Maybe<(
+      { __typename?: 'NotificationAggregator' }
+      & Pick<NotificationAggregator, 'count'>
     )> }
   )> }
 );
@@ -2659,6 +2936,121 @@ export function useCreateCommentMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateCommentMutationHookResult = ReturnType<typeof useCreateCommentMutation>;
 export type CreateCommentMutationResult = Apollo.MutationResult<CreateCommentMutation>;
 export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<CreateCommentMutation, CreateCommentMutationVariables>;
+export const MarkAsReadDocument = gql`
+    mutation MarkAsRead($user: ID!, $id: ID) {
+  markNotificationsAsRead(user: $user, id: $id)
+}
+    `;
+export type MarkAsReadMutationFn = Apollo.MutationFunction<MarkAsReadMutation, MarkAsReadMutationVariables>;
+
+/**
+ * __useMarkAsReadMutation__
+ *
+ * To run a mutation, you first call `useMarkAsReadMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMarkAsReadMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [markAsReadMutation, { data, loading, error }] = useMarkAsReadMutation({
+ *   variables: {
+ *      user: // value for 'user'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useMarkAsReadMutation(baseOptions?: Apollo.MutationHookOptions<MarkAsReadMutation, MarkAsReadMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<MarkAsReadMutation, MarkAsReadMutationVariables>(MarkAsReadDocument, options);
+      }
+export type MarkAsReadMutationHookResult = ReturnType<typeof useMarkAsReadMutation>;
+export type MarkAsReadMutationResult = Apollo.MutationResult<MarkAsReadMutation>;
+export type MarkAsReadMutationOptions = Apollo.BaseMutationOptions<MarkAsReadMutation, MarkAsReadMutationVariables>;
+export const MarkAsSeenDocument = gql`
+    mutation MarkAsSeen($user: ID!) {
+  markNotificationsAsSeen(user: $user)
+}
+    `;
+export type MarkAsSeenMutationFn = Apollo.MutationFunction<MarkAsSeenMutation, MarkAsSeenMutationVariables>;
+
+/**
+ * __useMarkAsSeenMutation__
+ *
+ * To run a mutation, you first call `useMarkAsSeenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMarkAsSeenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [markAsSeenMutation, { data, loading, error }] = useMarkAsSeenMutation({
+ *   variables: {
+ *      user: // value for 'user'
+ *   },
+ * });
+ */
+export function useMarkAsSeenMutation(baseOptions?: Apollo.MutationHookOptions<MarkAsSeenMutation, MarkAsSeenMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<MarkAsSeenMutation, MarkAsSeenMutationVariables>(MarkAsSeenDocument, options);
+      }
+export type MarkAsSeenMutationHookResult = ReturnType<typeof useMarkAsSeenMutation>;
+export type MarkAsSeenMutationResult = Apollo.MutationResult<MarkAsSeenMutation>;
+export type MarkAsSeenMutationOptions = Apollo.BaseMutationOptions<MarkAsSeenMutation, MarkAsSeenMutationVariables>;
+export const NotificationsConnectionDocument = gql`
+    query NotificationsConnection($start: Int = 0, $where: JSON) {
+  notificationsConnection(
+    start: $start
+    sort: "createdAt:desc"
+    limit: 10
+    where: $where
+  ) {
+    values {
+      id
+      title
+      channel
+      readAt
+      url
+      new
+      message
+    }
+    aggregate {
+      count
+    }
+  }
+}
+    `;
+
+/**
+ * __useNotificationsConnectionQuery__
+ *
+ * To run a query within a React component, call `useNotificationsConnectionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNotificationsConnectionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNotificationsConnectionQuery({
+ *   variables: {
+ *      start: // value for 'start'
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useNotificationsConnectionQuery(baseOptions?: Apollo.QueryHookOptions<NotificationsConnectionQuery, NotificationsConnectionQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<NotificationsConnectionQuery, NotificationsConnectionQueryVariables>(NotificationsConnectionDocument, options);
+      }
+export function useNotificationsConnectionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NotificationsConnectionQuery, NotificationsConnectionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<NotificationsConnectionQuery, NotificationsConnectionQueryVariables>(NotificationsConnectionDocument, options);
+        }
+export type NotificationsConnectionQueryHookResult = ReturnType<typeof useNotificationsConnectionQuery>;
+export type NotificationsConnectionLazyQueryHookResult = ReturnType<typeof useNotificationsConnectionLazyQuery>;
+export type NotificationsConnectionQueryResult = Apollo.QueryResult<NotificationsConnectionQuery, NotificationsConnectionQueryVariables>;
 export const CountPostCommentDocument = gql`
     query CountPostComment($postId: ID!) {
   countPostComment(postId: $postId)

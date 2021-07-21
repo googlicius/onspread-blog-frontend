@@ -64,49 +64,50 @@ const EdittingPostPreview = ({ post, openMediaLib }: Props) => {
     <>
       <div
         className={classNames('d-flex post-preview-container', {
-          'flex-row': displayType === Enum_Post_Displaytype.NoImage,
+          'flex-row': displayType?.value === Enum_Post_Displaytype.NoImage,
         })}
       >
-        {displayType && displayType !== Enum_Post_Displaytype.NoImage && (
-          <div className="feature-image-wrapper">
-            <a role="button" onClick={openMediaLib}>
-              {thumbnailImage && (
-                <div
-                  className="feature-image relative"
-                  style={{
-                    backgroundImage: `url(${thumbnailImage})`,
-                    backgroundSize: 'cover',
-                  }}
-                >
-                  <div className={cs(styles.buttons)}>
-                    <button
-                      type="button"
-                      className="btn btn-light"
-                      onClick={handleDeleteImage}
-                    >
-                      <TrashSvg />
-                    </button>
+        {displayType?.value &&
+          displayType.value !== Enum_Post_Displaytype.NoImage && (
+            <div className="feature-image-wrapper">
+              <a role="button" onClick={openMediaLib}>
+                {thumbnailImage && (
+                  <div
+                    className="feature-image relative"
+                    style={{
+                      backgroundImage: `url(${thumbnailImage})`,
+                      backgroundSize: 'cover',
+                    }}
+                  >
+                    <div className={cs(styles.buttons)}>
+                      <button
+                        type="button"
+                        className="btn btn-light"
+                        onClick={handleDeleteImage}
+                      >
+                        <TrashSvg />
+                      </button>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {!thumbnailImage && (
-                <div
-                  className={cs(
-                    'd-flex',
-                    'align-items-center',
-                    'justify-content-center',
-                    styles['feature-image'],
-                  )}
-                >
-                  <span className="text-light">
-                    {t('Click to select an image.')}
-                  </span>
-                </div>
-              )}
-            </a>
-          </div>
-        )}
+                {!thumbnailImage && (
+                  <div
+                    className={cs(
+                      'd-flex',
+                      'align-items-center',
+                      'justify-content-center',
+                      styles['feature-image'],
+                    )}
+                  >
+                    <span className="text-light">
+                      {t('Click to select an image.')}
+                    </span>
+                  </div>
+                )}
+              </a>
+            </div>
+          )}
 
         <div className="post-preview">
           <a>
@@ -130,13 +131,13 @@ const EdittingPostPreview = ({ post, openMediaLib }: Props) => {
           </a>
 
           {post && (
-            <p className="post-meta">
+            <small className="post-meta">
               Posted by <Link href={'#'}>{post.user?.username}</Link> on{' '}
               {format(
                 new Date(post.published_at),
                 process.env.NEXT_PUBLIC_DATE_DISPLAY_FORMAT,
               )}
-            </p>
+            </small>
           )}
         </div>
       </div>

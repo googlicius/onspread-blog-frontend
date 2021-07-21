@@ -8,7 +8,7 @@ import useDynamicOption from '@/hooks/dynamic-option';
 
 interface Props extends React.ComponentProps<typeof ReactSelect> {}
 
-const TagSelect = forwardRef<ReactSelect, Props>((props, ref) => {
+const TagSelect = forwardRef<any, Props>((props, ref) => {
   const { t } = useTranslation();
   const [
     tagsConnection,
