@@ -1093,6 +1093,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@googlicius/build-url@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@googlicius/build-url/-/build-url-1.0.2.tgz#d9935cba474b65264960d6b1a4a4d297df5268fe"
+  integrity sha512-1ye4taXnK73YLlbOL0YNZnop5enBmZtx4XugNlZrqCatpfWaIi5ZW3BGJYYHFKDzqVXoMKz5Z+/6P9S+9v5Muw==
+
 "@graphql-codegen/cli@^1.21.4":
   version "1.21.4"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/cli/-/cli-1.21.4.tgz#41ce6abc6b33e369a3ee795621373b8ffa1aadeb"

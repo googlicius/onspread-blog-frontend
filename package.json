@@ -10,11 +10,12 @@
     "eslint": "./node_modules/.bin/eslint",
     "lint": "eslint . --ext .tsx,.ts",
     "prepare": "husky install",
-    "test": "jest --watch"
+    "test": "jest"
   },
   "dependencies": {
     "@apollo/client": "^3.3.15",
     "@ckeditor/ckeditor5-react": "^3.0.2",
+    "@googlicius/build-url": "^1.0.2",
     "@reduxjs/toolkit": "^1.5.1",
     "apollo-upload-client": "^16.0.0",
     "axios": "^0.21.1",

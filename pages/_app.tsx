@@ -11,7 +11,7 @@ import 'nprogress/nprogress.css';
 import '@/styles/scss/styles.scss';
 import '@/configs/i18n';
 import { meQueryAsync, selectMe } from '@/redux/meProducer';
-import { loadSocketAsync, selectSocket } from '@/redux/socketReducer';
+import { loadSocketIOAsync, selectSocket } from '@/redux/socketIOReducer';
 
 let progressBarTimeout = null;
 
@@ -39,7 +39,7 @@ const InitApp = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadSocketAsync());
+    dispatch(loadSocketIOAsync());
   }, []);
 
   useEffect(() => {

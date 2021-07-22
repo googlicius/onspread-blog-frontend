@@ -7,10 +7,9 @@ const initialState: SocketState = {
   value: null,
 };
 
-export const loadSocketAsync = createAsyncThunk('socket/load', async () => {
-  await loadAsyncJS('https://cdn.socket.io/3.1.3/socket.io.min.js');
-  return;
-});
+export const loadSocketIOAsync = createAsyncThunk('socket/load', () =>
+  loadAsyncJS('https://cdn.socket.io/4.1.2/socket.io.min.js'),
+);
 
 const socketSlice = createSlice({
   name: 'socket',
@@ -21,7 +20,7 @@ const socketSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(loadSocketAsync.fulfilled, (state) => {
+    builder.addCase(loadSocketIOAsync.fulfilled, (state) => {
       state.isLoaded = true;
       state.value = io(process.env.NEXT_PUBLIC_API_ENDPOINT);
     });

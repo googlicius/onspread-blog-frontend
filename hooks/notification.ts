@@ -7,7 +7,7 @@ import {
 } from '@/graphql/generated';
 import { useSelector } from 'react-redux';
 import { selectMe } from '@/redux/meProducer';
-import { selectSocket } from '@/redux/socketReducer';
+import { selectSocket } from '@/redux/socketIOReducer';
 
 interface UseNotificationReturn {
   notifications: Partial<Notification>[];
@@ -18,6 +18,10 @@ interface UseNotificationReturn {
   markAsRead: (notification?: Notification) => void;
 }
 
+/**
+ * Notification hook, load notifications by current user.
+ * Display real-time notification via socket.o client.
+ */
 const useNotification = (): UseNotificationReturn => {
   const [newNotifications, setNewNotifications] = useState<
     Partial<Notification>[]

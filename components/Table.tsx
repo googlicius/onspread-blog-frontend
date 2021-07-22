@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTable, Column, useSortBy } from 'react-table';
 import { useRouter } from 'next/router';
-import buildUrl from '@/utils/build-url';
+import buildUrl from '@googlicius/build-url';
 import { useTranslation } from 'react-i18next';
 
 const buildSortBy = (strSort: string) => {

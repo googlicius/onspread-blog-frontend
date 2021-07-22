@@ -13,11 +13,11 @@ const createElement = (d, s, src) => {
 };
 
 /**
- * Load JS file async
+ * Load js file(s) asynchonously.
  *
  * @param url url of JS file
  * @param cb Callback after file has loaded.
- * @param wait_id id of element that being waited to load.
+ * @param waitSrc src of element that being waited to load.
  * @returns Promise<any>
  */
 export const loadAsyncJS = async (
@@ -60,7 +60,7 @@ export const loadAsyncJS = async (
     await Promise.all(promises);
   };
 
-  const waitEl = document.querySelector(waitSrc);
+  const waitEl = document.querySelector<HTMLElement>(waitSrc);
 
   if (waitEl && !waitEl.getAttribute('data-loaded')) {
     addOnloadHandler(waitEl, () => run());

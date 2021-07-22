@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import cs from 'classnames';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import buildUrl from '@/utils/build-url';
+import buildUrl from '@googlicius/build-url';
 
 interface Props {
   currentPage: number;
