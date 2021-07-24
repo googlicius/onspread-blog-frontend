@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Modal, ModalBody, ModalHeader, Row, Col, Container } from 'reactstrap';
 import {
   PostBySlugDocument,
@@ -37,6 +37,7 @@ import { useTranslation } from 'react-i18next';
 import PostPreview from '@/components/posts/PostPreview';
 import PencilSvg from '@/components/svgs/PencilSvg';
 import TagLinks from '@/components/posts/TagLinks/TagLinks';
+import mediumZoom from 'medium-zoom';
 
 interface Props {
   postData: PostBySlugQuery;
@@ -50,6 +51,7 @@ const PostDetail = (props: Props): JSX.Element => {
   const { slug } = router.query;
   const [giveHeartMutation] = useGiveHeartMutation();
   const { t } = useTranslation();
+  const postContentRef = useRef<HTMLDivElement>(null);
 
   const me = useSelector(selectMe);
 
@@ -58,6 +60,13 @@ const PostDetail = (props: Props): JSX.Element => {
   useEffect(() => {
     if (postData?.postBySlug) {
       setTotalHeart(postData.postBySlug.heart);
+    }
+  }, [postData]);
+
+  // Make images zoomable.
+  useEffect(() => {
+    if (postContentRef.current) {
+      mediumZoom(postContentRef.current.querySelectorAll('img'));
     }
   }, [postData]);
 
@@ -172,7 +181,7 @@ const PostDetail = (props: Props): JSX.Element => {
           <div className="container mb-5">
             <Row>
               <Col lg={8} md={10} className="mx-auto">
-                <div className={styles.post}>
+                <div ref={postContentRef} className={styles.post}>
                   {postData.postBySlug.displayType !==
                     Enum_Post_Displaytype.FullscreenImage && (
                     <h1 className={cs(styles.post__title, 'mt-7', 'mb-4')}>

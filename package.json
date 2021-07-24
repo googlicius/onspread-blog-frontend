@@ -15,7 +15,8 @@
   "dependencies": {
     "@apollo/client": "^3.3.15",
     "@ckeditor/ckeditor5-react": "^3.0.2",
-    "@googlicius/build-url": "^1.0.2",
+    "@googlicius/build-url": "^1.0.7",
+    "@googlicius/load-assets": "^1.0.0",
     "@reduxjs/toolkit": "^1.5.1",
     "apollo-upload-client": "^16.0.0",
     "axios": "^0.21.1",
@@ -30,6 +31,7 @@
     "immutability-helper": "^3.1.1",
     "jsdom": "^16.5.3",
     "lodash": "^4.17.21",
+    "medium-zoom": "^1.0.6",
     "next": "10.2.0",
     "nprogress": "^0.2.0",
     "react": "17.0.2",

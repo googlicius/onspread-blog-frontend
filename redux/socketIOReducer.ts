@@ -1,4 +1,4 @@
-import { loadAsyncJS } from '@/utils/load-async-js';
+import { loadAsyncJS } from '@googlicius/load-assets';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState, SocketState } from './interface';
 

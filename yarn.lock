@@ -1093,10 +1093,15 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@googlicius/build-url@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@googlicius/build-url/-/build-url-1.0.2.tgz#d9935cba474b65264960d6b1a4a4d297df5268fe"
-  integrity sha512-1ye4taXnK73YLlbOL0YNZnop5enBmZtx4XugNlZrqCatpfWaIi5ZW3BGJYYHFKDzqVXoMKz5Z+/6P9S+9v5Muw==
+"@googlicius/build-url@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@googlicius/build-url/-/build-url-1.0.7.tgz#2c04db55400bb37b59fe43dcbe5eea9600d8788d"
+  integrity sha512-aVoRQyj3LE5e4QZOj5CH0kSA5pv5dpJFGR4DanWpsbSwX9COdorVigvKPf00kvO+7uYb9NnnM5fMPFYVG4Rnpg==
+
+"@googlicius/load-assets@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@googlicius/load-assets/-/load-assets-1.0.0.tgz#44dfc394b1671ad88a8c16ef5cfc1e86508ae753"
+  integrity sha512-93ZQ9rQ03WFanQ+9I4nVEajCiaVTy1pQ4RPqtIxKNQVfBP3JNEDtj7o5pcLRQqLmtpnV9iQ8TFLaCEPsdVgr/Q==
 
 "@graphql-codegen/cli@^1.21.4":
   version "1.21.4"
@@ -6318,6 +6323,11 @@ mdurl@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
   integrity sha1-/oWy7HWlkDfyrf7BAP1sYBdhFS4=
+
+medium-zoom@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/medium-zoom/-/medium-zoom-1.0.6.tgz#9247f21ca9313d8bbe9420aca153a410df08d027"
+  integrity sha512-UdiUWfvz9fZMg1pzf4dcuqA0W079o0mpqbTnOz5ip4VGYX96QjmbM+OgOU/0uOzAytxC0Ny4z+VcYQnhdifimg==
 
 memoize-one@^5.0.0:
   version "5.2.1"
