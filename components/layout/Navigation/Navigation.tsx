@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import cs from 'classnames';
 import get from 'lodash/get';
 import {
-  Badge,
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
@@ -14,11 +13,9 @@ import {
 } from 'reactstrap';
 import styles from './Navigation.module.scss';
 import debounce from 'lodash/debounce';
-import { useLogoutMutation, Notification } from '@/graphql/generated';
-import NotificationSvg from '@/components/svgs/NotificationSvg';
+import { useLogoutMutation } from '@/graphql/generated';
 import HandScissors from '@/components/svgs/HandScissors';
-import useNotification from '@/hooks/notification';
-import CheckSvg from '@/components/svgs/CheckSvg';
+import Notification from './Notification';
 
 interface Props {
   isTransparentBg?: boolean;
@@ -41,13 +38,6 @@ export default function Navigation(props: Props): JSX.Element {
   const dispatch = useDispatch();
   const [logoutMutation] = useLogoutMutation();
   const { t } = useTranslation();
-  const {
-    notifications,
-    newCount,
-    unReadCount,
-    markAsSeen,
-    markAsRead,
-  } = useNotification();
 
   const handleLogOut = async () => {
     await logoutMutation();
@@ -133,14 +123,6 @@ export default function Navigation(props: Props): JSX.Element {
     };
   }, [isTransparentBg, noHide]);
 
-  const handleNotificationToggle = (e) => {
-    const target: HTMLElement = e.target;
-    const dropdownEl = target.closest('li.notification-dropdown');
-    if (!dropdownEl || dropdownEl.classList.contains('show')) {
-      markAsSeen();
-    }
-  };
-
   return (
     <nav
       className={cs('navbar navbar-expand-lg navbar-dark bg-dark fixed-top', {
@@ -163,85 +145,6 @@ export default function Navigation(props: Props): JSX.Element {
 
         <ul className="navbar-nav d-flex align-tems-center flex-row">
           {children}
-          {/* Notification */}
-          <UncontrolledDropdown
-            tag="li"
-            className="nav-item mr-2 notification-dropdown"
-            onToggle={handleNotificationToggle}
-          >
-            <DropdownToggle tag="a" role="button" className="pointer nav-link">
-              <NotificationSvg title={t('notifications')} />
-
-              {newCount > 0 && (
-                <Badge
-                  pill
-                  color="primary"
-                  className={styles['notification-badge']}
-                >
-                  {newCount}
-                </Badge>
-              )}
-            </DropdownToggle>
-
-            <DropdownMenu right className={styles.notifications}>
-              {notifications.length === 0 ? (
-                <span className="dropdown-item text-secondary">
-                  {t('No notification.')}
-                </span>
-              ) : (
-                <>
-                  <div className="px-4 py-2 d-flex justify-content-between align-items-center">
-                    <strong className="h5 mb-0">{t('Notification')}</strong>
-
-                    {unReadCount > 0 && (
-                      <a
-                        role="button"
-                        className="px-0"
-                        onClick={() => markAsRead()}
-                      >
-                        <CheckSvg title={t('Mark all as read')} />
-                      </a>
-                    )}
-                  </div>
-                  {notifications.map((item, index) => (
-                    <Link href={item.url} key={index}>
-                      <a
-                        className={cs('dropdown-item d-flex', {
-                          [styles['notifications__is-unread']]: !item.readAt,
-                        })}
-                        onClick={() => markAsRead(item as Notification)}
-                      >
-                        <div className="flex-grow-1">
-                          <div
-                            className={styles.notifications__title}
-                            dangerouslySetInnerHTML={{ __html: item.title }}
-                          />
-
-                          {item.message && (
-                            <div
-                              className={styles.notifications__message}
-                              dangerouslySetInnerHTML={{ __html: item.message }}
-                            />
-                          )}
-                        </div>
-
-                        {item.new && (
-                          <div className="d-flex flex-column justify-content-center">
-                            <div
-                              className="badge badge-pill badge-primary ml-2 p-0"
-                              style={{ width: 8, height: 8 }}
-                            >
-                              &nbsp;
-                            </div>
-                          </div>
-                        )}
-                      </a>
-                    </Link>
-                  ))}
-                </>
-              )}
-            </DropdownMenu>
-          </UncontrolledDropdown>
 
           {/* User menu */}
           {/* Use IIFE to performs a switch case in JSX */}
@@ -268,41 +171,48 @@ export default function Navigation(props: Props): JSX.Element {
                 }
 
                 return (
-                  <UncontrolledDropdown tag="li" className="nav-item">
-                    <DropdownToggle
-                      tag="a"
-                      role="button"
-                      className="nav-link px-0"
-                    >
-                      {/* {me.value.username} */}
-                      <div className={cs(styles.navigation__avatar)}>
-                        <img
-                          src={get(me.value, 'avatar.formats.thumbnail.url')}
-                          alt={get(me.value, 'user.avatar.alternativeText')}
-                        />
-                      </div>
-                    </DropdownToggle>
+                  <>
+                    {/* Notification */}
+                    <Notification />
 
-                    <DropdownMenu right>
-                      <Link href="/posts/create">
-                        <a className="dropdown-item">{t('Create new Post')}</a>
-                      </Link>
+                    <UncontrolledDropdown tag="li" className="nav-item">
+                      <DropdownToggle
+                        tag="a"
+                        role="button"
+                        className="nav-link px-0"
+                      >
+                        {/* {me.value.username} */}
+                        <div className={cs(styles.navigation__avatar)}>
+                          <img
+                            src={get(me.value, 'avatar.formats.thumbnail.url')}
+                            alt={get(me.value, 'user.avatar.alternativeText')}
+                          />
+                        </div>
+                      </DropdownToggle>
 
-                      <Link href="/manage-posts?sort=createdAt%3Adesc">
-                        <a className="dropdown-item">{t('Manage Posts')}</a>
-                      </Link>
+                      <DropdownMenu right>
+                        <Link href="/posts/create">
+                          <a className="dropdown-item">
+                            {t('Create new Post')}
+                          </a>
+                        </Link>
 
-                      <Link href="/me">
-                        <a className="dropdown-item">{t('Profile')}</a>
-                      </Link>
+                        <Link href="/manage-posts?sort=createdAt%3Adesc">
+                          <a className="dropdown-item">{t('Manage Posts')}</a>
+                        </Link>
 
-                      <DropdownItem divider />
+                        <Link href="/me">
+                          <a className="dropdown-item">{t('Profile')}</a>
+                        </Link>
 
-                      <DropdownItem onClick={handleLogOut}>
-                        {t('Logout')}
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </UncontrolledDropdown>
+                        <DropdownItem divider />
+
+                        <DropdownItem onClick={handleLogOut}>
+                          {t('Logout')}
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </UncontrolledDropdown>
+                  </>
                 );
             }
           })()}

@@ -15,8 +15,8 @@
   "dependencies": {
     "@apollo/client": "^3.3.15",
     "@ckeditor/ckeditor5-react": "^3.0.2",
-    "@googlicius/build-url": "^1.0.7",
-    "@googlicius/load-assets": "^1.0.0",
+    "@googlicius/build-url": "^1.0.8",
+    "@googlicius/load-assets": "^1.0.2",
     "@reduxjs/toolkit": "^1.5.1",
     "apollo-upload-client": "^16.0.0",
     "axios": "^0.21.1",

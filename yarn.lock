@@ -1093,15 +1093,15 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@googlicius/build-url@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@googlicius/build-url/-/build-url-1.0.7.tgz#2c04db55400bb37b59fe43dcbe5eea9600d8788d"
-  integrity sha512-aVoRQyj3LE5e4QZOj5CH0kSA5pv5dpJFGR4DanWpsbSwX9COdorVigvKPf00kvO+7uYb9NnnM5fMPFYVG4Rnpg==
+"@googlicius/build-url@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@googlicius/build-url/-/build-url-1.0.8.tgz#946d02a37acb22163e7363e5cc2edbe4191e8113"
+  integrity sha512-t+g10ksrF+dpMlQToBRmkszr/2UEjRp22i27qJLvY+7sqpPmxaWEckQkIxpZG+ntjBVu9ZWK5lFhDzVKEoqo2Q==
 
-"@googlicius/load-assets@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@googlicius/load-assets/-/load-assets-1.0.0.tgz#44dfc394b1671ad88a8c16ef5cfc1e86508ae753"
-  integrity sha512-93ZQ9rQ03WFanQ+9I4nVEajCiaVTy1pQ4RPqtIxKNQVfBP3JNEDtj7o5pcLRQqLmtpnV9iQ8TFLaCEPsdVgr/Q==
+"@googlicius/load-assets@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@googlicius/load-assets/-/load-assets-1.0.2.tgz#5d14e08765d24d41d8d3a3f72bb1d7e6d7475135"
+  integrity sha512-qEf7iJ/QeZbEwFlSosiXY/5fmD3BcZouT7S6NjbMy55KrOm04MU1fJT3hHgKI1CM8hB8Kze/pSQUeQKwf+Xr/A==
 
 "@graphql-codegen/cli@^1.21.4":
   version "1.21.4"

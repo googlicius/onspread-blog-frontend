@@ -3,6 +3,7 @@ import ArrowBackSvg from '@/components/svgs/ArrowBackSvg';
 import CloseSvg from '@/components/svgs/CloseSvg';
 import { UploadFile } from '@/graphql/generated';
 import FileItem from './FileItem';
+import { Col, Row } from 'reactstrap';
 
 interface Props {
   uploadFiles: Partial<UploadFile>[];
@@ -44,18 +45,19 @@ const UploadList = ({
       </div>
 
       <div className="modal-body">
-        <div className="row">
+        <Row>
           {uploadFiles.map((file, index) => {
             return (
-              <FileItem
-                file={file as UploadFile}
-                key={index}
-                selected
-                onDelete={onDelete}
-              />
+              <Col md={3} xs={6} key={index} className="mb-4">
+                <FileItem
+                  file={file as UploadFile}
+                  selected
+                  onDelete={onDelete}
+                />
+              </Col>
             );
           })}
-        </div>
+        </Row>
       </div>
 
       <div className="modal-footer d-flex justify-content-between">
