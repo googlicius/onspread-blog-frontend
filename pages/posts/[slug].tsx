@@ -76,7 +76,7 @@ const PostDetail = (props: Props): JSX.Element => {
     loadPrism().then(() => {
       Prism.highlightAll();
     });
-  }, []);
+  }, [postData]);
 
   useEffect(() => {
     router.beforePopState((state) => {

@@ -8,6 +8,7 @@ import client from '@/configs/apollo-client';
 import store from '@/redux/store';
 import 'react-toastify/dist/ReactToastify.css';
 import 'nprogress/nprogress.css';
+import '@/styles/prism.css';
 import '@/styles/scss/styles.scss';
 import '@/configs/i18n';
 import { meQueryAsync, selectMe } from '@/redux/meProducer';
