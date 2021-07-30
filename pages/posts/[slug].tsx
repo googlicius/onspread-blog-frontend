@@ -38,7 +38,7 @@ import PostPreview from '@/components/posts/PostPreview';
 import PencilSvg from '@/components/svgs/PencilSvg';
 import TagLinks from '@/components/posts/TagLinks/TagLinks';
 import mediumZoom from 'medium-zoom';
-import loadHighlightJs from '@/utils/load-highlightjs';
+import loadPrism from '@/utils/load-prism';
 
 interface Props {
   postData: PostBySlugQuery;
@@ -73,8 +73,8 @@ const PostDetail = (props: Props): JSX.Element => {
 
   // Highlight code snippets.
   useEffect(() => {
-    loadHighlightJs().then(() => {
-      hljs.highlightAll();
+    loadPrism().then(() => {
+      Prism.highlightAll();
     });
   }, []);
 

@@ -4,3 +4,8 @@
 declare const iframely;
 declare const io;
 declare const hljs;
+declare const Prism;
+
+interface Window {
+  Prism: any;
+}
