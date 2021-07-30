@@ -38,6 +38,7 @@ import PostPreview from '@/components/posts/PostPreview';
 import PencilSvg from '@/components/svgs/PencilSvg';
 import TagLinks from '@/components/posts/TagLinks/TagLinks';
 import mediumZoom from 'medium-zoom';
+import loadHighlightJs from '@/utils/load-highlightjs';
 
 interface Props {
   postData: PostBySlugQuery;
@@ -69,6 +70,13 @@ const PostDetail = (props: Props): JSX.Element => {
       mediumZoom(postContentRef.current.querySelectorAll('img'));
     }
   }, [postData]);
+
+  // Highlight code snippets.
+  useEffect(() => {
+    loadHighlightJs().then(() => {
+      hljs.highlightAll();
+    });
+  }, []);
 
   useEffect(() => {
     router.beforePopState((state) => {
@@ -216,12 +224,14 @@ const PostDetail = (props: Props): JSX.Element => {
                       </Link>
                     </strong>
 
-                    <small>
-                      {format(
-                        new Date(postData.postBySlug.published_at),
-                        process.env.NEXT_PUBLIC_DATE_DISPLAY_FORMAT,
-                      )}
-                    </small>
+                    {postData.postBySlug.published_at && (
+                      <small>
+                        {format(
+                          new Date(postData.postBySlug.published_at),
+                          process.env.NEXT_PUBLIC_DATE_DISPLAY_FORMAT,
+                        )}
+                      </small>
+                    )}
                   </div>
 
                   {imageUrl &&

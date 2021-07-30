@@ -3,3 +3,4 @@
 
 declare const iframely;
 declare const io;
+declare const hljs;
