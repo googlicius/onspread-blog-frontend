@@ -1,0 +1,13 @@
+mutation CreateSubscription($input: createSubscriptionInput) {
+  createSubscription(input: $input) {
+    subscription {
+      user {
+        id
+        email
+        username
+      }
+      collectionName
+      collectionId
+    }
+  }
+}

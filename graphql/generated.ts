@@ -229,6 +229,17 @@ export enum Enum_Post_Displaytype {
   NoImage = 'NoImage'
 }
 
+export enum Enum_Story_Status {
+  Publishing = 'publishing',
+  Completed = 'completed'
+}
+
+export enum Enum_Subscription_Collectionname {
+  Story = 'story',
+  Post = 'post',
+  Comment = 'comment'
+}
+
 export type FileInfoInput = {
   name?: Maybe<Scalars['String']>;
   alternativeText?: Maybe<Scalars['String']>;
@@ -278,7 +289,7 @@ export type LocaleInput = {
 };
 
 
-export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnection_Id | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | CategoryConnectionDescription | CategoryConnectionImage | CreateCategoryPayload | UpdateCategoryPayload | DeleteCategoryPayload | Comment | CommentConnection | CommentAggregator | CommentGroupBy | CommentConnectionId | CommentConnection_Id | CommentConnectionCreatedAt | CommentConnectionUpdatedAt | CommentConnectionContent | CommentConnectionUser | CommentConnectionPost | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Notification | NotificationConnection | NotificationAggregator | NotificationGroupBy | NotificationConnectionId | NotificationConnection_Id | NotificationConnectionCreatedAt | NotificationConnectionUpdatedAt | NotificationConnectionTitle | NotificationConnectionUser | NotificationConnectionChannel | NotificationConnectionIsVisible | NotificationConnectionReadAt | NotificationConnectionNew | NotificationConnectionUrl | NotificationConnectionMessage | CreateNotificationPayload | UpdateNotificationPayload | DeleteNotificationPayload | Post | PostConnection | PostAggregator | PostAggregatorSum | PostAggregatorAvg | PostAggregatorMin | PostAggregatorMax | PostGroupBy | PostConnectionId | PostConnection_Id | PostConnectionCreatedAt | PostConnectionUpdatedAt | PostConnectionTitle | PostConnectionContent | PostConnectionImage | PostConnectionCategory | PostConnectionUser | PostConnectionSlug | PostConnectionDescription | PostConnectionHeart | PostConnectionHomeFeatured | PostConnectionContentType | PostConnectionDisplayType | PostConnectionStory | PostConnectionStorySeq | PostConnectionPublished_At | CreatePostPayload | UpdatePostPayload | DeletePostPayload | Story | StoryConnection | StoryAggregator | StoryGroupBy | StoryConnectionId | StoryConnection_Id | StoryConnectionCreatedAt | StoryConnectionUpdatedAt | StoryConnectionName | StoryConnectionDescription | StoryConnectionImage | StoryConnectionUser | CreateStoryPayload | UpdateStoryPayload | DeleteStoryPayload | Tag | TagConnection | TagAggregator | TagGroupBy | TagConnectionId | TagConnection_Id | TagConnectionCreatedAt | TagConnectionUpdatedAt | TagConnectionName | TagConnectionDescription | TagConnectionImage | TagConnectionSlug | CreateTagPayload | UpdateTagPayload | DeleteTagPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnection_Id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnection_Id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnection_Id | UsersPermissionsUserConnectionCreatedAt | UsersPermissionsUserConnectionUpdatedAt | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionAvatar | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
+export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnection_Id | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | CategoryConnectionDescription | CategoryConnectionImage | CreateCategoryPayload | UpdateCategoryPayload | DeleteCategoryPayload | Comment | CommentConnection | CommentAggregator | CommentGroupBy | CommentConnectionId | CommentConnection_Id | CommentConnectionCreatedAt | CommentConnectionUpdatedAt | CommentConnectionContent | CommentConnectionUser | CommentConnectionPost | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Notification | NotificationConnection | NotificationAggregator | NotificationGroupBy | NotificationConnectionId | NotificationConnection_Id | NotificationConnectionCreatedAt | NotificationConnectionUpdatedAt | NotificationConnectionTitle | NotificationConnectionUser | NotificationConnectionChannel | NotificationConnectionIsVisible | NotificationConnectionReadAt | NotificationConnectionNew | NotificationConnectionUrl | NotificationConnectionMessage | CreateNotificationPayload | UpdateNotificationPayload | DeleteNotificationPayload | Post | PostConnection | PostAggregator | PostAggregatorSum | PostAggregatorAvg | PostAggregatorMin | PostAggregatorMax | PostGroupBy | PostConnectionId | PostConnection_Id | PostConnectionCreatedAt | PostConnectionUpdatedAt | PostConnectionTitle | PostConnectionContent | PostConnectionImage | PostConnectionCategory | PostConnectionUser | PostConnectionSlug | PostConnectionDescription | PostConnectionHeart | PostConnectionHomeFeatured | PostConnectionContentType | PostConnectionDisplayType | PostConnectionStory | PostConnectionStorySeq | PostConnectionPublished_At | CreatePostPayload | UpdatePostPayload | DeletePostPayload | Story | StoryConnection | StoryAggregator | StoryGroupBy | StoryConnectionId | StoryConnection_Id | StoryConnectionCreatedAt | StoryConnectionUpdatedAt | StoryConnectionName | StoryConnectionDescription | StoryConnectionImage | StoryConnectionUser | StoryConnectionStatus | CreateStoryPayload | UpdateStoryPayload | DeleteStoryPayload | Subscription | SubscriptionConnection | SubscriptionAggregator | SubscriptionGroupBy | SubscriptionConnectionId | SubscriptionConnection_Id | SubscriptionConnectionCreatedAt | SubscriptionConnectionUpdatedAt | SubscriptionConnectionUser | SubscriptionConnectionCollectionName | SubscriptionConnectionCollectionId | CreateSubscriptionPayload | UpdateSubscriptionPayload | DeleteSubscriptionPayload | Tag | TagConnection | TagAggregator | TagGroupBy | TagConnectionId | TagConnection_Id | TagConnectionCreatedAt | TagConnectionUpdatedAt | TagConnectionName | TagConnectionDescription | TagConnectionImage | TagConnectionSlug | CreateTagPayload | UpdateTagPayload | DeleteTagPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnection_Id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnection_Id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnection_Id | UsersPermissionsUserConnectionCreatedAt | UsersPermissionsUserConnectionUpdatedAt | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionAvatar | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -297,6 +308,9 @@ export type Mutation = {
   createStory?: Maybe<CreateStoryPayload>;
   updateStory?: Maybe<UpdateStoryPayload>;
   deleteStory?: Maybe<DeleteStoryPayload>;
+  createSubscription?: Maybe<CreateSubscriptionPayload>;
+  updateSubscription?: Maybe<UpdateSubscriptionPayload>;
+  deleteSubscription?: Maybe<DeleteSubscriptionPayload>;
   createTag?: Maybe<CreateTagPayload>;
   updateTag?: Maybe<UpdateTagPayload>;
   deleteTag?: Maybe<DeleteTagPayload>;
@@ -408,6 +422,21 @@ export type MutationUpdateStoryArgs = {
 
 export type MutationDeleteStoryArgs = {
   input?: Maybe<DeleteStoryInput>;
+};
+
+
+export type MutationCreateSubscriptionArgs = {
+  input?: Maybe<CreateSubscriptionInput>;
+};
+
+
+export type MutationUpdateSubscriptionArgs = {
+  input?: Maybe<UpdateSubscriptionInput>;
+};
+
+
+export type MutationDeleteSubscriptionArgs = {
+  input?: Maybe<DeleteSubscriptionInput>;
 };
 
 
@@ -915,6 +944,9 @@ export type Query = {
   story?: Maybe<Story>;
   stories?: Maybe<Array<Maybe<Story>>>;
   storiesConnection?: Maybe<StoryConnection>;
+  subscription?: Maybe<Subscription>;
+  subscriptions?: Maybe<Array<Maybe<Subscription>>>;
+  subscriptionsConnection?: Maybe<SubscriptionConnection>;
   tag?: Maybe<Tag>;
   tags?: Maybe<Array<Maybe<Tag>>>;
   tagsConnection?: Maybe<TagConnection>;
@@ -934,6 +966,8 @@ export type Query = {
   postBySlug?: Maybe<Post>;
   /** Get featured post */
   featuredPost?: Maybe<Post>;
+  /** Get one subscription by userId, collectionName, and collectionId. */
+  subscriptionByUserAndCollection?: Maybe<Subscription>;
 };
 
 
@@ -1052,6 +1086,29 @@ export type QueryStoriesConnectionArgs = {
 };
 
 
+export type QuerySubscriptionArgs = {
+  id: Scalars['ID'];
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QuerySubscriptionsArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QuerySubscriptionsConnectionArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+};
+
+
 export type QueryTagArgs = {
   id: Scalars['ID'];
   publicationState?: Maybe<PublicationState>;
@@ -1147,6 +1204,13 @@ export type QueryPostBySlugArgs = {
   slug: Scalars['String'];
 };
 
+
+export type QuerySubscriptionByUserAndCollectionArgs = {
+  user: Scalars['String'];
+  collectionName: Scalars['String'];
+  collectionId: Scalars['String'];
+};
+
 export type RoleInput = {
   name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
@@ -1167,6 +1231,7 @@ export type Story = {
   description?: Maybe<Scalars['String']>;
   image?: Maybe<UploadFile>;
   user?: Maybe<UsersPermissionsUser>;
+  status?: Maybe<Enum_Story_Status>;
 };
 
 export type StoryAggregator = {
@@ -1212,6 +1277,12 @@ export type StoryConnectionName = {
   connection?: Maybe<StoryConnection>;
 };
 
+export type StoryConnectionStatus = {
+  __typename?: 'StoryConnectionStatus';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<StoryConnection>;
+};
+
 export type StoryConnectionUpdatedAt = {
   __typename?: 'StoryConnectionUpdatedAt';
   key?: Maybe<Scalars['DateTime']>;
@@ -1240,6 +1311,7 @@ export type StoryGroupBy = {
   description?: Maybe<Array<Maybe<StoryConnectionDescription>>>;
   image?: Maybe<Array<Maybe<StoryConnectionImage>>>;
   user?: Maybe<Array<Maybe<StoryConnectionUser>>>;
+  status?: Maybe<Array<Maybe<StoryConnectionStatus>>>;
 };
 
 export type StoryInput = {
@@ -1247,6 +1319,92 @@ export type StoryInput = {
   description?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['ID']>;
   user?: Maybe<Scalars['ID']>;
+  status?: Maybe<Enum_Story_Status>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  id: Scalars['ID'];
+  _id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+  user?: Maybe<UsersPermissionsUser>;
+  collectionName: Enum_Subscription_Collectionname;
+  collectionId: Scalars['String'];
+};
+
+export type SubscriptionAggregator = {
+  __typename?: 'SubscriptionAggregator';
+  count?: Maybe<Scalars['Int']>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type SubscriptionConnection = {
+  __typename?: 'SubscriptionConnection';
+  values?: Maybe<Array<Maybe<Subscription>>>;
+  groupBy?: Maybe<SubscriptionGroupBy>;
+  aggregate?: Maybe<SubscriptionAggregator>;
+};
+
+export type SubscriptionConnectionCollectionId = {
+  __typename?: 'SubscriptionConnectionCollectionId';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<SubscriptionConnection>;
+};
+
+export type SubscriptionConnectionCollectionName = {
+  __typename?: 'SubscriptionConnectionCollectionName';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<SubscriptionConnection>;
+};
+
+export type SubscriptionConnectionCreatedAt = {
+  __typename?: 'SubscriptionConnectionCreatedAt';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<SubscriptionConnection>;
+};
+
+export type SubscriptionConnectionId = {
+  __typename?: 'SubscriptionConnectionId';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<SubscriptionConnection>;
+};
+
+export type SubscriptionConnectionUpdatedAt = {
+  __typename?: 'SubscriptionConnectionUpdatedAt';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<SubscriptionConnection>;
+};
+
+export type SubscriptionConnectionUser = {
+  __typename?: 'SubscriptionConnectionUser';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<SubscriptionConnection>;
+};
+
+export type SubscriptionConnection_Id = {
+  __typename?: 'SubscriptionConnection_id';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<SubscriptionConnection>;
+};
+
+export type SubscriptionGroupBy = {
+  __typename?: 'SubscriptionGroupBy';
+  id?: Maybe<Array<Maybe<SubscriptionConnectionId>>>;
+  _id?: Maybe<Array<Maybe<SubscriptionConnection_Id>>>;
+  createdAt?: Maybe<Array<Maybe<SubscriptionConnectionCreatedAt>>>;
+  updatedAt?: Maybe<Array<Maybe<SubscriptionConnectionUpdatedAt>>>;
+  user?: Maybe<Array<Maybe<SubscriptionConnectionUser>>>;
+  collectionName?: Maybe<Array<Maybe<SubscriptionConnectionCollectionName>>>;
+  collectionId?: Maybe<Array<Maybe<SubscriptionConnectionCollectionId>>>;
+};
+
+export type SubscriptionInput = {
+  user?: Maybe<Scalars['ID']>;
+  collectionName: Enum_Subscription_Collectionname;
+  collectionId: Scalars['String'];
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1873,6 +2031,15 @@ export type CreateStoryPayload = {
   story?: Maybe<Story>;
 };
 
+export type CreateSubscriptionInput = {
+  data?: Maybe<SubscriptionInput>;
+};
+
+export type CreateSubscriptionPayload = {
+  __typename?: 'createSubscriptionPayload';
+  subscription?: Maybe<Subscription>;
+};
+
 export type CreateTagInput = {
   data?: Maybe<TagInput>;
 };
@@ -1952,6 +2119,15 @@ export type DeleteStoryInput = {
 export type DeleteStoryPayload = {
   __typename?: 'deleteStoryPayload';
   story?: Maybe<Story>;
+};
+
+export type DeleteSubscriptionInput = {
+  where?: Maybe<InputId>;
+};
+
+export type DeleteSubscriptionPayload = {
+  __typename?: 'deleteSubscriptionPayload';
+  subscription?: Maybe<Subscription>;
 };
 
 export type DeleteTagInput = {
@@ -2063,6 +2239,15 @@ export type EditStoryInput = {
   description?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['ID']>;
   user?: Maybe<Scalars['ID']>;
+  status?: Maybe<Enum_Story_Status>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
+export type EditSubscriptionInput = {
+  user?: Maybe<Scalars['ID']>;
+  collectionName?: Maybe<Enum_Subscription_Collectionname>;
+  collectionId?: Maybe<Scalars['String']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -2149,6 +2334,16 @@ export type UpdateStoryInput = {
 export type UpdateStoryPayload = {
   __typename?: 'updateStoryPayload';
   story?: Maybe<Story>;
+};
+
+export type UpdateSubscriptionInput = {
+  where?: Maybe<InputId>;
+  data?: Maybe<EditSubscriptionInput>;
+};
+
+export type UpdateSubscriptionPayload = {
+  __typename?: 'updateSubscriptionPayload';
+  subscription?: Maybe<Subscription>;
 };
 
 export type UpdateTagInput = {
@@ -2589,6 +2784,57 @@ export type UpdateStoryMutation = (
         & Pick<UploadFile, 'url' | 'formats' | 'provider'>
       )> }
     )> }
+  )> }
+);
+
+export type CreateSubscriptionMutationVariables = Exact<{
+  input?: Maybe<CreateSubscriptionInput>;
+}>;
+
+
+export type CreateSubscriptionMutation = (
+  { __typename?: 'Mutation' }
+  & { createSubscription?: Maybe<(
+    { __typename?: 'createSubscriptionPayload' }
+    & { subscription?: Maybe<(
+      { __typename?: 'Subscription' }
+      & Pick<Subscription, 'collectionName' | 'collectionId'>
+      & { user?: Maybe<(
+        { __typename?: 'UsersPermissionsUser' }
+        & Pick<UsersPermissionsUser, 'id' | 'email' | 'username'>
+      )> }
+    )> }
+  )> }
+);
+
+export type DeleteSubscriptionMutationVariables = Exact<{
+  input?: Maybe<DeleteSubscriptionInput>;
+}>;
+
+
+export type DeleteSubscriptionMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteSubscription?: Maybe<(
+    { __typename?: 'deleteSubscriptionPayload' }
+    & { subscription?: Maybe<(
+      { __typename?: 'Subscription' }
+      & Pick<Subscription, 'id'>
+    )> }
+  )> }
+);
+
+export type SubscriptionByUserAndCollectionQueryVariables = Exact<{
+  user: Scalars['String'];
+  collectionName: Scalars['String'];
+  collectionId: Scalars['String'];
+}>;
+
+
+export type SubscriptionByUserAndCollectionQuery = (
+  { __typename?: 'Query' }
+  & { subscriptionByUserAndCollection?: Maybe<(
+    { __typename?: 'Subscription' }
+    & Pick<Subscription, 'id' | 'collectionId' | 'collectionName'>
   )> }
 );
 
@@ -3653,6 +3899,125 @@ export function useUpdateStoryMutation(baseOptions?: Apollo.MutationHookOptions<
 export type UpdateStoryMutationHookResult = ReturnType<typeof useUpdateStoryMutation>;
 export type UpdateStoryMutationResult = Apollo.MutationResult<UpdateStoryMutation>;
 export type UpdateStoryMutationOptions = Apollo.BaseMutationOptions<UpdateStoryMutation, UpdateStoryMutationVariables>;
+export const CreateSubscriptionDocument = gql`
+    mutation CreateSubscription($input: createSubscriptionInput) {
+  createSubscription(input: $input) {
+    subscription {
+      user {
+        id
+        email
+        username
+      }
+      collectionName
+      collectionId
+    }
+  }
+}
+    `;
+export type CreateSubscriptionMutationFn = Apollo.MutationFunction<CreateSubscriptionMutation, CreateSubscriptionMutationVariables>;
+
+/**
+ * __useCreateSubscriptionMutation__
+ *
+ * To run a mutation, you first call `useCreateSubscriptionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateSubscriptionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createSubscriptionMutation, { data, loading, error }] = useCreateSubscriptionMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateSubscriptionMutation(baseOptions?: Apollo.MutationHookOptions<CreateSubscriptionMutation, CreateSubscriptionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateSubscriptionMutation, CreateSubscriptionMutationVariables>(CreateSubscriptionDocument, options);
+      }
+export type CreateSubscriptionMutationHookResult = ReturnType<typeof useCreateSubscriptionMutation>;
+export type CreateSubscriptionMutationResult = Apollo.MutationResult<CreateSubscriptionMutation>;
+export type CreateSubscriptionMutationOptions = Apollo.BaseMutationOptions<CreateSubscriptionMutation, CreateSubscriptionMutationVariables>;
+export const DeleteSubscriptionDocument = gql`
+    mutation DeleteSubscription($input: deleteSubscriptionInput) {
+  deleteSubscription(input: $input) {
+    subscription {
+      id
+    }
+  }
+}
+    `;
+export type DeleteSubscriptionMutationFn = Apollo.MutationFunction<DeleteSubscriptionMutation, DeleteSubscriptionMutationVariables>;
+
+/**
+ * __useDeleteSubscriptionMutation__
+ *
+ * To run a mutation, you first call `useDeleteSubscriptionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteSubscriptionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteSubscriptionMutation, { data, loading, error }] = useDeleteSubscriptionMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteSubscriptionMutation(baseOptions?: Apollo.MutationHookOptions<DeleteSubscriptionMutation, DeleteSubscriptionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteSubscriptionMutation, DeleteSubscriptionMutationVariables>(DeleteSubscriptionDocument, options);
+      }
+export type DeleteSubscriptionMutationHookResult = ReturnType<typeof useDeleteSubscriptionMutation>;
+export type DeleteSubscriptionMutationResult = Apollo.MutationResult<DeleteSubscriptionMutation>;
+export type DeleteSubscriptionMutationOptions = Apollo.BaseMutationOptions<DeleteSubscriptionMutation, DeleteSubscriptionMutationVariables>;
+export const SubscriptionByUserAndCollectionDocument = gql`
+    query SubscriptionByUserAndCollection($user: String!, $collectionName: String!, $collectionId: String!) {
+  subscriptionByUserAndCollection(
+    user: $user
+    collectionName: $collectionName
+    collectionId: $collectionId
+  ) {
+    id
+    collectionId
+    collectionName
+  }
+}
+    `;
+
+/**
+ * __useSubscriptionByUserAndCollectionQuery__
+ *
+ * To run a query within a React component, call `useSubscriptionByUserAndCollectionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSubscriptionByUserAndCollectionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSubscriptionByUserAndCollectionQuery({
+ *   variables: {
+ *      user: // value for 'user'
+ *      collectionName: // value for 'collectionName'
+ *      collectionId: // value for 'collectionId'
+ *   },
+ * });
+ */
+export function useSubscriptionByUserAndCollectionQuery(baseOptions: Apollo.QueryHookOptions<SubscriptionByUserAndCollectionQuery, SubscriptionByUserAndCollectionQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SubscriptionByUserAndCollectionQuery, SubscriptionByUserAndCollectionQueryVariables>(SubscriptionByUserAndCollectionDocument, options);
+      }
+export function useSubscriptionByUserAndCollectionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SubscriptionByUserAndCollectionQuery, SubscriptionByUserAndCollectionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SubscriptionByUserAndCollectionQuery, SubscriptionByUserAndCollectionQueryVariables>(SubscriptionByUserAndCollectionDocument, options);
+        }
+export type SubscriptionByUserAndCollectionQueryHookResult = ReturnType<typeof useSubscriptionByUserAndCollectionQuery>;
+export type SubscriptionByUserAndCollectionLazyQueryHookResult = ReturnType<typeof useSubscriptionByUserAndCollectionLazyQuery>;
+export type SubscriptionByUserAndCollectionQueryResult = Apollo.QueryResult<SubscriptionByUserAndCollectionQuery, SubscriptionByUserAndCollectionQueryVariables>;
 export const TagsConnectionDocument = gql`
     query TagsConnection($start: Int = 0, $search: String = "") {
   tagsConnection(start: $start, where: {name_contains: $search}) {

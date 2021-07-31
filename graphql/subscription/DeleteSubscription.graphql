@@ -1,0 +1,7 @@
+mutation DeleteSubscription($input: deleteSubscriptionInput) {
+  deleteSubscription(input: $input) {
+    subscription {
+      id
+    }
+  }
+}

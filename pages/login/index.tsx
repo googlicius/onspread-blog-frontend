@@ -38,6 +38,14 @@ const Login: NextPage = () => {
 
   useEffect(() => {
     if (me.value) {
+      if (router.query['next']) {
+        router.push(router.query['next'] as string);
+        return;
+      }
+      if (router.query['back']) {
+        router.back();
+        return;
+      }
       router.push('/');
     }
   }, [me]);
@@ -78,6 +86,13 @@ const Login: NextPage = () => {
                   {t('Email or password is invalid')}
                 </div>
               )}
+
+              {router.query['next'] ||
+                (router.query['back'] && (
+                  <div className="alert alert-info">
+                    {t('You need to login to continue')}
+                  </div>
+                ))}
 
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-group">

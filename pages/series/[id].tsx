@@ -8,6 +8,7 @@ import Head from 'next/head';
 import cs from 'classnames';
 import client from '@/configs/apollo-client';
 import {
+  Enum_Subscription_Collectionname,
   Post,
   PostsConnectionDocument,
   PostsConnectionQuery,
@@ -21,6 +22,7 @@ import Pagination from '@/components/Pagination';
 import { selectMe } from '@/redux/meProducer';
 import PencilSvg from '@/components/svgs/PencilSvg';
 import styles from './styles.module.scss';
+import FollowButton from '@/components/FollowButton';
 
 interface Props {
   postsConnectionData: PostsConnectionQuery;
@@ -48,16 +50,28 @@ const Series = ({ postsConnectionData, storyData }: Props) => {
           <Row>
             <Col lg={8} md={10} className="mx-auto">
               <strong>{t('Series')}</strong>
-              <h1>
-                {storyData.story.name}{' '}
-                {me.value?.id === storyData.story.user?.id && (
-                  <Link href={`/series/${id}/edit`}>
-                    <a>
-                      <PencilSvg />
-                    </a>
-                  </Link>
-                )}
-              </h1>
+              <div className="d-flex justify-content-between">
+                <h1>
+                  {storyData.story.name}{' '}
+                  {me.value?.id === storyData.story.user?.id && (
+                    <Link href={`/series/${id}/edit`}>
+                      <a>
+                        <PencilSvg />
+                      </a>
+                    </Link>
+                  )}
+                </h1>
+
+                <div>
+                  <FollowButton
+                    collectionId={storyData.story.id}
+                    collectionName={Enum_Subscription_Collectionname.Story}
+                    user={me.value?.id}
+                    className="my-2 mr-3 text-nowrap shadow-none"
+                    outline
+                  />
+                </div>
+              </div>
               <div
                 dangerouslySetInnerHTML={{
                   __html: storyData.story.description,

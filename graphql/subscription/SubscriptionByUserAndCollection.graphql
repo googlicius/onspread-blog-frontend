@@ -1,0 +1,15 @@
+query SubscriptionByUserAndCollection(
+  $user: String!
+  $collectionName: String!
+  $collectionId: String!
+) {
+  subscriptionByUserAndCollection(
+    user: $user
+    collectionName: $collectionName
+    collectionId: $collectionId
+  ) {
+    id
+    collectionId
+    collectionName
+  }
+}

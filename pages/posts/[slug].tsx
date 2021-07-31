@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Modal, ModalBody, ModalHeader, Row, Col, Container } from 'reactstrap';
+import { Modal, ModalBody, ModalHeader, Row, Col } from 'reactstrap';
 import {
   PostBySlugDocument,
   PostBySlugQuery,
@@ -34,9 +34,9 @@ import postStyles from '@/styles/scss/modules/post.module.scss';
 import format from 'date-fns/format';
 import TogglePublish from './TogglePublish';
 import { useTranslation } from 'react-i18next';
-import PostPreview from '@/components/posts/PostPreview';
 import PencilSvg from '@/components/svgs/PencilSvg';
 import TagLinks from '@/components/posts/TagLinks/TagLinks';
+import NextPostsRecommend from '@/components/posts/NextPostRecommend/NextPostsRecommend';
 import mediumZoom from 'medium-zoom';
 import loadPrism from '@/utils/load-prism';
 
@@ -46,12 +46,12 @@ interface Props {
 }
 
 const PostDetail = (props: Props): JSX.Element => {
-  const { postData, countCommentData } = props;
   const router = useRouter();
-  const [totalHeart, setTotalHeart] = useState(0);
-  const { slug } = router.query;
-  const [giveHeartMutation] = useGiveHeartMutation();
+  const { postData, countCommentData } = props;
   const { t } = useTranslation();
+  const { slug } = router.query;
+  const [totalHeart, setTotalHeart] = useState(0);
+  const [giveHeartMutation] = useGiveHeartMutation();
   const postContentRef = useRef<HTMLDivElement>(null);
 
   const me = useSelector(selectMe);
@@ -271,28 +271,10 @@ const PostDetail = (props: Props): JSX.Element => {
             </Row>
           </div>
 
-          {postData.postBySlug.nextPost &&
-            (() => {
-              const { name, id } = postData.postBySlug.story;
-              return (
-                <div className={cs(styles['next-post-wrapper'], 'py-5')}>
-                  <Container>
-                    <Row>
-                      <Col lg={8} md={10} className="mx-auto">
-                        <strong>
-                          <Link href={`/series/${id}`}>{name}</Link> -{' '}
-                          {t('Next post')}
-                        </strong>
-
-                        <PostPreview
-                          post={postData.postBySlug.nextPost as Post}
-                        />
-                      </Col>
-                    </Row>
-                  </Container>
-                </div>
-              );
-            })()}
+          {/* Next posts */}
+          {postData.postBySlug.story && (
+            <NextPostsRecommend post={postData.postBySlug as Post} />
+          )}
 
           <Modal
             isOpen={isCommentModalOpen}
