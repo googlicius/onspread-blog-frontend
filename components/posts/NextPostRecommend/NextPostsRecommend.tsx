@@ -6,8 +6,6 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
 import PostPreview from '../PostPreview';
-import { useSelector } from 'react-redux';
-import { selectMe } from '@/redux/meProducer';
 import FollowButton from '@/components/FollowButton';
 
 interface Props {
@@ -17,7 +15,6 @@ interface Props {
 const NextPostsRecommend = ({ post }: Props) => {
   const { nextPost, story } = post;
   const { t } = useTranslation();
-  const me = useSelector(selectMe);
 
   return (
     <div className={cs(styles['next-post-wrapper'], 'py-5')}>
@@ -52,7 +49,6 @@ const NextPostsRecommend = ({ post }: Props) => {
                     <FollowButton
                       collectionId={post.story.id}
                       collectionName={Enum_Subscription_Collectionname.Story}
-                      user={me.value?.id}
                       className="mt-3 shadow-none"
                     />
                   </CardBody>

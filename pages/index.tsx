@@ -94,7 +94,7 @@ Home.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
     client.query<FeaturedPostQuery>({
       query: FeaturedPostDocument,
       // We don't need to fetch featured post from page 2 afterward.
-      fetchPolicy: +page === 1 ? 'cache-first' : 'standby',
+      ...(+page > 1 && { fetchPolicy: 'standby' }),
     }),
   ]);
 

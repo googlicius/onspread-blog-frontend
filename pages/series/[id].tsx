@@ -66,7 +66,6 @@ const Series = ({ postsConnectionData, storyData }: Props) => {
                   <FollowButton
                     collectionId={storyData.story.id}
                     collectionName={Enum_Subscription_Collectionname.Story}
-                    user={me.value?.id}
                     className="my-2 mr-3 text-nowrap shadow-none"
                     outline
                   />

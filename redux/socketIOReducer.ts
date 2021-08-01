@@ -1,4 +1,4 @@
-import { loadAsyncJs } from '@googlicius/load-assets';
+import { loadScript } from '@googlicius/load-assets';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState, SocketState } from './interface';
 
@@ -8,7 +8,7 @@ const initialState: SocketState = {
 };
 
 export const loadSocketIOAsync = createAsyncThunk('socket/load', () =>
-  loadAsyncJs('https://cdn.socket.io/4.1.2/socket.io.min.js'),
+  loadScript('https://cdn.socket.io/4.1.2/socket.io.min.js'),
 );
 
 const socketSlice = createSlice({

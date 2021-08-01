@@ -1,4 +1,8 @@
+import { ButtonHTMLAttributes, forwardRef } from 'react';
 import { Button } from 'reactstrap';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import {
   Enum_Subscription_Collectionname,
@@ -6,21 +10,16 @@ import {
   useSubscriptionByUserAndCollectionQuery,
   useDeleteSubscriptionMutation,
 } from '@/graphql/generated';
-import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { selectMe } from '@/redux/meProducer';
-import { useRouter } from 'next/router';
-import { ButtonHTMLAttributes, forwardRef } from 'react';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  user: string;
   collectionName: Enum_Subscription_Collectionname;
   collectionId: string;
   outline?: boolean;
 }
 
 const FollowButton = forwardRef<HTMLButtonElement, Props>(
-  ({ user, collectionId, collectionName, outline = false, ...rest }, ref) => {
+  ({ collectionId, collectionName, outline = false, ...rest }, ref) => {
     const { t } = useTranslation();
     const me = useSelector(selectMe);
     const router = useRouter();
@@ -30,7 +29,7 @@ const FollowButton = forwardRef<HTMLButtonElement, Props>(
       refetch,
     } = useSubscriptionByUserAndCollectionQuery({
       variables: {
-        user,
+        user: me.value?.id,
         collectionName,
         collectionId,
       },
@@ -71,7 +70,7 @@ const FollowButton = forwardRef<HTMLButtonElement, Props>(
           variables: {
             input: {
               data: {
-                user,
+                user: me.value?.id,
                 collectionId,
                 collectionName,
               },
@@ -116,9 +115,9 @@ const CollectionNameType = PropTypes.oneOf(
 );
 
 FollowButton.propTypes = {
-  user: PropTypes.string.isRequired,
   collectionName: CollectionNameType.isRequired,
   collectionId: PropTypes.string.isRequired,
+  outline: PropTypes.bool,
 };
 
 export default FollowButton;

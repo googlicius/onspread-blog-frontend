@@ -214,6 +214,7 @@ export type CommentInput = {
 
 export enum Enum_Notification_Channel {
   PostCommented = 'PostCommented',
+  PostUpdated = 'PostUpdated',
   UserRegistered = 'UserRegistered',
   UserRegistrationFailed = 'UserRegistrationFailed'
 }
@@ -289,7 +290,7 @@ export type LocaleInput = {
 };
 
 
-export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnection_Id | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | CategoryConnectionDescription | CategoryConnectionImage | CreateCategoryPayload | UpdateCategoryPayload | DeleteCategoryPayload | Comment | CommentConnection | CommentAggregator | CommentGroupBy | CommentConnectionId | CommentConnection_Id | CommentConnectionCreatedAt | CommentConnectionUpdatedAt | CommentConnectionContent | CommentConnectionUser | CommentConnectionPost | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Notification | NotificationConnection | NotificationAggregator | NotificationGroupBy | NotificationConnectionId | NotificationConnection_Id | NotificationConnectionCreatedAt | NotificationConnectionUpdatedAt | NotificationConnectionTitle | NotificationConnectionUser | NotificationConnectionChannel | NotificationConnectionIsVisible | NotificationConnectionReadAt | NotificationConnectionNew | NotificationConnectionUrl | NotificationConnectionMessage | CreateNotificationPayload | UpdateNotificationPayload | DeleteNotificationPayload | Post | PostConnection | PostAggregator | PostAggregatorSum | PostAggregatorAvg | PostAggregatorMin | PostAggregatorMax | PostGroupBy | PostConnectionId | PostConnection_Id | PostConnectionCreatedAt | PostConnectionUpdatedAt | PostConnectionTitle | PostConnectionContent | PostConnectionImage | PostConnectionCategory | PostConnectionUser | PostConnectionSlug | PostConnectionDescription | PostConnectionHeart | PostConnectionHomeFeatured | PostConnectionContentType | PostConnectionDisplayType | PostConnectionStory | PostConnectionStorySeq | PostConnectionPublished_At | CreatePostPayload | UpdatePostPayload | DeletePostPayload | Story | StoryConnection | StoryAggregator | StoryGroupBy | StoryConnectionId | StoryConnection_Id | StoryConnectionCreatedAt | StoryConnectionUpdatedAt | StoryConnectionName | StoryConnectionDescription | StoryConnectionImage | StoryConnectionUser | StoryConnectionStatus | CreateStoryPayload | UpdateStoryPayload | DeleteStoryPayload | Subscription | SubscriptionConnection | SubscriptionAggregator | SubscriptionGroupBy | SubscriptionConnectionId | SubscriptionConnection_Id | SubscriptionConnectionCreatedAt | SubscriptionConnectionUpdatedAt | SubscriptionConnectionUser | SubscriptionConnectionCollectionName | SubscriptionConnectionCollectionId | CreateSubscriptionPayload | UpdateSubscriptionPayload | DeleteSubscriptionPayload | Tag | TagConnection | TagAggregator | TagGroupBy | TagConnectionId | TagConnection_Id | TagConnectionCreatedAt | TagConnectionUpdatedAt | TagConnectionName | TagConnectionDescription | TagConnectionImage | TagConnectionSlug | CreateTagPayload | UpdateTagPayload | DeleteTagPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnection_Id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnection_Id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnection_Id | UsersPermissionsUserConnectionCreatedAt | UsersPermissionsUserConnectionUpdatedAt | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionAvatar | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
+export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnection_Id | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | CategoryConnectionDescription | CategoryConnectionImage | CreateCategoryPayload | UpdateCategoryPayload | DeleteCategoryPayload | Comment | CommentConnection | CommentAggregator | CommentGroupBy | CommentConnectionId | CommentConnection_Id | CommentConnectionCreatedAt | CommentConnectionUpdatedAt | CommentConnectionContent | CommentConnectionUser | CommentConnectionPost | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Notification | NotificationConnection | NotificationAggregator | NotificationGroupBy | NotificationConnectionId | NotificationConnection_Id | NotificationConnectionCreatedAt | NotificationConnectionUpdatedAt | NotificationConnectionTitle | NotificationConnectionUser | NotificationConnectionChannel | NotificationConnectionIsVisible | NotificationConnectionReadAt | NotificationConnectionNew | NotificationConnectionUrl | NotificationConnectionMessage | CreateNotificationPayload | UpdateNotificationPayload | DeleteNotificationPayload | Post | PostConnection | PostAggregator | PostAggregatorSum | PostAggregatorAvg | PostAggregatorMin | PostAggregatorMax | PostGroupBy | PostConnectionId | PostConnection_Id | PostConnectionCreatedAt | PostConnectionUpdatedAt | PostConnectionTitle | PostConnectionContent | PostConnectionImage | PostConnectionCategory | PostConnectionUser | PostConnectionSlug | PostConnectionDescription | PostConnectionHeart | PostConnectionHomeFeatured | PostConnectionContentType | PostConnectionDisplayType | PostConnectionStory | PostConnectionStorySeq | PostConnectionIsNewPost | PostConnectionPublished_At | CreatePostPayload | UpdatePostPayload | DeletePostPayload | Story | StoryConnection | StoryAggregator | StoryGroupBy | StoryConnectionId | StoryConnection_Id | StoryConnectionCreatedAt | StoryConnectionUpdatedAt | StoryConnectionName | StoryConnectionDescription | StoryConnectionImage | StoryConnectionUser | StoryConnectionStatus | CreateStoryPayload | UpdateStoryPayload | DeleteStoryPayload | Subscription | SubscriptionConnection | SubscriptionAggregator | SubscriptionGroupBy | SubscriptionConnectionId | SubscriptionConnection_Id | SubscriptionConnectionCreatedAt | SubscriptionConnectionUpdatedAt | SubscriptionConnectionUser | SubscriptionConnectionCollectionName | SubscriptionConnectionCollectionId | CreateSubscriptionPayload | UpdateSubscriptionPayload | DeleteSubscriptionPayload | Tag | TagConnection | TagAggregator | TagGroupBy | TagConnectionId | TagConnection_Id | TagConnectionCreatedAt | TagConnectionUpdatedAt | TagConnectionName | TagConnectionDescription | TagConnectionImage | TagConnectionSlug | CreateTagPayload | UpdateTagPayload | DeleteTagPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnection_Id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnection_Id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnection_Id | UsersPermissionsUserConnectionCreatedAt | UsersPermissionsUserConnectionUpdatedAt | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionAvatar | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -717,6 +718,7 @@ export type Post = {
   displayType?: Maybe<Enum_Post_Displaytype>;
   story?: Maybe<Story>;
   storySeq?: Maybe<Scalars['Float']>;
+  isNewPost?: Maybe<Scalars['Boolean']>;
   published_at?: Maybe<Scalars['DateTime']>;
   tags?: Maybe<Array<Maybe<Tag>>>;
   /** Next post of series. */
@@ -832,6 +834,12 @@ export type PostConnectionImage = {
   connection?: Maybe<PostConnection>;
 };
 
+export type PostConnectionIsNewPost = {
+  __typename?: 'PostConnectionIsNewPost';
+  key?: Maybe<Scalars['Boolean']>;
+  connection?: Maybe<PostConnection>;
+};
+
 export type PostConnectionPublished_At = {
   __typename?: 'PostConnectionPublished_at';
   key?: Maybe<Scalars['DateTime']>;
@@ -899,6 +907,7 @@ export type PostGroupBy = {
   displayType?: Maybe<Array<Maybe<PostConnectionDisplayType>>>;
   story?: Maybe<Array<Maybe<PostConnectionStory>>>;
   storySeq?: Maybe<Array<Maybe<PostConnectionStorySeq>>>;
+  isNewPost?: Maybe<Array<Maybe<PostConnectionIsNewPost>>>;
   published_at?: Maybe<Array<Maybe<PostConnectionPublished_At>>>;
 };
 
@@ -917,6 +926,7 @@ export type PostInput = {
   story?: Maybe<Scalars['ID']>;
   storySeq?: Maybe<Scalars['Float']>;
   tags?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  isNewPost?: Maybe<Scalars['Boolean']>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -2219,6 +2229,7 @@ export type EditPostInput = {
   story?: Maybe<Scalars['ID']>;
   storySeq?: Maybe<Scalars['Float']>;
   tags?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  isNewPost?: Maybe<Scalars['Boolean']>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
