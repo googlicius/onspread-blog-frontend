@@ -86,6 +86,58 @@ const Wysiwyg = React.forwardRef<any, Props>(
           'undo',
           'redo',
         ],
+        codeBlock: {
+          languages: [
+            {
+              language: 'plaintext',
+              label: 'Plain text',
+            },
+            {
+              language: 'javascript',
+              label: 'Javascript',
+            },
+            {
+              language: 'typescript',
+              label: 'Typescript',
+            },
+            {
+              language: 'css',
+              label: 'CSS',
+            },
+            {
+              language: 'html',
+              label: 'HTML',
+            },
+            {
+              language: 'graphql',
+              label: 'GraphQL',
+            },
+            {
+              language: 'git',
+              label: 'GIT',
+            },
+            {
+              language: 'yaml',
+              label: 'YAML',
+            },
+            {
+              language: 'php',
+              label: 'PHP',
+            },
+            {
+              language: 'java',
+              label: 'Java',
+            },
+            {
+              language: 'python',
+              label: 'Python',
+            },
+            {
+              language: 'dart',
+              label: 'Dart',
+            },
+          ],
+        },
         insertImage: {
           openMediaLib: handleMediaLibToggle,
         },

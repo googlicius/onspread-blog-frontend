@@ -1104,9 +1104,9 @@
   integrity sha512-t+g10ksrF+dpMlQToBRmkszr/2UEjRp22i27qJLvY+7sqpPmxaWEckQkIxpZG+ntjBVu9ZWK5lFhDzVKEoqo2Q==
 
 "@googlicius/load-assets@^1.0.2":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@googlicius/load-assets/-/load-assets-1.0.4.tgz#921f2f38939eb383601fb88ae0ed248726f637c3"
-  integrity sha512-PbNp1pLpIlWg3l4n2fVk7wUSTNTdVc3kgriNxM42Yku32BiTta7MEwJPZHFZqQqXTZAogwMBgfymgNnkZt4S0Q==
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@googlicius/load-assets/-/load-assets-1.0.6.tgz#d9173bad3594273edf3c4e67f71e5b69de2c6eb1"
+  integrity sha512-mG2PwG8fcqOCXuKYVh0Iap2VPwR0mu9uMWva9dOKNDEtgCeQij92h6Pd4vLLPbdM6zOBmI4jClzEGl5Hf5X0IA==
 
 "@graphql-codegen/cli@1.21.8":
   version "1.21.8"
