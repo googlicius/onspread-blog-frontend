@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Table } from 'reactstrap';
 import { DndProvider } from 'react-dnd';
 import { useTranslation } from 'react-i18next';
@@ -6,20 +6,89 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
 import sortBy from 'lodash/sortBy';
 import CardItem, { Card } from './CardItem';
+import { Post, usePostsByStoryQuery } from '@/graphql/generated';
+import Option from '@/types/Option';
+import { FormData } from '../interface';
+import { useFormContext } from 'react-hook-form';
 
 interface Props {
-  postCards: Card[];
-  editingCard: Card;
+  post: Post;
+  selectedStoryOption: Option;
   onSequenceChanged: (seq: number) => void;
 }
 
 const PostSequence = ({
-  postCards = [],
-  editingCard,
+  post,
+  selectedStoryOption,
   onSequenceChanged,
 }: Props) => {
   const { t } = useTranslation();
   const [cards, setCards] = useState<Card[]>([]);
+  const { setValue, getValues } = useFormContext<FormData>();
+
+  const { data: postsByStoryData, loading } = usePostsByStoryQuery({
+    variables: {
+      story: selectedStoryOption?.value,
+    },
+    skip: !selectedStoryOption?.value,
+    fetchPolicy: 'network-only',
+  });
+
+  const postsByStory = postsByStoryData?.posts || [];
+
+  useEffect(() => {
+    if (loading) {
+      return;
+    }
+
+    if (!selectedStoryOption) {
+      setValue('storySeq', null);
+      return;
+    }
+
+    const seq =
+      postsByStory.length > 0
+        ? postsByStory[postsByStory.length - 1].storySeq
+        : 0;
+    setValue('storySeq', seq + 1);
+  }, [selectedStoryOption, postsByStory, loading]);
+
+  const postCards: Card[] = useMemo(() => {
+    const cards: Card[] = [];
+
+    if (postsByStory.length > 0) {
+      cards.push(
+        ...postsByStory.map(({ id, title, storySeq }) => ({
+          id: id,
+          text: title,
+          seq: storySeq,
+          canDrag: post && post.id === id,
+        })),
+      );
+    }
+
+    // Add card for current post that doesn't exists in
+    if (post && !postsByStory.find(({ id }) => id === post.id)) {
+      cards.push({
+        id: post.id,
+        text: post.title,
+        seq: null,
+        canDrag: true,
+      });
+    }
+
+    // Add card for new post.
+    if (!post) {
+      cards.push({
+        id: post?.id,
+        text: getValues('title'),
+        seq: null,
+        canDrag: true,
+      });
+    }
+
+    return cards;
+  }, [postsByStory]);
 
   useEffect(() => {
     setCards(sortBy(postCards, ['seq']));
@@ -42,13 +111,13 @@ const PostSequence = ({
   const handleEndDrag = (index: number) => {
     // First post in series
     if (index === 0) {
-      onSequenceChanged(cards[1].seq - 86400000);
+      onSequenceChanged(cards[index].seq - 1);
       return;
     }
 
     // Last post in series
     if (cards[index + 1] === undefined) {
-      onSequenceChanged(cards[index - 1].seq + 86400000);
+      onSequenceChanged(cards[index].seq + 1);
       return;
     }
 
@@ -73,7 +142,7 @@ const PostSequence = ({
               key={index}
               index={index}
               card={card}
-              canDrag={!editingCard || card.id === editingCard.id}
+              canDrag={card.canDrag}
               onMoveCard={handleMoveCard}
               onEndDrag={handleEndDrag}
             />

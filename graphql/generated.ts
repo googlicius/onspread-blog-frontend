@@ -2382,28 +2382,12 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = (
-  { __typename?: 'Mutation' }
-  & { login: (
-    { __typename?: 'UsersPermissionsLoginPayload' }
-    & { user: (
-      { __typename?: 'UsersPermissionsMe' }
-      & Pick<UsersPermissionsMe, 'id' | 'username' | 'email'>
-      & { avatar?: Maybe<(
-        { __typename?: 'UploadFile' }
-        & Pick<UploadFile, 'url' | 'formats' | 'alternativeText'>
-      )> }
-    ) }
-  ) }
-);
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UsersPermissionsLoginPayload', user: { __typename?: 'UsersPermissionsMe', id: string, username: string, email: string, avatar?: Maybe<{ __typename?: 'UploadFile', url: string, formats?: Maybe<any>, alternativeText?: Maybe<string> }> } } };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type LogoutMutation = (
-  { __typename?: 'Mutation' }
-  & Pick<Mutation, 'logout'>
-);
+export type LogoutMutation = { __typename?: 'Mutation', logout?: Maybe<string> };
 
 export type CategoriesConnectionQueryVariables = Exact<{
   start?: Maybe<Scalars['Int']>;
@@ -2411,76 +2395,28 @@ export type CategoriesConnectionQueryVariables = Exact<{
 }>;
 
 
-export type CategoriesConnectionQuery = (
-  { __typename?: 'Query' }
-  & { categoriesConnection?: Maybe<(
-    { __typename?: 'CategoryConnection' }
-    & { values?: Maybe<Array<Maybe<(
-      { __typename?: 'Category' }
-      & Pick<Category, 'id' | 'name'>
-    )>>>, aggregate?: Maybe<(
-      { __typename?: 'CategoryAggregator' }
-      & Pick<CategoryAggregator, 'totalCount'>
-    )> }
-  )> }
-);
+export type CategoriesConnectionQuery = { __typename?: 'Query', categoriesConnection?: Maybe<{ __typename?: 'CategoryConnection', values?: Maybe<Array<Maybe<{ __typename?: 'Category', id: string, name: string }>>>, aggregate?: Maybe<{ __typename?: 'CategoryAggregator', totalCount?: Maybe<number> }> }> };
 
 export type CreateCategoryMutationVariables = Exact<{
   input?: Maybe<CreateCategoryInput>;
 }>;
 
 
-export type CreateCategoryMutation = (
-  { __typename?: 'Mutation' }
-  & { createCategory?: Maybe<(
-    { __typename?: 'createCategoryPayload' }
-    & { category?: Maybe<(
-      { __typename?: 'Category' }
-      & Pick<Category, 'id' | 'name'>
-    )> }
-  )> }
-);
+export type CreateCategoryMutation = { __typename?: 'Mutation', createCategory?: Maybe<{ __typename?: 'createCategoryPayload', category?: Maybe<{ __typename?: 'Category', id: string, name: string }> }> };
 
 export type CommentsQueryVariables = Exact<{
   postId: Scalars['ID'];
 }>;
 
 
-export type CommentsQuery = (
-  { __typename?: 'Query' }
-  & { comments?: Maybe<Array<Maybe<(
-    { __typename?: 'Comment' }
-    & Pick<Comment, 'id' | 'content' | 'createdAt'>
-    & { user?: Maybe<(
-      { __typename?: 'UsersPermissionsUser' }
-      & Pick<UsersPermissionsUser, 'id' | 'username'>
-      & { avatar?: Maybe<(
-        { __typename?: 'UploadFile' }
-        & Pick<UploadFile, 'url' | 'formats' | 'alternativeText'>
-      )> }
-    )> }
-  )>>> }
-);
+export type CommentsQuery = { __typename?: 'Query', comments?: Maybe<Array<Maybe<{ __typename?: 'Comment', id: string, content: string, createdAt: any, user?: Maybe<{ __typename?: 'UsersPermissionsUser', id: string, username: string, avatar?: Maybe<{ __typename?: 'UploadFile', url: string, formats?: Maybe<any>, alternativeText?: Maybe<string> }> }> }>>> };
 
 export type CreateCommentMutationVariables = Exact<{
   input?: Maybe<CreateCommentInput>;
 }>;
 
 
-export type CreateCommentMutation = (
-  { __typename?: 'Mutation' }
-  & { createComment?: Maybe<(
-    { __typename?: 'createCommentPayload' }
-    & { comment?: Maybe<(
-      { __typename?: 'Comment' }
-      & Pick<Comment, 'id' | 'content' | 'createdAt'>
-      & { user?: Maybe<(
-        { __typename?: 'UsersPermissionsUser' }
-        & Pick<UsersPermissionsUser, 'id' | 'username'>
-      )> }
-    )> }
-  )> }
-);
+export type CreateCommentMutation = { __typename?: 'Mutation', createComment?: Maybe<{ __typename?: 'createCommentPayload', comment?: Maybe<{ __typename?: 'Comment', id: string, content: string, createdAt: any, user?: Maybe<{ __typename?: 'UsersPermissionsUser', id: string, username: string }> }> }> };
 
 export type MarkAsReadMutationVariables = Exact<{
   user: Scalars['ID'];
@@ -2488,20 +2424,14 @@ export type MarkAsReadMutationVariables = Exact<{
 }>;
 
 
-export type MarkAsReadMutation = (
-  { __typename?: 'Mutation' }
-  & Pick<Mutation, 'markNotificationsAsRead'>
-);
+export type MarkAsReadMutation = { __typename?: 'Mutation', markNotificationsAsRead: string };
 
 export type MarkAsSeenMutationVariables = Exact<{
   user: Scalars['ID'];
 }>;
 
 
-export type MarkAsSeenMutation = (
-  { __typename?: 'Mutation' }
-  & Pick<Mutation, 'markNotificationsAsSeen'>
-);
+export type MarkAsSeenMutation = { __typename?: 'Mutation', markNotificationsAsSeen: string };
 
 export type NotificationsConnectionQueryVariables = Exact<{
   start?: Maybe<Scalars['Int']>;
@@ -2509,67 +2439,26 @@ export type NotificationsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type NotificationsConnectionQuery = (
-  { __typename?: 'Query' }
-  & { notificationsConnection?: Maybe<(
-    { __typename?: 'NotificationConnection' }
-    & { values?: Maybe<Array<Maybe<(
-      { __typename?: 'Notification' }
-      & Pick<Notification, 'id' | 'title' | 'channel' | 'readAt' | 'url' | 'new' | 'message'>
-    )>>>, aggregate?: Maybe<(
-      { __typename?: 'NotificationAggregator' }
-      & Pick<NotificationAggregator, 'count'>
-    )> }
-  )> }
-);
+export type NotificationsConnectionQuery = { __typename?: 'Query', notificationsConnection?: Maybe<{ __typename?: 'NotificationConnection', values?: Maybe<Array<Maybe<{ __typename?: 'Notification', id: string, title: string, channel: Enum_Notification_Channel, readAt?: Maybe<any>, url: string, new?: Maybe<boolean>, message?: Maybe<string> }>>>, aggregate?: Maybe<{ __typename?: 'NotificationAggregator', count?: Maybe<number> }> }> };
 
 export type CountPostCommentQueryVariables = Exact<{
   postId: Scalars['ID'];
 }>;
 
 
-export type CountPostCommentQuery = (
-  { __typename?: 'Query' }
-  & Pick<Query, 'countPostComment'>
-);
+export type CountPostCommentQuery = { __typename?: 'Query', countPostComment: number };
 
 export type CreatePostMutationVariables = Exact<{
   input?: Maybe<CreatePostInput>;
 }>;
 
 
-export type CreatePostMutation = (
-  { __typename?: 'Mutation' }
-  & { createPost?: Maybe<(
-    { __typename?: 'createPostPayload' }
-    & { post?: Maybe<(
-      { __typename?: 'Post' }
-      & Pick<Post, 'id' | 'slug' | 'title' | 'description' | 'content' | 'contentType' | 'displayType'>
-      & { category?: Maybe<(
-        { __typename?: 'Category' }
-        & Pick<Category, 'id' | 'name'>
-      )>, tags?: Maybe<Array<Maybe<(
-        { __typename?: 'Tag' }
-        & Pick<Tag, 'id' | 'name' | 'slug'>
-      )>>> }
-    )> }
-  )> }
-);
+export type CreatePostMutation = { __typename?: 'Mutation', createPost?: Maybe<{ __typename?: 'createPostPayload', post?: Maybe<{ __typename?: 'Post', id: string, slug?: Maybe<string>, title: string, description?: Maybe<string>, content: string, contentType?: Maybe<Enum_Post_Contenttype>, displayType?: Maybe<Enum_Post_Displaytype>, category?: Maybe<{ __typename?: 'Category', id: string, name: string }>, tags?: Maybe<Array<Maybe<{ __typename?: 'Tag', id: string, name: string, slug?: Maybe<string> }>>> }> }> };
 
 export type FeaturedPostQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FeaturedPostQuery = (
-  { __typename?: 'Query' }
-  & { featuredPost?: Maybe<(
-    { __typename?: 'Post' }
-    & Pick<Post, 'title' | 'slug' | 'description'>
-    & { image?: Maybe<(
-      { __typename?: 'UploadFile' }
-      & Pick<UploadFile, 'url'>
-    )> }
-  )> }
-);
+export type FeaturedPostQuery = { __typename?: 'Query', featuredPost?: Maybe<{ __typename?: 'Post', title: string, slug?: Maybe<string>, description?: Maybe<string>, image?: Maybe<{ __typename?: 'UploadFile', url: string }> }> };
 
 export type GiveHeartMutationVariables = Exact<{
   postId: Scalars['ID'];
@@ -2577,61 +2466,16 @@ export type GiveHeartMutationVariables = Exact<{
 }>;
 
 
-export type GiveHeartMutation = (
-  { __typename?: 'Mutation' }
-  & Pick<Mutation, 'giveHeart'>
-);
+export type GiveHeartMutation = { __typename?: 'Mutation', giveHeart: number };
 
 export type PostBySlugQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type PostBySlugQuery = (
-  { __typename?: 'Query' }
-  & { postBySlug?: Maybe<(
-    { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'slug' | 'title' | 'description' | 'content' | 'contentType' | 'displayType' | 'heart' | 'published_at' | 'storySeq'>
-    & { category?: Maybe<(
-      { __typename?: 'Category' }
-      & Pick<Category, 'id'>
-    )>, story?: Maybe<(
-      { __typename?: 'Story' }
-      & Pick<Story, 'id' | 'name'>
-    )>, tags?: Maybe<Array<Maybe<(
-      { __typename?: 'Tag' }
-      & Pick<Tag, 'id' | 'name' | 'slug'>
-    )>>>, image?: Maybe<(
-      { __typename?: 'UploadFile' }
-      & Pick<UploadFile, 'id' | 'url' | 'provider' | 'formats'>
-    )>, user?: Maybe<(
-      { __typename?: 'UsersPermissionsUser' }
-      & Pick<UsersPermissionsUser, 'id' | 'username'>
-      & { avatar?: Maybe<(
-        { __typename?: 'UploadFile' }
-        & Pick<UploadFile, 'url' | 'formats' | 'alternativeText'>
-      )> }
-    )>, nextPost?: Maybe<(
-      { __typename?: 'Post' }
-      & PostsConnectionFragmentFragment
-    )> }
-  )> }
-);
+export type PostBySlugQuery = { __typename?: 'Query', postBySlug?: Maybe<{ __typename?: 'Post', id: string, slug?: Maybe<string>, title: string, description?: Maybe<string>, content: string, contentType?: Maybe<Enum_Post_Contenttype>, displayType?: Maybe<Enum_Post_Displaytype>, heart?: Maybe<number>, published_at?: Maybe<any>, storySeq?: Maybe<number>, category?: Maybe<{ __typename?: 'Category', id: string }>, story?: Maybe<{ __typename?: 'Story', id: string, name: string }>, tags?: Maybe<Array<Maybe<{ __typename?: 'Tag', id: string, name: string, slug?: Maybe<string> }>>>, image?: Maybe<{ __typename?: 'UploadFile', id: string, url: string, provider: string, formats?: Maybe<any> }>, user?: Maybe<{ __typename?: 'UsersPermissionsUser', id: string, username: string, avatar?: Maybe<{ __typename?: 'UploadFile', url: string, formats?: Maybe<any>, alternativeText?: Maybe<string> }> }>, nextPost?: Maybe<{ __typename?: 'Post', id: string, title: string, slug?: Maybe<string>, description?: Maybe<string>, createdAt: any, published_at?: Maybe<any>, user?: Maybe<{ __typename?: 'UsersPermissionsUser', username: string }>, image?: Maybe<{ __typename?: 'UploadFile', url: string, provider: string, formats?: Maybe<any> }>, tags?: Maybe<Array<Maybe<{ __typename?: 'Tag', slug?: Maybe<string> }>>> }> }> };
 
-export type PostsConnectionFragmentFragment = (
-  { __typename?: 'Post' }
-  & Pick<Post, 'id' | 'title' | 'slug' | 'description' | 'createdAt' | 'published_at'>
-  & { user?: Maybe<(
-    { __typename?: 'UsersPermissionsUser' }
-    & Pick<UsersPermissionsUser, 'username'>
-  )>, image?: Maybe<(
-    { __typename?: 'UploadFile' }
-    & Pick<UploadFile, 'url' | 'provider' | 'formats'>
-  )>, tags?: Maybe<Array<Maybe<(
-    { __typename?: 'Tag' }
-    & Pick<Tag, 'slug'>
-  )>>> }
-);
+export type PostsConnectionFragmentFragment = { __typename?: 'Post', id: string, title: string, slug?: Maybe<string>, description?: Maybe<string>, createdAt: any, published_at?: Maybe<any>, user?: Maybe<{ __typename?: 'UsersPermissionsUser', username: string }>, image?: Maybe<{ __typename?: 'UploadFile', url: string, provider: string, formats?: Maybe<any> }>, tags?: Maybe<Array<Maybe<{ __typename?: 'Tag', slug?: Maybe<string> }>>> };
 
 export type PostsByStoryQueryVariables = Exact<{
   limit?: Maybe<Scalars['Int']>;
@@ -2639,13 +2483,7 @@ export type PostsByStoryQueryVariables = Exact<{
 }>;
 
 
-export type PostsByStoryQuery = (
-  { __typename?: 'Query' }
-  & { posts?: Maybe<Array<Maybe<(
-    { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'title' | 'storySeq'>
-  )>>> }
-);
+export type PostsByStoryQuery = { __typename?: 'Query', posts?: Maybe<Array<Maybe<{ __typename?: 'Post', id: string, title: string, storySeq?: Maybe<number> }>>> };
 
 export type PostsConnectionQueryVariables = Exact<{
   sort?: Maybe<Scalars['String']>;
@@ -2654,91 +2492,35 @@ export type PostsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type PostsConnectionQuery = (
-  { __typename?: 'Query' }
-  & { postsConnection?: Maybe<(
-    { __typename?: 'PostConnection' }
-    & { values?: Maybe<Array<Maybe<(
-      { __typename?: 'Post' }
-      & PostsConnectionFragmentFragment
-    )>>>, aggregate?: Maybe<(
-      { __typename?: 'PostAggregator' }
-      & Pick<PostAggregator, 'count' | 'totalCount'>
-    )> }
-  )> }
-);
+export type PostsConnectionQuery = { __typename?: 'Query', postsConnection?: Maybe<{ __typename?: 'PostConnection', values?: Maybe<Array<Maybe<{ __typename?: 'Post', id: string, title: string, slug?: Maybe<string>, description?: Maybe<string>, createdAt: any, published_at?: Maybe<any>, user?: Maybe<{ __typename?: 'UsersPermissionsUser', username: string }>, image?: Maybe<{ __typename?: 'UploadFile', url: string, provider: string, formats?: Maybe<any> }>, tags?: Maybe<Array<Maybe<{ __typename?: 'Tag', slug?: Maybe<string> }>>> }>>>, aggregate?: Maybe<{ __typename?: 'PostAggregator', count?: Maybe<number>, totalCount?: Maybe<number> }> }> };
 
 export type PublishPostMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type PublishPostMutation = (
-  { __typename?: 'Mutation' }
-  & { publishPost: (
-    { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'slug' | 'published_at'>
-  ) }
-);
+export type PublishPostMutation = { __typename?: 'Mutation', publishPost: { __typename?: 'Post', id: string, slug?: Maybe<string>, published_at?: Maybe<any> } };
 
 export type UnPublishPostMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type UnPublishPostMutation = (
-  { __typename?: 'Mutation' }
-  & { unPublishPost: (
-    { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'slug' | 'published_at'>
-  ) }
-);
+export type UnPublishPostMutation = { __typename?: 'Mutation', unPublishPost: { __typename?: 'Post', id: string, slug?: Maybe<string>, published_at?: Maybe<any> } };
 
 export type UpdatePostMutationVariables = Exact<{
   input?: Maybe<UpdatePostInput>;
 }>;
 
 
-export type UpdatePostMutation = (
-  { __typename?: 'Mutation' }
-  & { updatePost?: Maybe<(
-    { __typename?: 'updatePostPayload' }
-    & { post?: Maybe<(
-      { __typename?: 'Post' }
-      & Pick<Post, 'id' | 'slug' | 'title' | 'description' | 'content' | 'contentType' | 'displayType'>
-      & { image?: Maybe<(
-        { __typename?: 'UploadFile' }
-        & Pick<UploadFile, 'id' | 'url' | 'provider' | 'formats'>
-      )>, category?: Maybe<(
-        { __typename?: 'Category' }
-        & Pick<Category, 'id' | 'name'>
-      )>, tags?: Maybe<Array<Maybe<(
-        { __typename?: 'Tag' }
-        & Pick<Tag, 'id' | 'name' | 'slug'>
-      )>>> }
-    )> }
-  )> }
-);
+export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: Maybe<{ __typename?: 'updatePostPayload', post?: Maybe<{ __typename?: 'Post', id: string, slug?: Maybe<string>, title: string, description?: Maybe<string>, content: string, contentType?: Maybe<Enum_Post_Contenttype>, displayType?: Maybe<Enum_Post_Displaytype>, image?: Maybe<{ __typename?: 'UploadFile', id: string, url: string, provider: string, formats?: Maybe<any> }>, category?: Maybe<{ __typename?: 'Category', id: string, name: string }>, tags?: Maybe<Array<Maybe<{ __typename?: 'Tag', id: string, name: string, slug?: Maybe<string> }>>>, nextPost?: Maybe<{ __typename?: 'Post', id: string, title: string, slug?: Maybe<string>, description?: Maybe<string>, createdAt: any, published_at?: Maybe<any>, user?: Maybe<{ __typename?: 'UsersPermissionsUser', username: string }>, image?: Maybe<{ __typename?: 'UploadFile', url: string, provider: string, formats?: Maybe<any> }>, tags?: Maybe<Array<Maybe<{ __typename?: 'Tag', slug?: Maybe<string> }>>> }> }> }> };
 
 export type CreateStoryMutationVariables = Exact<{
   input: CreateStoryInput;
 }>;
 
 
-export type CreateStoryMutation = (
-  { __typename?: 'Mutation' }
-  & { createStory?: Maybe<(
-    { __typename?: 'createStoryPayload' }
-    & { story?: Maybe<(
-      { __typename?: 'Story' }
-      & Pick<Story, 'id' | 'name' | 'description'>
-      & { image?: Maybe<(
-        { __typename?: 'UploadFile' }
-        & Pick<UploadFile, 'url' | 'formats' | 'provider'>
-      )> }
-    )> }
-  )> }
-);
+export type CreateStoryMutation = { __typename?: 'Mutation', createStory?: Maybe<{ __typename?: 'createStoryPayload', story?: Maybe<{ __typename?: 'Story', id: string, name: string, description?: Maybe<string>, image?: Maybe<{ __typename?: 'UploadFile', url: string, formats?: Maybe<any>, provider: string }> }> }> };
 
 export type StoriesConnectionQueryVariables = Exact<{
   start?: Maybe<Scalars['Int']>;
@@ -2747,92 +2529,35 @@ export type StoriesConnectionQueryVariables = Exact<{
 }>;
 
 
-export type StoriesConnectionQuery = (
-  { __typename?: 'Query' }
-  & { storiesConnection?: Maybe<(
-    { __typename?: 'StoryConnection' }
-    & { values?: Maybe<Array<Maybe<(
-      { __typename?: 'Story' }
-      & Pick<Story, 'id' | 'name'>
-    )>>>, aggregate?: Maybe<(
-      { __typename?: 'StoryAggregator' }
-      & Pick<StoryAggregator, 'totalCount'>
-    )> }
-  )> }
-);
+export type StoriesConnectionQuery = { __typename?: 'Query', storiesConnection?: Maybe<{ __typename?: 'StoryConnection', values?: Maybe<Array<Maybe<{ __typename?: 'Story', id: string, name: string }>>>, aggregate?: Maybe<{ __typename?: 'StoryAggregator', totalCount?: Maybe<number> }> }> };
 
 export type StoryQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type StoryQuery = (
-  { __typename?: 'Query' }
-  & { story?: Maybe<(
-    { __typename?: 'Story' }
-    & Pick<Story, 'id' | 'name' | 'description'>
-    & { user?: Maybe<(
-      { __typename?: 'UsersPermissionsUser' }
-      & Pick<UsersPermissionsUser, 'id'>
-    )> }
-  )> }
-);
+export type StoryQuery = { __typename?: 'Query', story?: Maybe<{ __typename?: 'Story', id: string, name: string, description?: Maybe<string>, user?: Maybe<{ __typename?: 'UsersPermissionsUser', id: string }> }> };
 
 export type UpdateStoryMutationVariables = Exact<{
   input?: Maybe<UpdateStoryInput>;
 }>;
 
 
-export type UpdateStoryMutation = (
-  { __typename?: 'Mutation' }
-  & { updateStory?: Maybe<(
-    { __typename?: 'updateStoryPayload' }
-    & { story?: Maybe<(
-      { __typename?: 'Story' }
-      & Pick<Story, 'id' | 'name' | 'description'>
-      & { image?: Maybe<(
-        { __typename?: 'UploadFile' }
-        & Pick<UploadFile, 'url' | 'formats' | 'provider'>
-      )> }
-    )> }
-  )> }
-);
+export type UpdateStoryMutation = { __typename?: 'Mutation', updateStory?: Maybe<{ __typename?: 'updateStoryPayload', story?: Maybe<{ __typename?: 'Story', id: string, name: string, description?: Maybe<string>, image?: Maybe<{ __typename?: 'UploadFile', url: string, formats?: Maybe<any>, provider: string }> }> }> };
 
 export type CreateSubscriptionMutationVariables = Exact<{
   input?: Maybe<CreateSubscriptionInput>;
 }>;
 
 
-export type CreateSubscriptionMutation = (
-  { __typename?: 'Mutation' }
-  & { createSubscription?: Maybe<(
-    { __typename?: 'createSubscriptionPayload' }
-    & { subscription?: Maybe<(
-      { __typename?: 'Subscription' }
-      & Pick<Subscription, 'collectionName' | 'collectionId'>
-      & { user?: Maybe<(
-        { __typename?: 'UsersPermissionsUser' }
-        & Pick<UsersPermissionsUser, 'id' | 'email' | 'username'>
-      )> }
-    )> }
-  )> }
-);
+export type CreateSubscriptionMutation = { __typename?: 'Mutation', createSubscription?: Maybe<{ __typename?: 'createSubscriptionPayload', subscription?: Maybe<{ __typename?: 'Subscription', collectionName: Enum_Subscription_Collectionname, collectionId: string, user?: Maybe<{ __typename?: 'UsersPermissionsUser', id: string, email: string, username: string }> }> }> };
 
 export type DeleteSubscriptionMutationVariables = Exact<{
   input?: Maybe<DeleteSubscriptionInput>;
 }>;
 
 
-export type DeleteSubscriptionMutation = (
-  { __typename?: 'Mutation' }
-  & { deleteSubscription?: Maybe<(
-    { __typename?: 'deleteSubscriptionPayload' }
-    & { subscription?: Maybe<(
-      { __typename?: 'Subscription' }
-      & Pick<Subscription, 'id'>
-    )> }
-  )> }
-);
+export type DeleteSubscriptionMutation = { __typename?: 'Mutation', deleteSubscription?: Maybe<{ __typename?: 'deleteSubscriptionPayload', subscription?: Maybe<{ __typename?: 'Subscription', id: string }> }> };
 
 export type SubscriptionByUserAndCollectionQueryVariables = Exact<{
   user: Scalars['String'];
@@ -2841,13 +2566,7 @@ export type SubscriptionByUserAndCollectionQueryVariables = Exact<{
 }>;
 
 
-export type SubscriptionByUserAndCollectionQuery = (
-  { __typename?: 'Query' }
-  & { subscriptionByUserAndCollection?: Maybe<(
-    { __typename?: 'Subscription' }
-    & Pick<Subscription, 'id' | 'collectionId' | 'collectionName'>
-  )> }
-);
+export type SubscriptionByUserAndCollectionQuery = { __typename?: 'Query', subscriptionByUserAndCollection?: Maybe<{ __typename?: 'Subscription', id: string, collectionId: string, collectionName: Enum_Subscription_Collectionname }> };
 
 export type TagsConnectionQueryVariables = Exact<{
   start?: Maybe<Scalars['Int']>;
@@ -2855,19 +2574,7 @@ export type TagsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type TagsConnectionQuery = (
-  { __typename?: 'Query' }
-  & { tagsConnection?: Maybe<(
-    { __typename?: 'TagConnection' }
-    & { values?: Maybe<Array<Maybe<(
-      { __typename?: 'Tag' }
-      & Pick<Tag, 'id' | 'name' | 'description'>
-    )>>>, aggregate?: Maybe<(
-      { __typename?: 'TagAggregator' }
-      & Pick<TagAggregator, 'totalCount'>
-    )> }
-  )> }
-);
+export type TagsConnectionQuery = { __typename?: 'Query', tagsConnection?: Maybe<{ __typename?: 'TagConnection', values?: Maybe<Array<Maybe<{ __typename?: 'Tag', id: string, name: string, description: string }>>>, aggregate?: Maybe<{ __typename?: 'TagAggregator', totalCount?: Maybe<number> }> }> };
 
 export type FilesQueryVariables = Exact<{
   sort?: Maybe<Scalars['String']>;
@@ -2877,13 +2584,7 @@ export type FilesQueryVariables = Exact<{
 }>;
 
 
-export type FilesQuery = (
-  { __typename?: 'Query' }
-  & { files?: Maybe<Array<Maybe<(
-    { __typename?: 'UploadFile' }
-    & Pick<UploadFile, 'id' | 'url' | 'formats' | 'provider'>
-  )>>> }
-);
+export type FilesQuery = { __typename?: 'Query', files?: Maybe<Array<Maybe<{ __typename?: 'UploadFile', id: string, url: string, formats?: Maybe<any>, provider: string }>>> };
 
 export type FilesConnectionQueryVariables = Exact<{
   sort?: Maybe<Scalars['String']>;
@@ -2893,47 +2594,19 @@ export type FilesConnectionQueryVariables = Exact<{
 }>;
 
 
-export type FilesConnectionQuery = (
-  { __typename?: 'Query' }
-  & { filesConnection?: Maybe<(
-    { __typename?: 'UploadFileConnection' }
-    & { values?: Maybe<Array<Maybe<(
-      { __typename?: 'UploadFile' }
-      & Pick<UploadFile, 'id' | 'name' | 'size' | 'ext' | 'mime' | 'width' | 'height' | 'formats' | 'url' | 'provider'>
-    )>>>, aggregate?: Maybe<(
-      { __typename?: 'UploadFileAggregator' }
-      & Pick<UploadFileAggregator, 'count' | 'totalCount'>
-    )> }
-  )> }
-);
+export type FilesConnectionQuery = { __typename?: 'Query', filesConnection?: Maybe<{ __typename?: 'UploadFileConnection', values?: Maybe<Array<Maybe<{ __typename?: 'UploadFile', id: string, name: string, size: number, ext?: Maybe<string>, mime: string, width?: Maybe<number>, height?: Maybe<number>, formats?: Maybe<any>, url: string, provider: string }>>>, aggregate?: Maybe<{ __typename?: 'UploadFileAggregator', count?: Maybe<number>, totalCount?: Maybe<number> }> }> };
 
 export type MutipleUploadMutationVariables = Exact<{
   files: Array<Maybe<Scalars['Upload']>> | Maybe<Scalars['Upload']>;
 }>;
 
 
-export type MutipleUploadMutation = (
-  { __typename?: 'Mutation' }
-  & { multipleUpload: Array<Maybe<(
-    { __typename?: 'UploadFile' }
-    & Pick<UploadFile, 'id'>
-  )>> }
-);
+export type MutipleUploadMutation = { __typename?: 'Mutation', multipleUpload: Array<Maybe<{ __typename?: 'UploadFile', id: string }>> };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = (
-  { __typename?: 'Query' }
-  & { me?: Maybe<(
-    { __typename?: 'UsersPermissionsMe' }
-    & Pick<UsersPermissionsMe, 'id' | 'username' | 'email'>
-    & { avatar?: Maybe<(
-      { __typename?: 'UploadFile' }
-      & Pick<UploadFile, 'url' | 'formats' | 'alternativeText'>
-    )> }
-  )> }
-);
+export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'UsersPermissionsMe', id: string, username: string, email: string, avatar?: Maybe<{ __typename?: 'UploadFile', url: string, formats?: Maybe<any>, alternativeText?: Maybe<string> }> }> };
 
 export const PostsConnectionFragmentFragmentDoc = gql`
     fragment PostsConnectionFragment on Post {
@@ -3538,7 +3211,11 @@ export type PostBySlugLazyQueryHookResult = ReturnType<typeof usePostBySlugLazyQ
 export type PostBySlugQueryResult = Apollo.QueryResult<PostBySlugQuery, PostBySlugQueryVariables>;
 export const PostsByStoryDocument = gql`
     query PostsByStory($limit: Int = 100, $story: ID!) {
-  posts(limit: $limit, sort: "storySeq:asc", where: {story: $story}) {
+  posts(
+    limit: $limit
+    sort: "storySeq:asc"
+    where: {story: $story, _publicationState: "preview"}
+  ) {
     id
     title
     storySeq
@@ -3713,10 +3390,13 @@ export const UpdatePostDocument = gql`
         name
         slug
       }
+      nextPost {
+        ...PostsConnectionFragment
+      }
     }
   }
 }
-    `;
+    ${PostsConnectionFragmentFragmentDoc}`;
 export type UpdatePostMutationFn = Apollo.MutationFunction<UpdatePostMutation, UpdatePostMutationVariables>;
 
 /**

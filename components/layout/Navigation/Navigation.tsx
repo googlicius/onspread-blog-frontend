@@ -16,6 +16,7 @@ import debounce from 'lodash/debounce';
 import { useLogoutMutation } from '@/graphql/generated';
 import HandScissors from '@/components/svgs/HandScissors';
 import Notification from './Notification';
+import EvictCacheLink from '@/components/EvictCacheLink';
 
 interface Props {
   isTransparentBg?: boolean;
@@ -26,7 +27,7 @@ interface Props {
 
 const SCROLL_GAP = 50;
 
-export default function Navigation(props: Props): JSX.Element {
+const Navigation = (props: Props): JSX.Element => {
   const {
     isTransparentBg = false,
     noHide = false,
@@ -132,10 +133,10 @@ export default function Navigation(props: Props): JSX.Element {
       id="mainNav"
     >
       <div className="container d-flex justify-content-between align-items-center">
-        <Link href="/">
-          <a className="navbar-brand">
+        <Link href="/" passHref>
+          <EvictCacheLink className="navbar-brand">
             <strong>ONSPREAD</strong>
-          </a>
+          </EvictCacheLink>
         </Link>
         <div>
           {/* <button className="btn ml-4 p-0">
@@ -220,4 +221,6 @@ export default function Navigation(props: Props): JSX.Element {
       </div>
     </nav>
   );
-}
+};
+
+export default Navigation;

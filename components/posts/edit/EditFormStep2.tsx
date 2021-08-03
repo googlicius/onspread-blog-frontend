@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useRef } from 'react';
 import Navigation from '@/components/layout/Navigation/Navigation';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Col, Row, FormGroup, Container } from 'reactstrap';
@@ -6,16 +6,14 @@ import ReactSelect from 'react-select';
 import cs from 'classnames';
 import { FormData } from './interface';
 import EdittingPostPreview from './EdittingPostPreview';
-import { Post, UploadFile, usePostsByStoryQuery } from '@/graphql/generated';
+import { Post, UploadFile } from '@/graphql/generated';
 import Option from '@/types/Option';
 import CategorySelect from './CategorySelect/CategorySelect';
 import MediaLib, { MediaLibRef } from '@/components/Wysiwyg/MediaLib/MediaLib';
 import { useTranslation } from 'react-i18next';
 import StorySelect from './StorySelect/StorySelect';
 import TagSelect from './TagSelect/TagSelect';
-import getTime from 'date-fns/getTime';
 import PostSequence from './PostSequence/PostSequence';
-import { Card } from './PostSequence/CardItem';
 import displayTypeOptions from '@/utils/display-type-options';
 
 interface Props {
@@ -27,67 +25,12 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
   const {
     control,
     setValue,
-    getValues,
     watch,
     formState: { errors, isSubmitting },
   } = useFormContext<FormData>();
   const { t } = useTranslation();
   const mediaLibRef = useRef<MediaLibRef>(null);
   const storyOption = watch('story');
-
-  const { data: postsByStoryData } = usePostsByStoryQuery({
-    variables: {
-      story: storyOption?.value,
-    },
-    skip: !storyOption?.value,
-    fetchPolicy: 'network-only',
-  });
-
-  const postSeqcards: Card[] = useMemo(() => {
-    const cards: Card[] = [];
-
-    if (postsByStoryData) {
-      cards.push(
-        ...postsByStoryData.posts.map((post) => ({
-          id: post.id,
-          text: post.title,
-          seq: post.storySeq,
-        })),
-      );
-    }
-
-    if (!post || storyOption?.value !== post.story?.id) {
-      cards.push({
-        id: post?.id,
-        text: getValues('title'),
-        seq: getValues('storySeq'),
-      });
-    }
-
-    return cards;
-  }, [postsByStoryData, storyOption]);
-
-  const editingCard: Card = useMemo(() => {
-    if (post) {
-      return {
-        id: post.id,
-        text: post.title,
-        seq: post.storySeq,
-      };
-    }
-
-    return {
-      id: null,
-      text: getValues('title'),
-      seq: getValues('storySeq'),
-    };
-  }, [post]);
-
-  useEffect(() => {
-    if (storyOption?.value) {
-      setValue('storySeq', getTime(new Date()));
-    }
-  }, [storyOption]);
 
   const handleMediaChange = (data: UploadFile) => {
     setValue('image', data.id);
@@ -242,8 +185,8 @@ const EditFormStep2 = ({ post, goBack }: Props) => {
                   <h4>{t('Posts of series')}</h4>
 
                   <PostSequence
-                    postCards={postSeqcards}
-                    editingCard={editingCard}
+                    post={post}
+                    selectedStoryOption={storyOption}
                     onSequenceChanged={handleSequenceChanged}
                   />
                 </Col>

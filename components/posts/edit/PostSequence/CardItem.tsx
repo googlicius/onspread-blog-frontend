@@ -7,6 +7,7 @@ export interface Card {
   id: string;
   text: string;
   seq: number;
+  canDrag: boolean;
 }
 
 interface Props {

@@ -23,6 +23,9 @@ mutation UpdatePost($input: updatePostInput) {
         name
         slug
       }
+      nextPost {
+        ...PostsConnectionFragment
+      }
     }
   }
 }

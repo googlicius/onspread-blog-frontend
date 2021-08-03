@@ -23,6 +23,7 @@ import { selectMe } from '@/redux/meProducer';
 import PencilSvg from '@/components/svgs/PencilSvg';
 import styles from './styles.module.scss';
 import FollowButton from '@/components/FollowButton';
+import EvictCacheLink from '@/components/EvictCacheLink';
 
 interface Props {
   postsConnectionData: PostsConnectionQuery;
@@ -52,7 +53,9 @@ const Series = ({ postsConnectionData, storyData }: Props) => {
               <strong>{t('Series')}</strong>
               <div className="d-flex justify-content-between">
                 <h1>
-                  {storyData.story.name}{' '}
+                  <Link href={`/series/${id}`} passHref>
+                    <EvictCacheLink>{storyData.story.name}</EvictCacheLink>
+                  </Link>{' '}
                   {me.value?.id === storyData.story.user?.id && (
                     <Link href={`/series/${id}/edit`}>
                       <a>
