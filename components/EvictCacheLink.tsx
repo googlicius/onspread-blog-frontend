@@ -15,7 +15,7 @@ const EvictCacheLink = forwardRef<HTMLAnchorElement, Props>(
     const handleClick = (e) => {
       e.preventDefault();
 
-      if (href === buildUrl({})) {
+      if (href === buildUrl()) {
         client.cache.evict({});
         client.cache.gc();
       }

@@ -1099,9 +1099,9 @@
     strip-json-comments "^3.1.1"
 
 "@googlicius/build-url@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@googlicius/build-url/-/build-url-1.0.8.tgz#946d02a37acb22163e7363e5cc2edbe4191e8113"
-  integrity sha512-t+g10ksrF+dpMlQToBRmkszr/2UEjRp22i27qJLvY+7sqpPmxaWEckQkIxpZG+ntjBVu9ZWK5lFhDzVKEoqo2Q==
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@googlicius/build-url/-/build-url-1.0.11.tgz#1c10e01662d5a40abcc5307754cee7c6ce8f16cf"
+  integrity sha512-lsY5Mf9+Vrf1mPsDgUNzMzU1SIQHIPc7aGaGthkrZMg4Ppmniaprai2yArYjHYVg/Sacf+oretpBpIoSVpSSRQ==
 
 "@googlicius/load-assets@^1.0.2":
   version "1.0.6"

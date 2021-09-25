@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { Container, Row, Col, FormGroup } from 'reactstrap';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -71,9 +72,9 @@ const Login: NextPage = () => {
 
       <Navigation loginText={<HandLizard />} />
 
-      <div className="container mt-7">
-        <div className="row">
-          <div className="col-md-5 mx-auto">
+      <Container className="mt-7">
+        <Row className="row">
+          <Col md={5} className="mx-auto">
             <div className="myform form ">
               <div className="logo mb-3">
                 <div className="col-md-12 text-center">
@@ -95,7 +96,7 @@ const Login: NextPage = () => {
                 ))}
 
               <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="form-group">
+                <FormGroup>
                   <label>{t('Email address')}</label>
 
                   <input
@@ -112,13 +113,15 @@ const Login: NextPage = () => {
                     })}
                     placeholder={t('Enter email')}
                   />
+
                   <div className="invalid-feedback">
                     {errors.identifier?.message}
                   </div>
-                </div>
+                </FormGroup>
 
-                <div className="form-group">
+                <FormGroup>
                   <label>{t('Password')}</label>
+
                   <input
                     type="password"
                     {...register('password', {
@@ -132,18 +135,19 @@ const Login: NextPage = () => {
                     })}
                     placeholder={t('Enter Password')}
                   />
+
                   <div className="invalid-feedback">
                     {errors.password?.message}
                   </div>
-                </div>
+                </FormGroup>
 
-                <div className="form-group">
+                <FormGroup>
                   <small className="text-center">
                     <Trans i18nKey="termOfUseAcceptance">
                       By signing up you accept our <a href="#">term of use</a>.
                     </Trans>
                   </small>
-                </div>
+                </FormGroup>
 
                 <div className="text-center">
                   <button
@@ -177,19 +181,19 @@ const Login: NextPage = () => {
                   </p>
                 </div>
 
-                <div className="form-group">
+                <FormGroup>
                   <p className="text-center">
                     <Trans i18nKey="dontHaveAccount">
                       Don&apos;t have account?
                       <a href="#">Sign up here</a>
                     </Trans>
                   </p>
-                </div>
+                </FormGroup>
               </form>
             </div>
-          </div>
-        </div>
-      </div>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 };
