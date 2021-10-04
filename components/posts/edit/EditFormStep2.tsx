@@ -9,7 +9,7 @@ import EdittingPostPreview from './EdittingPostPreview';
 import { Post, UploadFile } from '@/graphql/generated';
 import Option from '@/types/Option';
 import CategorySelect from './CategorySelect/CategorySelect';
-import MediaLib, { MediaLibRef } from '@/components/Wysiwyg/MediaLib/MediaLib';
+import MediaLib, { MediaLibRef } from '@/components/MediaLib/MediaLib';
 import { useTranslation } from 'react-i18next';
 import StorySelect from './StorySelect/StorySelect';
 import TagSelect from './TagSelect/TagSelect';

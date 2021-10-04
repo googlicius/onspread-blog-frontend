@@ -3,7 +3,7 @@ import { Col, Container, FormGroup, Row } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
 import cs from 'classnames';
 import Navigation from '../../layout/Navigation/Navigation';
-import Wysiwyg from '../../Wysiwyg/Wysiwyg';
+import Editor from '../../tiptap/Editor';
 import { FormData } from './interface';
 import { useRouter } from 'next/router';
 import postStyles from '@/styles/scss/modules/post.module.scss';
@@ -87,7 +87,7 @@ const EditFormStep1 = ({ title, onNextStep }: Props) => {
                   'is-invalid': !!errors.content,
                 })}
               >
-                <Wysiwyg
+                <Editor
                   {...register('content', {
                     required: {
                       value: true,
@@ -95,7 +95,6 @@ const EditFormStep1 = ({ title, onNextStep }: Props) => {
                     },
                   })}
                   value={getValues('content')}
-                  config={{ placeholder: t('Type the content here') }}
                 />
               </div>
               <div className="invalid-feedback">{errors.content?.message}</div>

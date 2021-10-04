@@ -8,7 +8,7 @@ import { Story, useCreateStoryMutation } from '@/graphql/generated';
 import { useSelector } from 'react-redux';
 import { selectMe } from '@/redux/meProducer';
 import { toast } from 'react-toastify';
-import Wysiwyg from '@/components/Wysiwyg/Wysiwyg';
+import Editor from '@/components/tiptap/Editor';
 
 interface Props {
   newStoryAdded: (story: Story) => void;
@@ -127,25 +127,10 @@ const AddStoryModal = React.forwardRef<AddStoryModalRef, Props>(
                     <strong>{t('Description')}</strong>
                   </label>
 
-                  <Wysiwyg
+                  <Editor
                     {...register('description')}
+                    placeholder={t('Description')}
                     value={getValues('description')}
-                    config={{
-                      placeholder: t('Description'),
-                      toolbar: [
-                        'paragraph',
-                        'heading2',
-                        'heading3',
-                        '|',
-                        'bulletedList',
-                        'numberedList',
-                        '|',
-                        'blockQuote',
-                        '|',
-                        'undo',
-                        'redo',
-                      ],
-                    }}
                   />
                 </FormGroup>
               </Col>

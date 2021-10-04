@@ -14,10 +14,13 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.15",
-    "@ckeditor/ckeditor5-react": "^3.0.2",
     "@googlicius/build-url": "^1.0.8",
     "@googlicius/load-assets": "^1.0.2",
     "@reduxjs/toolkit": "^1.5.1",
+    "@tiptap/extension-image": "^2.0.0-beta.15",
+    "@tiptap/extension-link": "^2.0.0-beta.20",
+    "@tiptap/react": "^2.0.0-beta.72",
+    "@tiptap/starter-kit": "^2.0.0-beta.111",
     "apollo-upload-client": "^16.0.0",
     "axios": "^0.21.1",
     "bootstrap": "4.6.0",
@@ -71,6 +74,7 @@
     "husky": "^6.0.0",
     "jest": "^27.0.6",
     "prettier": "^2.2.1",
+    "prosemirror-dev-tools": "^3.1.0",
     "serverless-dotenv-plugin": "^3.9.0",
     "typescript": "^4.2.4"
   }

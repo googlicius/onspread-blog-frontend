@@ -11,10 +11,10 @@ import { useTranslation } from 'react-i18next';
 import Navigation from '@/components/layout/Navigation/Navigation';
 import { NextPageContext } from 'next';
 import client from '@/configs/apollo-client';
-import Wysiwyg from '@/components/Wysiwyg/Wysiwyg';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import useFormGuard from '@/hooks/form-guard';
+import Editor from '@/components/tiptap/Editor';
 
 interface Props {
   storyData: StoryQuery;
@@ -123,25 +123,10 @@ const SeriesEdit = ({ storyData }: Props) => {
                   <strong>{t('Description')}</strong>
                 </label>
 
-                <Wysiwyg
+                <Editor
                   {...register('description')}
+                  placeholder={t('Description')}
                   value={getValues('description')}
-                  config={{
-                    placeholder: t('Description'),
-                    blockToolbar: [
-                      'paragraph',
-                      'heading2',
-                      'heading3',
-                      '|',
-                      'bulletedList',
-                      'numberedList',
-                      '|',
-                      'blockQuote',
-                      '|',
-                      'undo',
-                      'redo',
-                    ],
-                  }}
                 />
               </FormGroup>
             </Col>
